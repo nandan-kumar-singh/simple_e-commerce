@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Aldım</string>
+    <string name="buy">buy</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="user_name">User Name</string>
+    <string name="pasword">Pasword</string>
+    <string name="login">Log In</string>
+    <string name="Sing_up">Sing Up</string>
+    <string name="home">home</string>
+    <string name="favorites">Favorites</string>
+    <string name="basket">Basket</string>
+    <string name="profile">Profile</string>
+    <string name="login_screen">Login Screen</string>
+    <string name="exit">Exit</string>
+    <string name="guest" translatable="false">Quest</string>
+    <string name="password_repeat">Password Repeat</string>
+    <string name="phone">Phone</string>
+    <string name="name_surname">Name Surname</string>
+    <string name="accept">accept</string>
+    <string name="all">all</string>
+    <string name="mansCloting">men\'s Clothing</string>
+    <string name="womensClothing">women\'s clothing</string>
+    <string name="teknology">teknology</string>
+    <string name="jewelery">jewelery</string>
+    <string name="buyingAndSelling">buying and selling</string>
+</resources>
