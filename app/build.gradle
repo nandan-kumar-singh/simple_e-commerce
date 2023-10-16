@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs'
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -62,4 +64,12 @@ dependencies {
     //Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+
+    //Firebase-Analytics
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Firebase-Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
 }
