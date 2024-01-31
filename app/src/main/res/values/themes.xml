@@ -15,4 +15,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!--Theme that will be activated when splashScreen opens-->
+    <style name = "splashScreenTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimaryVariant">@color/general_application_color</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
 </resources>
