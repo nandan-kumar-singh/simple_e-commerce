@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
 
         //Misafir modunda giren kişi üye olmak için butona tıklar
         viewBinding.buttonSingUp.setOnClickListener {
-            val intent = Intent(context,SingUp :: class.java)
+            val intent = Intent(context,SignUpActivity :: class.java)
             startActivity(intent)
         }
         //Misafir modunda giren kişi giriş sayfasına gitmek için butona tıklar

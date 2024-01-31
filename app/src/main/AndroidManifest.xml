@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Alsess"
         tools:targetApi="31">
         <activity
-            android:name=".SingUp"
+            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".HomePage"

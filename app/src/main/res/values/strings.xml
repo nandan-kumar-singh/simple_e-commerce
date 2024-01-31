@@ -1,4 +1,18 @@
 <resources>
+
+    <!-- General -->
+    <string name="email" translatable="false">E-Mail</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="sing_up" translatable="false">Sing Up</string>
+    <string name="first_name" translatable="false">First Name</string>
+    <string name="last_name" translatable="false">Last Name</string>
+    <string name="phone">Phone</string>
+    <!-- Sign Up Activity -->
+    <string name="password_repeat">Password Repeat</string>
+    <string name="password_not_same" translatable="false">Password and password Again not same</string>
+    <string name="empty_field" translatable="false">Please fill in all fields</string>
+
+
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -13,8 +27,7 @@
     <string name="login_screen">Login Screen</string>
     <string name="exit">Exit</string>
     <string name="guest" translatable="false">Quest</string>
-    <string name="password_repeat">Password Repeat</string>
-    <string name="phone">Phone</string>
+
     <string name="name_surname">Name Surname</string>
     <string name="accept">accept</string>
     <string name="all">all</string>

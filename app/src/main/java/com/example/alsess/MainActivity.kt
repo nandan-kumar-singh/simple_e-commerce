@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         personRecognition()
 
         viewBinding.buttonSingUp.setOnClickListener {
-            val intent = Intent(this@MainActivity, SingUp::class.java)
+            val intent = Intent(this@MainActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
 
