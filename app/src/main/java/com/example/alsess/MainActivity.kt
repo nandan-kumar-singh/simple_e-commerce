@@ -1,112 +1,53 @@
 package com.example.alsess
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.alsess.apimodels.ApiUserModel
-import com.example.alsess.apis.UserAPI
+import android.view.View
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.alsess.databinding.ActivityMainBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.alsess.sqlitedaos.BasketSqliteDao
+import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewBinding : ActivityMainBinding
+    private lateinit var viewBinding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        firebaseAuth = FirebaseAuth.getInstance()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.activityMainMavHostFragment) as NavHostFragment
+        NavigationUI.setupWithNavController(
+            viewBinding.activityMainBottomNavigationView,
+            navHostFragment.navController
+        )
 
-        login()
-        personRecognition()
-
-        viewBinding.buttonSingUp.setOnClickListener {
-            val intent = Intent(this@MainActivity, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-
-        viewBinding.buttonQuest.setOnClickListener {
-            val intent = Intent(this@MainActivity, HomePage::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-    }
-    // Giriş yapılan bilgiler veri tabanından kontrol edilir girildiğinde bilgiler shared preferencese atılır
-    fun login() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(ApiLinks.USER_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(UserAPI :: class.java)
-        val call = service.loadData()
-        call.enqueue(object: Callback<List<ApiUserModel>> {
-            @SuppressLint("SuspiciousIndentation")
-            override fun onResponse(call: Call<List<ApiUserModel>>, response: Response<List<ApiUserModel>>) {
-                val sharedPreferences = getSharedPreferences("users", Context.MODE_PRIVATE)
-                val editör = sharedPreferences.edit()
-
-                viewBinding.buttonLogin.setOnClickListener {
-                    if(response.isSuccessful){
-                        val userText = viewBinding.textViewUserName.text.toString()
-                        val paswordText = viewBinding.textViewPasword.text.toString()
-                        var position = 0
-                        while(position<response.body()!!.size){
-                            if(userText.equals(response.body()!!.get(position).username ) && paswordText.equals(response.body()!!.get(position).pasword)) {
-                                editör.putString("username", userText)
-                                editör.putString("pasword", paswordText)
-                                editör.putInt("id", response.body()!!.get(position).id)
-                                editör.putString("name",response.body()!!.get(position).name )
-                                editör.putString("surname",response.body()!!.get(position).surname )
-                                editör.putString("photo",response.body()!!.get(position).photo)
-                                editör.putString("email",response.body()!!.get(position).email)
-                                editör.commit()
-                                val intent = Intent(this@MainActivity, HomePage::class.java)
-                                startActivity(intent)
-                                finish()
-                            }else{
-                                viewBinding.textViewUserName.setBackgroundResource(R.drawable.login_red_edittext_shape)
-                                viewBinding.textViewPasword.setBackgroundResource(R.drawable.login_red_edittext_shape)
-                            }
-                            position ++
-                        }
-                    }
-                }
+        //BattomNavigation menu disappears when you enter the product detail page
+        navHostFragment.navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.productDetailFragment) {
+                viewBinding.activityMainBottomNavigationView.visibility = View.GONE
+            } else {
+                basketBedge()
+                viewBinding.activityMainBottomNavigationView.visibility = View.VISIBLE
             }
-            override fun onFailure(call: Call<List<ApiUserModel>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+        }
     }
 
-    //Girilen verilerin kaydolduğu shared preferencede kontrol edilir ve giren kişi tanındığı an otomatik giriş yapar
-    fun personRecognition(){
-        val retrofit = Retrofit.Builder()
-            .baseUrl(ApiLinks.USER_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(UserAPI :: class.java)
-        val call = service.loadData()
-        call.enqueue(object : Callback<List<ApiUserModel>>{
-            override fun onResponse(call: Call<List<ApiUserModel>>, response: Response<List<ApiUserModel>>, ) {
-                val sharedPreferences = getSharedPreferences("users", Context.MODE_PRIVATE)
-                var indeks = 0
-                while (indeks <response.body()!!.size){
-                    if(sharedPreferences.getString("username","") == response.body()!!.get(indeks).username && sharedPreferences.getString("pasword","") == response.body()!!.get(indeks).pasword){
-                        val intent = Intent(this@MainActivity, HomePage::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    indeks ++
-                }
-            }
-            override fun onFailure(call: Call<List<ApiUserModel>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+    //The number of products added to the cart is displayed as a bottom notification.
+    fun basketBedge() {
+        val basketSQLiteDataHelper = BasketSqliteDataHelper(this)
+        val basketSqliteList = BasketSqliteDao().getAllBaskets(basketSQLiteDataHelper)
+        val basketBadge =
+            viewBinding.activityMainBottomNavigationView.getOrCreateBadge(R.id.basketFragment)
+        basketBadge.number = basketSqliteList.size
+        basketBadge.isVisible = true
+        if (basketSqliteList.size == 0) {
+            basketBadge.isVisible = false
+        }
     }
 }
