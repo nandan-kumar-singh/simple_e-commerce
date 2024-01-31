@@ -7,11 +7,18 @@
     <string name="first_name" translatable="false">First Name</string>
     <string name="last_name" translatable="false">Last Name</string>
     <string name="phone">Phone</string>
+
     <!-- Sign Up Activity -->
     <string name="password_repeat">Password Repeat</string>
     <string name="password_not_same" translatable="false">Password and password Again not same</string>
     <string name="empty_field" translatable="false">Please fill in all fields</string>
 
+    <!-- Login Activity -->
+    <string name="with" translatable="false">With</string>
+    <string name="forgot_passwrod" translatable="false">Forgot Password</string>
+    <string name="email_password_empty" translatable="false">Email and password are required</string>
+    <string name="reset_password" translatable="false">Password reset link sent to email</string>
+    <string name="enter_email" translatable="false">Please enter your e-mail </string>
 
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>
