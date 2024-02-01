@@ -16,6 +16,34 @@ class AccountSettingsFragment : Fragment() {
     ): View {
         viewBinding = FragmentAccountSettingsBinding.inflate(inflater, container, false)
 
+        buttonClickAction()
+
         return viewBinding.root
+    }
+
+    fun buttonClickAction() {
+        viewBinding.fragmentAccountSettingsToolbar.setNavigationOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
+
+        viewBinding.fragmentAccountSettingsBtnChangeEmail.setOnClickListener {
+            navigations(it, R.id.action_accountSettingsFragment_to_changeEmailFragment)
+        }
+
+        viewBinding.fragmentAccountSettingsBtnChangePassword.setOnClickListener {
+            navigations(it, R.id.action_accountSettingsFragment_to_changePasswordFragment)
+        }
+
+        viewBinding.fragmentAccountSettingsBtnEmailverification.setOnClickListener {
+            navigations(it, R.id.action_accountSettingsFragment_to_emailVerificationFragment)
+        }
+
+        viewBinding.fragmentAccountSettingsBtnDellete.setOnClickListener {
+            navigations(it, R.id.action_accountSettingsFragment_to_disableDeleteAccountFragment)
+        }
+    }
+
+    fun navigations(view: View, actionId: Int) {
+        Navigation.findNavController(view).navigate(actionId)
     }
 }

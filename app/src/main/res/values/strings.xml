@@ -29,6 +29,12 @@
     <!-- User Info Fragment -->
     <string name="update_info" translatable="false">Update Info</string>
 
+    <!-- Account Settings Fragment -->
+    <string name="change_email" translatable="false">Change Email Address</string>
+    <string name="change_password" translatable="false">Change Password</string>
+    <string name="email_verification" translatable="false">Email Verification</string>
+    <string name="account_delete" translatable="false">Account Delete</string>
+
 
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>

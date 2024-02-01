@@ -7,4 +7,94 @@
     android:layout_height="match_parent"
     tools:context=".AccountSettingsFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragmentAccountSettingsToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/asset_back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/account_settings"
+        app:titleTextColor="@color/black" />
+
+    <Button
+        android:id="@+id/fragmentAccountSettingsBtnChangeEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/profile_button_shape"
+        android:drawableLeft="@drawable/asset_email"
+        android:drawablePadding="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/change_email"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAccountSettingsToolbar" />
+
+    <Button
+        android:id="@+id/fragmentAccountSettingsBtnChangePassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/profile_button_shape"
+        android:drawableLeft="@drawable/asset_key"
+        android:drawablePadding="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/change_password"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAccountSettingsBtnChangeEmail" />
+
+    <Button
+        android:id="@+id/fragmentAccountSettingsBtnEmailverification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/profile_button_shape"
+        android:drawableLeft="@drawable/asset_email_verification"
+        android:drawablePadding="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/email_verification"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAccountSettingsBtnChangePassword" />
+
+    <Button
+        android:id="@+id/fragmentAccountSettingsBtnDellete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/profile_button_shape"
+        android:drawableLeft="@drawable/asset_delete"
+        android:drawablePadding="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/account_delete"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAccountSettingsBtnEmailverification" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
