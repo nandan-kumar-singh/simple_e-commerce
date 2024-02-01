@@ -35,6 +35,9 @@
     <string name="email_verification" translatable="false">Email Verification</string>
     <string name="account_delete" translatable="false">Account Delete</string>
 
+    <!-- Email Verification Fragment -->
+    <string name="email_already_verified" translatable="false">Email already verified</string>
+    <string name="verification_link_sent" translatable="false">Verification Link Sent</string>
 
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>
