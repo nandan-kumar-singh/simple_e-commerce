@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="edit_text">#D3D3D3</color>
+    <color name="toolbar">#FFFFFFFF</color>
     <color name="general_application_color">#FA9415</color>
     <color name="textView_button_color">#69D3ED</color>
     <color name="buttonText_color">#000000</color>

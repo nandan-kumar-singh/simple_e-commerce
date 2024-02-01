@@ -20,6 +20,12 @@
     <string name="reset_password" translatable="false">Password reset link sent to email</string>
     <string name="enter_email" translatable="false">Please enter your e-mail </string>
 
+    <!--Profile Fragment-->
+    <string name="user_information" translatable="false">User Information</string>
+    <string name="address_information" translatable="false">Address Information</string>
+    <string name="account_settings" translatable="false">Account Settings</string>
+    <string name="log_out" translatable="false">Log Out</string>
+
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
