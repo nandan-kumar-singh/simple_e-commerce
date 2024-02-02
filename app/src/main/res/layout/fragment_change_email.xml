@@ -7,4 +7,125 @@
     android:layout_height="match_parent"
     tools:context=".ChangeEmailFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragmentChangeEmailToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/asset_back_button"
+        app:title="@string/change_email"
+        app:titleTextColor="@color/black" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragmentChangeEmailCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/fragmentChangeEmailBtnChange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/general_application_color"
+                android:text="@string/change_email"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailEdtNewEmailAgain" />
+
+            <EditText
+                android:id="@+id/fragmentChangeEmailEdtNewEmailAgain"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_shape"
+                android:ems="10"
+                android:hint="@string/new_email_again"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailEdtNewEmail"
+                tools:ignore="RtlSymmetry,TextFields" />
+
+            <EditText
+                android:id="@+id/fragmentChangeEmailEdtNewEmail"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_shape"
+                android:ems="10"
+                android:hint="@string/new_email"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailTxvCurrentEmail"
+                tools:ignore="RtlSymmetry,TextFields" />
+
+            <TextView
+                android:id="@+id/fragmentChangeEmailTxvCurrentEmail"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:background="@drawable/edittext_shape"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:text="textView"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat,RtlSymmetry" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/fragmentChangeEmailTxvVerifyYourEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/first_verify_your_email"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailToolbar" />
+
+    <TextView
+        android:id="@+id/fragmentChangeEmailTxvGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/go"
+        android:textColor="@color/purple_200"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentChangeEmailTxvVerifyYourEmail"
+        app:layout_constraintStart_toStartOf="@+id/fragmentChangeEmailTxvVerifyYourEmail"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentChangeEmailTxvVerifyYourEmail" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

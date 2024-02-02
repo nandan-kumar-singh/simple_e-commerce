@@ -37,6 +37,11 @@
     <string name="email_verification" translatable="false">Email Verification</string>
     <string name="account_delete" translatable="false">Delete Account</string>
 
+    <!-- Change Email Fragment -->
+    <string name="new_email" translatable="false">New Email</string>
+    <string name="new_email_again" translatable="false">New Email Again</string>
+    <string name="email_not_same">email and new email again not same</string>
+
     <!-- Change Password Fragment -->
     <string name="first_verify_your_email" translatable="false">First verify your email</string>
     <string name="go" translatable="false"><u>Go -></u></string>
