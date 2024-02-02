@@ -7,6 +7,8 @@
     <string name="first_name" translatable="false">First Name</string>
     <string name="last_name" translatable="false">Last Name</string>
     <string name="phone">Phone</string>
+    <string name="cancel" translatable="false">Calcel</string>
+    <string name="yes" translatable="false">Yes</string>
 
     <!-- Sign Up Activity -->
     <string name="password_repeat">Password Repeat</string>
@@ -42,11 +44,19 @@
     <string name="new_password" translatable="false">New Password</string>
     <string name="new_password_again" translatable="false">New Password Again</string>
     <string name="logged_in_with_google" translatable="false">logged in with google</string>
-    <string name="current_password_incorrect">Current password incorrect</string>
+    <string name="current_password_incorrect" translatable="false">Current password incorrect</string>
 
     <!-- Email Verification Fragment -->
     <string name="email_already_verified" translatable="false">Email already verified</string>
     <string name="verification_link_sent" translatable="false">Verification Link Sent</string>
+
+    <!-- Delete Account Fragment -->
+    <string name="delete_account" translatable="false">Delete Account</string>
+    <string name="delete_account_message" translatable="false">* All storage data in your account will be deleted
+        \n* Purchased products cannot be returned
+        \n* Deleted account cannot be restored</string>
+    <string name="delete_account_alert_message" translatable="false">Are you sure you want to delete your account?</string>
+    <string name="enter_info_correctly" translatable="false">Enter the information correctly</string>
 
     <string name="app_name">Aldım</string>
     <string name="buy">buy</string>

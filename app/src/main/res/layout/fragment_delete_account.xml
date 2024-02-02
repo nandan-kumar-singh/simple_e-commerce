@@ -6,4 +6,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DeleteAccountFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragmentDeleteAccountToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/delete_account"
+        app:navigationIcon="@drawable/asset_back_button"
+        app:titleTextColor="@color/black" />
+
+    <TextView
+        android:id="@+id/fragmentDeleteAccountTxvWarningMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/delete_account_message"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:lineSpacingExtra="2sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentDeleteAccountToolbar" />
+
+    <EditText
+        android:id="@+id/fragmentDeleteAccountEdtEmail"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edittext_shape"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/email"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentDeleteAccountTxvWarningMessage" />
+
+    <EditText
+        android:id="@+id/fragmentDeleteAccountEdtPassword"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edittext_shape"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPersonName"
+        android:paddingStart="10dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentDeleteAccountEdtEmail" />
+
+    <Button
+        android:id="@+id/fragmentDeleteAccountBtnDelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/red"
+        android:text="@string/delete_account"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentDeleteAccountEdtPassword" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
