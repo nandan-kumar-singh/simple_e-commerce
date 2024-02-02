@@ -33,7 +33,16 @@
     <string name="change_email" translatable="false">Change Email Address</string>
     <string name="change_password" translatable="false">Change Password</string>
     <string name="email_verification" translatable="false">Email Verification</string>
-    <string name="account_delete" translatable="false">Account Delete</string>
+    <string name="account_delete" translatable="false">Delete Account</string>
+
+    <!-- Change Password Fragment -->
+    <string name="first_verify_your_email" translatable="false">First verify your email</string>
+    <string name="go" translatable="false"><u>Go -></u></string>
+    <string name="current_password" translatable="false">Current Password</string>
+    <string name="new_password" translatable="false">New Password</string>
+    <string name="new_password_again" translatable="false">New Password Again</string>
+    <string name="logged_in_with_google" translatable="false">logged in with google</string>
+    <string name="current_password_incorrect">Current password incorrect</string>
 
     <!-- Email Verification Fragment -->
     <string name="email_already_verified" translatable="false">Email already verified</string>
