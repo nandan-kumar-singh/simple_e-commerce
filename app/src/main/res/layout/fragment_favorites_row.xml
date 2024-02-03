@@ -26,7 +26,6 @@
                 android:id="@+id/recyclerRowFavoritesImvProduct"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"

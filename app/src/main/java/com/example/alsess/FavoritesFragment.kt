@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alsess.adapters.FavoritesReyclerViewAdapter
 import com.example.alsess.databinding.FragmentFavoritesBinding
 
@@ -14,7 +15,7 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
         viewBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
         viewBinding.fragmentFavoritesRecyclerView.adapter = context?.let { FavoritesReyclerViewAdapter(it) }
-        viewBinding.fragmentFavoritesRecyclerView.layoutManager = GridLayoutManager(context,2)
+        viewBinding.fragmentFavoritesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         return viewBinding.root
     }
 }

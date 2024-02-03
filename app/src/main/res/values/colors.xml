@@ -8,14 +8,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="edit_text">#D3D3D3</color>
-    <color name="toolbar">#FFFFFFFF</color>
-    <color name="general_application_color">#FA9415</color>
-    <color name="textView_button_color">#69D3ED</color>
-    <color name="buttonText_color">#000000</color>
-    <color name="rating_color">#ffff00</color>
-    <color name="acceptance_color">#04C4D9</color>
     <color name="grey">#B1B1B1</color>
     <color name="light_grey">#C5C5C5</color>
+    <color name="primary_variant">#9A9A9A</color>
+    <color name="toolbar">#FFFFFFFF</color>
+    <color name="general_application_color">#FA9415</color>
+    <color name="edit_text">#D3D3D3</color>
+
+    <color name="textView_button_color">#69D3ED</color>
+    <color name="buttonText_color">#000000</color>
+    <color name="rating_color">#FA9415</color>
+    <color name="acceptance_color">#04C4D9</color>
     <color name="circleimageview_borderColor">#69D3ED</color>
 </resources>
