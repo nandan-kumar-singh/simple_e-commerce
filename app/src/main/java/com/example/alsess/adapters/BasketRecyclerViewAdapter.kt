@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.alsess.BasketFragmentDirections
 import com.example.alsess.OnChangeAmount
-import com.example.alsess.databinding.BasketFragmentRowBinding
+import com.example.alsess.databinding.FragmentBasketRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
 import com.example.alsess.sqlitemodels.SqliteBasketModel
 
 
 class BasketRecyclerViewAdapter(val context : Context, val onChangeAmount : OnChangeAmount) : RecyclerView.Adapter<BasketRecyclerViewAdapter.BasketVH>() {
-    class BasketVH(val viewBinding : BasketFragmentRowBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+    class BasketVH(val viewBinding : FragmentBasketRowBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketVH {
-        val view = BasketFragmentRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = FragmentBasketRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return BasketVH(view)
     }
     override fun getItemCount(): Int {
@@ -36,13 +36,13 @@ class BasketRecyclerViewAdapter(val context : Context, val onChangeAmount : OnCh
         val basketList = BasketSqliteDao().getAllBaskets(basketDataHelper)
         val basket : SqliteBasketModel = basketList.get(position)
 
-        holder.viewBinding.titleText.text = basket.title.replace("'"," ")
-        holder.viewBinding.priceText.text = "${basket.price.toFloat() *  basket.count} $"
-        holder.viewBinding.countText.text = basket.count.toString()
-        Glide.with(context!!).load(basket.imageUrl).into(holder.viewBinding.imageView)
+        holder.viewBinding.recyclerRowBasketTxvProductName.text = basket.title.replace("'"," ")
+        holder.viewBinding.recyclerRowBasketTxvPrice.text = "${basket.price.toFloat() *  basket.count} $"
+        holder.viewBinding.recyclerRowBasketTxvCount.text = basket.count.toString()
+        Glide.with(context!!).load(basket.imageUrl).into(holder.viewBinding.recyclerRowBasketImvProduct)
 
         // detay sayfasına id gönderilir ve bu id sayesinde detayda tıklanan ürün görüntülenir
-        holder.viewBinding.cardview.setOnClickListener {
+        holder.viewBinding.recyclerRowBasketCardView.setOnClickListener {
             val navArgs =BasketFragmentDirections.toProductsDetail(basket.id.toInt())
             Navigation.findNavController(it).navigate(navArgs)
         }
@@ -54,7 +54,7 @@ class BasketRecyclerViewAdapter(val context : Context, val onChangeAmount : OnCh
 
 
         // sepeteki ürünleri arttırmak ve total fiyatı bulmak için kullanılır
-        holder.viewBinding.increaseButton.setOnClickListener {
+        holder.viewBinding.recyclerRowBasketBtnIncrease.setOnClickListener {
             if (count < 20) {
                 count++
                 BasketSqliteDao().updateBasket(
@@ -67,13 +67,13 @@ class BasketRecyclerViewAdapter(val context : Context, val onChangeAmount : OnCh
                 )
 
                 total()
-                holder.viewBinding.countText.text = count.toString()
-                holder.viewBinding.priceText.text = "${basket.price.toFloat() * count} $"
+                holder.viewBinding.recyclerRowBasketTxvCount.text = count.toString()
+                holder.viewBinding.recyclerRowBasketTxvPrice.text = "${basket.price.toFloat() * count} $"
             }
         }
 
         //sepeteki ürünleri azaltmak ve total fiyatı bulmak için kullanılır
-        holder.viewBinding.decreaseButton.setOnClickListener {
+        holder.viewBinding.recyclerRowBasketBtnDecrease.setOnClickListener {
             if(count > 1){
                 count --
                 BasketSqliteDao().updateBasket(basketDataHelper,
@@ -87,12 +87,12 @@ class BasketRecyclerViewAdapter(val context : Context, val onChangeAmount : OnCh
             }
 
 
-            holder.viewBinding.countText.text = count.toString()
-            holder.viewBinding.priceText.text = "${basket.price.toFloat() *  count} $"
+            holder.viewBinding.recyclerRowBasketTxvCount.text = count.toString()
+            holder.viewBinding.recyclerRowBasketTxvPrice.text = "${basket.price.toFloat() *  count} $"
         }
 
         //ürünü sepetten silmek için kullanılır
-        holder.viewBinding.buttonDelete.setOnClickListener {
+        holder.viewBinding.recyclerRowBasketBtnDelete.setOnClickListener {
             BasketSqliteDao().deleteProduts(basketDataHelper,basket.id)
             total()
             onChangeAmount.onChange("0")

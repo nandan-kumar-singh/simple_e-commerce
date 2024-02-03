@@ -13,8 +13,8 @@ class FavoritesFragment : Fragment() {
     private lateinit var viewBinding : FragmentFavoritesBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
         viewBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        viewBinding.RecyclerView.adapter = context?.let { FavoritesReyclerViewAdapter(it) }
-        viewBinding.RecyclerView.layoutManager = GridLayoutManager(context,2)
+        viewBinding.fragmentFavoritesRecyclerView.adapter = context?.let { FavoritesReyclerViewAdapter(it) }
+        viewBinding.fragmentFavoritesRecyclerView.layoutManager = GridLayoutManager(context,2)
         return viewBinding.root
     }
 }

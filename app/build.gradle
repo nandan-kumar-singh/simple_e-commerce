@@ -62,6 +62,12 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
+    //Firebase-Analytics
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Firebase-Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:(insert latest version)'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -69,15 +75,5 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
 
-    //Circle Image View
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-
-    //Firebase-Analytics
-    implementation("com.google.firebase:firebase-analytics-ktx")
-
-    //Firebase-Crashlytics
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
 }

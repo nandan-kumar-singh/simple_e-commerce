@@ -1,6 +1,10 @@
 <resources>
 
     <!-- General -->
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="basket">Basket</string>
+    <string name="profile">Profile</string>
     <string name="email" translatable="false">E-Mail</string>
     <string name="password" translatable="false">Password</string>
     <string name="sing_up" translatable="false">Sing Up</string>
@@ -70,10 +74,7 @@
     <string name="pasword">Pasword</string>
     <string name="login">Log In</string>
     <string name="Sing_up">Sing Up</string>
-    <string name="home">home</string>
-    <string name="favorites">Favorites</string>
-    <string name="basket">Basket</string>
-    <string name="profile">Profile</string>
+
     <string name="login_screen">Login Screen</string>
     <string name="exit">Exit</string>
     <string name="guest" translatable="false">Quest</string>

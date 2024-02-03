@@ -24,25 +24,25 @@ class BasketFragment : Fragment() {
         //fiyat totallerini anlık olarak almak ve değişiklikleri anında vermek için kullanılır
         val onChangeAmount = object : OnChangeAmount {
             override fun onChange(totalPrice: String) {
-                viewBinding.totalPrice.text = totalPrice
+                viewBinding.fragmentBasketTxvTotalPrice.text = totalPrice
                 editor?.putFloat("total",totalPrice.toFloat())
                 editor?.apply()
                 if(totalPrice.toFloat() == 0F){
-                    viewBinding.cardView.visibility = View.GONE
+                    viewBinding.fragmentBasketCardViewPrice.visibility = View.GONE
 
                 }else{
-                    viewBinding.cardView.visibility = View.VISIBLE
+                    viewBinding.fragmentBasketCardViewPrice.visibility = View.VISIBLE
                 }
             }
         }
 
         if(sharedPreferences!!.getFloat("total",0.0F ) ==0.0F){
-            viewBinding.cardView.visibility = View.GONE
+            viewBinding.fragmentBasketCardViewPrice.visibility = View.GONE
         }
-        viewBinding.totalPrice.text = sharedPreferences?.getFloat("total",0F).toString()
+        viewBinding.fragmentBasketTxvTotalPrice.text = sharedPreferences?.getFloat("total",0F).toString()
 
-        viewBinding.recyclerView.adapter = context?.let { BasketRecyclerViewAdapter(it,onChangeAmount)}
-        viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
+        viewBinding.fragmentBasketRecyclerView.adapter = context?.let { BasketRecyclerViewAdapter(it,onChangeAmount)}
+        viewBinding.fragmentBasketRecyclerView.layoutManager = LinearLayoutManager(context)
         return viewBinding.root
     
         }
