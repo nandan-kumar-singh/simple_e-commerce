@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- General -->
     <string name="home">Home</string>
@@ -13,6 +13,13 @@
     <string name="phone">Phone</string>
     <string name="cancel" translatable="false">Calcel</string>
     <string name="yes" translatable="false">Yes</string>
+    <string name="all">All</string>
+    <string name="mansCloting" tools:ignore="DuplicateDefinition">Men  s Clothing</string>
+    <string name="womensClothing" tools:ignore="DuplicateDefinition">Women  s Clothing</string>
+    <string name="electronics" translatable="false">Electronics</string>
+    <string name="jewelery" tools:ignore="DuplicateDefinition">Jewelery</string>
+    <string name="add_basket" translatable="false">Add Basket</string>
+    <string name="added_basket" translatable="false">Added Basket</string>
 
     <!-- Sign Up Activity -->
     <string name="password_repeat">Password Repeat</string>
@@ -81,10 +88,5 @@
 
     <string name="name_surname">Name Surname</string>
     <string name="accept">accept</string>
-    <string name="all">all</string>
-    <string name="mansCloting">men\'s Clothing</string>
-    <string name="womensClothing">women\'s clothing</string>
-    <string name="teknology">teknology</string>
-    <string name="jewelery">jewelery</string>
     <string name="buyingAndSelling">buying and selling</string>
 </resources>
