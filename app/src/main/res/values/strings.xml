@@ -20,6 +20,7 @@
     <string name="jewelery" tools:ignore="DuplicateDefinition">Jewelery</string>
     <string name="add_basket" translatable="false">Add Basket</string>
     <string name="added_basket" translatable="false">Added Basket</string>
+    <string name="product_detail" translatable="false">Product Detail</string>
 
     <!-- Sign Up Activity -->
     <string name="password_repeat">Password Repeat</string>

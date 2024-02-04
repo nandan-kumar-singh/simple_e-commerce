@@ -81,7 +81,7 @@ class ProductsRecyclerViewAdapter(val context : Context,
                holder.viewBinding.favoritesButton.setBackgroundResource(R.drawable.asset_favorites_white)
            }else{
                if(FavoritesSqliteDao().controlFavorites(favoritesDataHelper,idList.get(position)) == 0){
-                   FavoritesSqliteDao().addFavorites(favoritesDataHelper,idList.get(position),titleList.get(position).replace("'"," "),priceList.get(position).toString() ,imageList.get(position))
+                   FavoritesSqliteDao().addFavorites(favoritesDataHelper,idList.get(position),titleList.get(position).replace("'"," "),priceList.get(position) ,imageList.get(position))
                    holder.viewBinding.favoritesButton.setBackgroundResource(R.drawable.asset_favorites_red)
                }
            }

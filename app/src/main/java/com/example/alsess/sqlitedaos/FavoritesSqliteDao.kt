@@ -8,7 +8,7 @@ import com.example.alsess.sqlitemodels.SqliteFavoritesModel
 
 class FavoritesSqliteDao {
 
-    fun addFavorites(favoritesDataHelper: FavoritesSqliteDataHelper, id : Long, title: String, price: String, image_url: String) {
+    fun addFavorites(favoritesDataHelper: FavoritesSqliteDataHelper, id : Long, title: String, price: Double, image_url: String) {
         val db = favoritesDataHelper.writableDatabase
         val values = ContentValues()
         values.put("id",id)

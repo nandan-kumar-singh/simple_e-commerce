@@ -80,7 +80,7 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
                         favoritesDataHelper,
                         childList.get(position).productId,
                         childList.get(position).productName,
-                        childList.get(position).productPrice.toString(),
+                        childList.get(position).productPrice,
                         childList.get(position).productImage
                     )
                 }

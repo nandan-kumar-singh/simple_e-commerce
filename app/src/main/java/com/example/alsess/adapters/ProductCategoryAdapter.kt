@@ -8,7 +8,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.alsess.ProductCategoryFragmentDirections
-import com.example.alsess.ProductsFragmentDirections
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
@@ -75,7 +74,7 @@ class ProductCategoryAdapter(
                         favoritesDataHelper,
                         idList.get(position),
                         titleList.get(position).replace("'", " "),
-                        priceList.get(position).toString(),
+                        priceList.get(position),
                         imageList.get(position)
                     )
                 }
