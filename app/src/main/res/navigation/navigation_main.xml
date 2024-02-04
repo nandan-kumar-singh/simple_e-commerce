@@ -111,5 +111,15 @@
         android:id="@+id/productCategoryFragment"
         android:name="com.example.alsess.ProductCategoryFragment"
         android:label="fragment_product_category"
-        tools:layout="@layout/fragment_product_category" />
+        tools:layout="@layout/fragment_product_category" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <argument
+            android:name="categoryTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_productCategoryFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
 </navigation>

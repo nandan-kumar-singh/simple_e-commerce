@@ -6,20 +6,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragmentProductToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <SearchView
+        android:id="@+id/fragmentProductSearchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/edittext_shape"
+        android:elevation="5dp"
+        android:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentProductToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentProductToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragmentProductToolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragmentProductRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProductToolbar" />
+
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/fragmentProductPgb"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/recylerView"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentProductRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/recylerView"
-        app:layout_constraintTop_toTopOf="@+id/recylerView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recylerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        app:layout_constraintStart_toStartOf="@+id/fragmentProductRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/fragmentProductRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
