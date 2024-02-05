@@ -1,26 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aldım</string>
-    <string name="buy">Satın Al</string>
-    <string name="user_name">"Kullanıcı Adı "</string>
-    <string name="pasword">Şifre</string>
-    <string name="login">Giriş</string>
-    <string name="Sing_up">Kaydol</string>
+    <string name="app_name">Aliwo</string>
+    <!-- General -->
     <string name="home">Anasayfa</string>
     <string name="favorites">Favorilerim</string>
     <string name="basket">Sepetim</string>
     <string name="profile">Profilim</string>
-    <string name="login_screen">Giriş Ekranı</string>
-    <string name="exit">Çıkış</string>
-    <string name="guest">Misafir</string>
-    <string name="password_repeat">Şifre Tekrarı</string>
+    <string name="email">E-posta</string>
+    <string name="password">Şifre</string>
+    <string name="sing_up">Kayıt Ol</string>
+    <string name="first_name">İsim</string>
+    <string name="last_name">Soyisim</string>
     <string name="phone">Telefon</string>
-    <string name="name_surname">İsim Soyisim</string>
-    <string name="accept">onayla</string>
-    <string name="all">tümü</string>
+    <string name="cancel">İptal</string>
+    <string name="yes">Evet</string>
+    <string name="all">Tümü</string>
     <string name="mansCloting">Erkek Giyim</string>
     <string name="womensClothing">Kadın Giyim</string>
-    <string name="teknology">teknoloji</string>
-    <string name="jewelery">mücevher</string>
-    <string name="buyingAndSelling">alım ve satım</string>
+    <string name="electronics">Elektronik</string>
+    <string name="jewelery">Mücevher</string>
+    <string name="add_basket">Sepete Ekle</string>
+    <string name="added_basket">Sepete Eklendi</string>
+    <string name="product_detail">Ürün detayları</string>
+    <string name="login">Giriş Yap</string>
+    <string name="pasword">Şifre</string>
+    <string name="accept">Satın Al</string>
+
+    <!-- Sign Up Activity -->
+    <string name="password_repeat">Şifre Tekrarı</string>
+    <string name="password_not_same">Şifre ve şifre tekrarı aynı değil</string>
+    <string name="empty_field">Lütfen boş alan bırakmayınız</string>
+
+    <!-- Login Activity -->
+    <string name="with">İle</string>
+    <string name="forgot_passwrod">Şifremi Unututum</string>
+    <string name="email_password_empty">E-posta ve şifre gereklidir</string>
+    <string name="reset_password">Şifre sıfırlama bağlantısı E-posta adresinize gönderildi</string>
+    <string name="enter_email">Lütfen E-posta adresinizi girin</string>
+
+    <!--Profile Fragment-->
+    <string name="user_information">Kullanıcı Bilgileri</string>
+    <string name="account_settings">Hesap Ayarları</string>
+    <string name="log_out">Çıkış Yap</string>
+
+    <!-- User Info Fragment -->
+    <string name="update_info">Bilgileri Güncelle</string>
+
+    <!-- Account Settings Fragment -->
+    <string name="change_email">E-Posta Değiştir</string>
+    <string name="change_password">Şifre Değiştir</string>
+    <string name="email_verification">E-Posta Doğrula</string>
+    <string name="account_delete">Hesabı Sil</string>
+
+    <!-- Change Email Fragment -->
+    <string name="new_email">Yeni E-Posta</string>
+    <string name="new_email_again">Yeni E-Posta Tekrarı</string>
+    <string name="email_not_same">Yeni E-Posta ve E-Posta tekrarı aynı değil</string>
+
+    <!-- Change Password Fragment -->
+    <string name="first_verify_your_email">Önce E-Postanızı Onaylayın</string>
+    <string name="go"><u>Git-></u></string>
+    <string name="current_password">Mevcut Şifre</string>
+    <string name="new_password">Yeni Şifre</string>
+    <string name="new_password_again">Yeni Şifre Tekrarı</string>
+    <string name="logged_in_with_google">Google ile giriş yapıldı</string>
+    <string name="current_password_incorrect">Mevcut şifre yanlış</string>
+
+    <!-- Email Verification Fragment -->
+    <string name="email_already_verified" >E-Postanızı zaten güncellediniz</string>
+    <string name="verification_link_sent">Doğrulama linki gönderildi</string>
+
+    <!-- Delete Account Fragment -->
+    <string name="delete_account">Hesabı Sil</string>
+    <string name="delete_account_message">* Hesabınızdaki tüm depolama verileri silinecektir
+        \n* Satın alınan ürünler iade edilemez
+        \n* Silinen hesap geri yüklenemez</string>
+    <string name="delete_account_alert_message">Hesabınızı silmek istediğinizden emin misiniz?</string>
+    <string name="enter_info_correctly">Bilgileri doğru girin</string>
 </resources>
