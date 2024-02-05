@@ -14,10 +14,5 @@
     <color name="toolbar">#FFFFFFFF</color>
     <color name="general_application_color">#FA9415</color>
     <color name="edit_text">#D3D3D3</color>
-
-    <color name="textView_button_color">#69D3ED</color>
-    <color name="buttonText_color">#000000</color>
     <color name="rating_color">#FA9415</color>
-    <color name="acceptance_color">#04C4D9</color>
-    <color name="circleimageview_borderColor">#69D3ED</color>
 </resources>

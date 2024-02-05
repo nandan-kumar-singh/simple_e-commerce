@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <string name="app_name">Aliwo</string>
     <!-- General -->
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
@@ -21,9 +21,12 @@
     <string name="add_basket" translatable="false">Add Basket</string>
     <string name="added_basket" translatable="false">Added Basket</string>
     <string name="product_detail" translatable="false">Product Detail</string>
+    <string name="login">Log In</string>
+    <string name="pasword">Pasword</string>
+    <string name="accept">Buy</string>
 
     <!-- Sign Up Activity -->
-    <string name="password_repeat">Password Repeat</string>
+    <string name="password_repeat">Retype Password</string>
     <string name="password_not_same" translatable="false">Password and password Again not same</string>
     <string name="empty_field" translatable="false">Please fill in all fields</string>
 
@@ -36,7 +39,6 @@
 
     <!--Profile Fragment-->
     <string name="user_information" translatable="false">User Information</string>
-    <string name="address_information" translatable="false">Address Information</string>
     <string name="account_settings" translatable="false">Account Settings</string>
     <string name="log_out" translatable="false">Log Out</string>
 
@@ -52,7 +54,7 @@
     <!-- Change Email Fragment -->
     <string name="new_email" translatable="false">New Email</string>
     <string name="new_email_again" translatable="false">New Email Again</string>
-    <string name="email_not_same">email and new email again not same</string>
+    <string name="email_not_same" translatable="false">email and new email again not same</string>
 
     <!-- Change Password Fragment -->
     <string name="first_verify_your_email" translatable="false">First verify your email</string>
@@ -74,20 +76,4 @@
         \n* Deleted account cannot be restored</string>
     <string name="delete_account_alert_message" translatable="false">Are you sure you want to delete your account?</string>
     <string name="enter_info_correctly" translatable="false">Enter the information correctly</string>
-
-    <string name="app_name">Aldım</string>
-    <string name="buy">buy</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="user_name">User Name</string>
-    <string name="pasword">Pasword</string>
-    <string name="login">Log In</string>
-    <string name="Sing_up">Sing Up</string>
-
-    <string name="login_screen">Login Screen</string>
-    <string name="exit">Exit</string>
-    <string name="guest" translatable="false">Quest</string>
-
-    <string name="name_surname">Name Surname</string>
-    <string name="accept">accept</string>
-    <string name="buyingAndSelling">buying and selling</string>
 </resources>
