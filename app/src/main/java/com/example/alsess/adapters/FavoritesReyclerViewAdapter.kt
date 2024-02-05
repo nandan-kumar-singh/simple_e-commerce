@@ -30,20 +30,18 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
     }
 
     override fun onBindViewHolder(holder: FavoritesVH, position: Int) {
-        //Ürünler listesinden veritabanına eklenen veri bilgileri çekilir ve görünümlere aktarılır
         val favoritesDataHelper = FavoritesSqliteDataHelper(context)
         val favoritesList = FavoritesSqliteDao().readFavorites(favoritesDataHelper)
         holder.viewBinding.recyclerRowFavoritesTxvProductName.text = favoritesList.get(position).title.replace("'"," ")
         holder.viewBinding.recyclerRowFavoritesTxvPrice.text = favoritesList.get(position).price.toString()
         Glide.with(context!!).load(favoritesList.get(position).image_url).into(holder.viewBinding.recyclerRowFavoritesImvProduct)
 
-        //Favorilerdeki ürünlerin detay sayfasında görüntülenmesi sağlanır
-        //Bilgiler id üzerinden aktarılıp çekilir
+        //Products in favorites are displayed on the detail page
         holder.viewBinding.recyclerRowFavoritesCardViewProduct.setOnClickListener {
             val navArgs = FavoritesFragmentDirections.toProductsDetail(favoritesList.get(position).id.toInt())
             Navigation.findNavController(it).navigate(navArgs)
         }
-        //Favoriler butonuna tıklanınca veri tabanına eklenen veriler id yardımıyla silinir
+
         holder.viewBinding.recyclerRowFavoritesBtnFavorites.setOnClickListener {
             FavoritesSqliteDao().deleteFavorites(favoritesDataHelper,favoritesList.get(position).id)
             notifyDataSetChanged()

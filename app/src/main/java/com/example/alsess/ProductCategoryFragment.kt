@@ -65,7 +65,7 @@ class ProductCategoryFragment : Fragment() {
                     if (productIdList.size == 0) {
                         viewBinding.fragmentProductCategoryAllRecyclerView.adapter =
                             ProductCategoryAdapter(
-                                requireContext(),
+                                context!!,
                                 productIdList,
                                 productNameList,
                                 productPriceList,
