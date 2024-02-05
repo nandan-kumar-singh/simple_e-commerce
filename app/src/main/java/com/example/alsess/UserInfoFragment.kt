@@ -92,8 +92,12 @@ class UserInfoFragment : Fragment() {
         val currentUserUid = auth.currentUser!!.uid
         val updateFirestore = UpdateFirestoreData(requireContext())
 
-        updateFirestore.updateFirestoreUserInfo(currentUserUid, "name", userName)
-        updateFirestore.updateFirestoreUserInfo(currentUserUid, "lastName", userLastName)
+        updateFirestore.updateFirestoreUserInfo(currentUserUid, "name", userName.replaceFirstChar {
+            it.uppercase()
+        })
+        updateFirestore.updateFirestoreUserInfo(currentUserUid, "lastName", userLastName.replaceFirstChar {
+            it.uppercase()
+        })
         updateFirestore.updateFirestoreUserInfo(currentUserUid, "phone", userPhone)
     }
 }

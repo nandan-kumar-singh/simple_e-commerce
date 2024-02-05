@@ -128,11 +128,18 @@ class ProfileFragment : Fragment() {
                                 viewBinding.fragmentProfileTxvNameChar.text =
                                     name.get(0).toString() + lastName.get(0).toString()
                             } else {
-                                viewBinding.fragmentProfileTxvName.text =
-                                    currentUser.displayName
-                                viewBinding.fragmentProfileTxvNameChar.text =
-                                    currentUser.displayName?.get(0)
-                                        .toString()
+                                if (currentUser.displayName != null && currentUser.displayName != "") {
+                                    viewBinding.fragmentProfileTxvName.text =
+                                        currentUser.displayName
+                                    viewBinding.fragmentProfileTxvNameChar.text =
+                                        currentUser.displayName?.first().toString()
+                                } else {
+                                    viewBinding.fragmentProfileTxvName.text = currentUser.email
+                                    viewBinding.fragmentProfileTxvNameChar.text =
+                                        currentUser.email?.get(0).toString().replaceFirstChar {
+                                            it.uppercaseChar()
+                                        }
+                                }
                             }
                         }
                     }
