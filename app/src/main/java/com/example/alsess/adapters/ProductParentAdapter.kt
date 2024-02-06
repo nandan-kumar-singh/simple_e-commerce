@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alsess.ProductsFragmentDirections
 import com.example.alsess.databinding.FragmentProductParentRowBinding
 import com.example.alsess.recyclerviewmodel.ProductParentModel
+import com.example.alsess.view.ProductsFragmentDirections
 
 class ProductParentAdapter(val context: Context, val parentList: List<ProductParentModel>) :
     RecyclerView.Adapter<ProductParentAdapter.ProductParentVH>() {

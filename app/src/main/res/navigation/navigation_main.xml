@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/productsFragment"
-        android:name="com.example.alsess.ProductsFragment"
+        android:name="com.example.alsess.view.ProductsFragment"
         android:label="fragment_products"
         tools:layout="@layout/fragment_products" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.alsess.FavoritesFragment"
+        android:name="com.example.alsess.view.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
-        android:name="com.example.alsess.BasketFragment"
+        android:name="com.example.alsess.view.BasketFragment"
         android:label="fragment_basket"
         tools:layout="@layout/fragment_basket" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.alsess.ProfileFragment"
+        android:name="com.example.alsess.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.example.alsess.ProductDetailFragment"
+        android:name="com.example.alsess.view.ProductDetailFragment"
         android:label="fragment_product_detail"
         tools:layout="@layout/fragment_product_detail" >
         <argument
@@ -58,12 +58,12 @@
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
-        android:name="com.example.alsess.UserInfoFragment"
+        android:name="com.example.alsess.view.UserInfoFragment"
         android:label="fragment_user_info"
         tools:layout="@layout/fragment_user_info" />
     <fragment
         android:id="@+id/accountSettingsFragment"
-        android:name="com.example.alsess.AccountSettingsFragment"
+        android:name="com.example.alsess.view.AccountSettingsFragment"
         android:label="fragment_account_settings"
         tools:layout="@layout/fragment_account_settings" >
         <action
@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/changeEmailFragment"
-        android:name="com.example.alsess.ChangeEmailFragment"
+        android:name="com.example.alsess.view.ChangeEmailFragment"
         android:label="fragment_change_email"
         tools:layout="@layout/fragment_change_email" >
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.alsess.ChangePasswordFragment"
+        android:name="com.example.alsess.view.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" >
         <action
@@ -99,17 +99,17 @@
     </fragment>
     <fragment
         android:id="@+id/disableDeleteAccountFragment"
-        android:name="com.example.alsess.DeleteAccountFragment"
+        android:name="com.example.alsess.view.DeleteAccountFragment"
         android:label="fragment_disable_delete_account"
         tools:layout="@layout/fragment_delete_account" />
     <fragment
         android:id="@+id/emailVerificationFragment"
-        android:name="com.example.alsess.EmailVerificationFragment"
+        android:name="com.example.alsess.view.EmailVerificationFragment"
         android:label="fragment_email_verification"
         tools:layout="@layout/fragment_email_verification" />
     <fragment
         android:id="@+id/productCategoryFragment"
-        android:name="com.example.alsess.ProductCategoryFragment"
+        android:name="com.example.alsess.view.ProductCategoryFragment"
         android:label="fragment_product_category"
         tools:layout="@layout/fragment_product_category" >
         <argument
