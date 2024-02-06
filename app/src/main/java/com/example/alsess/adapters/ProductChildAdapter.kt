@@ -8,11 +8,11 @@ import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.alsess.ProductsFragmentDirections
 import com.example.alsess.databinding.FragmentProductChildRowBinding
 import com.example.alsess.recyclerviewmodel.ProductChildModel
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.view.ProductsFragmentDirections
 
 class ProductChildAdapter(val context: Context, val childList: List<ProductChildModel>) :
     RecyclerView.Adapter<ProductChildAdapter.ProductChildVH>() {

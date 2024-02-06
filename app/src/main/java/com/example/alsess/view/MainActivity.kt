@@ -1,4 +1,4 @@
-package com.example.alsess
+package com.example.alsess.view
 
 
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.view.View
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.alsess.R
 import com.example.alsess.databinding.ActivityMainBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper

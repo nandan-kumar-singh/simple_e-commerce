@@ -1,4 +1,4 @@
-package com.example.alsess
+package com.example.alsess.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.alsess.ProductsRetrofit
 import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductDetailBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao

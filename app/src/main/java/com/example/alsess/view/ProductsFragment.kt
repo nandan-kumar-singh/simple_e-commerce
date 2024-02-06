@@ -1,4 +1,4 @@
-package com.example.alsess
+package com.example.alsess.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aaaaaa.ProductParentAdapter
+import com.example.alsess.ProductsRetrofit
+import com.example.alsess.R
 import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductsBinding
 import com.example.alsess.recyclerviewmodel.ProductChildModel
@@ -14,6 +16,7 @@ import com.example.alsess.recyclerviewmodel.ProductParentModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.Modifier
 
 class ProductsFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductsBinding
@@ -167,6 +170,10 @@ class ProductsFragment : Fragment() {
                 "electronics", response
             )
         }
+    }
+
+    fun searchView() {
+
     }
 }
 

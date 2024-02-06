@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.alsess.FavoritesFragmentDirections
 import com.example.alsess.databinding.FragmentFavoritesRowBinding
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
-
+import com.example.alsess.view.FavoritesFragmentDirections
 
 
 class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<FavoritesReyclerViewAdapter.FavoritesVH>() {

@@ -76,4 +76,6 @@
         \n* Deleted account cannot be restored</string>
     <string name="delete_account_alert_message" translatable="false">Are you sure you want to delete your account?</string>
     <string name="enter_info_correctly" translatable="false">Enter the information correctly</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

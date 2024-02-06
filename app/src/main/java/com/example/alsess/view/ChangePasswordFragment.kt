@@ -1,4 +1,4 @@
-package com.example.alsess
+package com.example.alsess.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.alsess.R
 import com.example.alsess.databinding.FragmentChangePasswordBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth

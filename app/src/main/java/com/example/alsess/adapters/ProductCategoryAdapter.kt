@@ -7,12 +7,12 @@ import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.alsess.ProductCategoryFragmentDirections
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.view.ProductCategoryFragmentDirections
 
 class ProductCategoryAdapter(
     val context: Context,

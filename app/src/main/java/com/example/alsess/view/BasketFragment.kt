@@ -1,4 +1,4 @@
-package com.example.alsess
+package com.example.alsess.view
 
 
 import android.content.Context
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.alsess.OnChangeAmount
 import com.example.alsess.adapters.BasketRecyclerViewAdapter
 import com.example.alsess.databinding.FragmentBasketBinding
 
