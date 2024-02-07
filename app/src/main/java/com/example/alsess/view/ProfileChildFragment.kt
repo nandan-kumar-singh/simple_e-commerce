@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileChildFragment : Fragment() {
-    private lateinit var viewBinding : FragmentProfileChildBinding
+    private lateinit var viewBinding: FragmentProfileChildBinding
     private lateinit var fireBaseAuth: FirebaseAuth
     val firebaseFirestoreDB = FirebaseFirestore.getInstance()
     override fun onCreateView(
@@ -29,13 +29,10 @@ class ProfileChildFragment : Fragment() {
         fireBaseAuth = FirebaseAuth.getInstance()
         buttonClickAction()
 
-        if (fireBaseAuth.currentUser != null) {
-            checkFirestoredocument()
-        }
 
         //If the user is logged in, the profile is listed, if not, the register or login buttons appear
         if (fireBaseAuth.currentUser != null) {
-            viewBinding.fragmentProfileChildCardViewParent.visibility = View.VISIBLE
+            checkFirestoredocument()
         } else {
             viewBinding.fragmentProfileChildBtnLogin.visibility = View.VISIBLE
             viewBinding.fragmentProfileChildBtnSignUp.visibility = View.VISIBLE
@@ -139,6 +136,8 @@ class ProfileChildFragment : Fragment() {
                                         }
                                 }
                             }
+                            //To prevent the view from arriving before the data arrives
+                            viewBinding.fragmentProfileChildCardViewParent.visibility = View.VISIBLE
                         }
                     }
                 }
