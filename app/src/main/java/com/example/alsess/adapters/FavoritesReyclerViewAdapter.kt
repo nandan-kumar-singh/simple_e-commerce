@@ -10,6 +10,7 @@ import com.example.alsess.databinding.FragmentFavoritesRowBinding
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
 import com.example.alsess.view.FavoritesFragmentDirections
+import java.util.*
 
 
 class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<FavoritesReyclerViewAdapter.FavoritesVH>() {
@@ -31,6 +32,7 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
     override fun onBindViewHolder(holder: FavoritesVH, position: Int) {
         val favoritesDataHelper = FavoritesSqliteDataHelper(context)
         val favoritesList = FavoritesSqliteDao().readFavorites(favoritesDataHelper)
+        Collections.reverse(favoritesList)
         holder.viewBinding.recyclerRowFavoritesTxvProductName.text = favoritesList.get(position).title.replace("'"," ")
         holder.viewBinding.recyclerRowFavoritesTxvPrice.text = favoritesList.get(position).price.toString()
         Glide.with(context!!).load(favoritesList.get(position).image_url).into(holder.viewBinding.recyclerRowFavoritesImvProduct)

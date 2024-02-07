@@ -58,6 +58,7 @@ class ProductDetailFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         var indeks = 0
+
                         viewBinding.fragmentProductDetailPgb.visibility = View.GONE
                         viewBinding.fragmentProductDetailCl.visibility = View.VISIBLE
                         viewBinding.fragmentProductDetailCardView.visibility = View.VISIBLE

@@ -13,6 +13,7 @@ import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
 import com.example.alsess.sqlitemodels.SqliteBasketModel
 import com.example.alsess.view.BasketFragmentDirections
+import java.util.*
 
 
 class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
@@ -37,6 +38,7 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
     override fun onBindViewHolder(holder: BasketVH, position: Int) {
         val basketDataHelper = BasketSqliteDataHelper(context)
         val basketList = BasketSqliteDao().getAllBaskets(basketDataHelper)
+        Collections.reverse(basketList)
         val basket: SqliteBasketModel = basketList.get(position)
 
         holder.viewBinding.recyclerRowBasketTxvProductName.text = basket.title.replace("'", " ")

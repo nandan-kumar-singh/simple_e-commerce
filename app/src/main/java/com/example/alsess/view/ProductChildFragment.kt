@@ -10,16 +10,15 @@ import com.example.aaaaaa.ProductParentAdapter
 import com.example.alsess.ProductsRetrofit
 import com.example.alsess.R
 import com.example.alsess.apimodels.ApiProductsModel
-import com.example.alsess.databinding.FragmentProductsBinding
+import com.example.alsess.databinding.FragmentProductChildBinding
 import com.example.alsess.recyclerviewmodel.ProductChildModel
 import com.example.alsess.recyclerviewmodel.ProductParentModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.reflect.Modifier
 
-class ProductsFragment : Fragment() {
-    private lateinit var viewBinding: FragmentProductsBinding
+class ProductChildFragment : Fragment() {
+    private lateinit var viewBinding: FragmentProductChildBinding
     val productIdList = ArrayList<Long>()
     val productNameList = ArrayList<String>()
     val productPriceList = ArrayList<Double>()
@@ -31,23 +30,20 @@ class ProductsFragment : Fragment() {
     val productChildList3 = ArrayList<ProductChildModel>()
     val productChildList4 = ArrayList<ProductChildModel>()
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        viewBinding = FragmentProductsBinding.inflate(inflater, container, false)
+        viewBinding = FragmentProductChildBinding.inflate(inflater, container, false)
         productLoadData()
-        viewBinding.fragmentProductRecyclerView.adapter =
+        viewBinding.fragmentProductChildRecyclerView.adapter =
             ProductParentAdapter(requireContext(), productParentList)
-        viewBinding.fragmentProductRecyclerView.layoutManager =
+        viewBinding.fragmentProductChildRecyclerView.layoutManager =
             LinearLayoutManager(context)
         if (productIdList.size != 0) {
-            viewBinding.fragmentProductPgb.visibility = View.GONE
+            viewBinding.fragmentProductChildPgb.visibility = View.GONE
         }
         return viewBinding.root
     }
-
-
     fun productLoadData() {
         val retrofit = ProductsRetrofit()
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
@@ -56,13 +52,13 @@ class ProductsFragment : Fragment() {
                 response: Response<List<ApiProductsModel>>
             ) {
                 if (response.isSuccessful) {
-                    viewBinding.fragmentProductPgb.visibility = View.GONE
+                    viewBinding.fragmentProductChildPgb.visibility = View.GONE
 
                     addDatatNestedRecyclerView(response)
                     if (productParentList.size == 0) {
-                        viewBinding.fragmentProductRecyclerView.adapter =
+                        viewBinding.fragmentProductChildRecyclerView.adapter =
                             ProductParentAdapter(requireContext(), productParentList)
-                        viewBinding.fragmentProductRecyclerView.layoutManager =
+                        viewBinding.fragmentProductChildRecyclerView.layoutManager =
                             LinearLayoutManager(context)
                         addDataParentList()
                     }
@@ -171,10 +167,4 @@ class ProductsFragment : Fragment() {
             )
         }
     }
-
-    fun searchView() {
-
-    }
 }
-
-

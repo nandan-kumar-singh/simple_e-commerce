@@ -12,7 +12,7 @@ import com.example.alsess.databinding.FragmentProductChildRowBinding
 import com.example.alsess.recyclerviewmodel.ProductChildModel
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
-import com.example.alsess.view.ProductsFragmentDirections
+import com.example.alsess.view.ProductChildFragmentDirections
 
 class ProductChildAdapter(val context: Context, val childList: List<ProductChildModel>) :
     RecyclerView.Adapter<ProductChildAdapter.ProductChildVH>() {
@@ -55,7 +55,7 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
 
         //Gets the id of the clicked product and shows the product in the product detail
         holder.viewBinding.rowProductChildCardView.setOnClickListener {
-            val navARg = ProductsFragmentDirections.toProductsDetail(
+            val navARg = ProductChildFragmentDirections.toProductDetail(
                 childList.get(position).productId.toInt()
             )
             Navigation.findNavController(it).navigate(navARg)

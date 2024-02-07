@@ -1,9 +1,10 @@
 package com.example.alsess.view
 
-
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -12,17 +13,20 @@ import com.example.alsess.databinding.ActivityMainBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
+
+    @SuppressLint("DetachAndAttachSameFragment")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.activityMainMavHostFragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.activityMainNavHostFragment) as NavHostFragment
         NavigationUI.setupWithNavController(
             viewBinding.activityMainBottomNavigationView,
             navHostFragment.navController
@@ -30,10 +34,10 @@ class MainActivity : AppCompatActivity() {
 
         //BattomNavigation menu disappears when you enter the product detail page
         navHostFragment.navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            basketBedge()
             if (nd.id == R.id.productDetailFragment) {
                 viewBinding.activityMainBottomNavigationView.visibility = View.GONE
             } else {
-                basketBedge()
                 viewBinding.activityMainBottomNavigationView.visibility = View.VISIBLE
             }
         }

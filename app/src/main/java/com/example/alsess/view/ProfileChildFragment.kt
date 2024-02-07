@@ -11,24 +11,21 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.example.alsess.R
-import com.example.alsess.databinding.FragmentProfileBinding
+import com.example.alsess.databinding.FragmentProfileChildBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ProfileFragment : Fragment() {
-    private lateinit var viewBinding: FragmentProfileBinding
+class ProfileChildFragment : Fragment() {
+    private lateinit var viewBinding : FragmentProfileChildBinding
     private lateinit var fireBaseAuth: FirebaseAuth
     val firebaseFirestoreDB = FirebaseFirestore.getInstance()
-
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        viewBinding = FragmentProfileBinding.inflate(inflater, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewBinding = FragmentProfileChildBinding.inflate(inflater, container, false)
         fireBaseAuth = FirebaseAuth.getInstance()
         buttonClickAction()
 
@@ -38,10 +35,10 @@ class ProfileFragment : Fragment() {
 
         //If the user is logged in, the profile is listed, if not, the register or login buttons appear
         if (fireBaseAuth.currentUser != null) {
-            viewBinding.fragmentProfileCardViewParent.visibility = View.VISIBLE
+            viewBinding.fragmentProfileChildCardViewParent.visibility = View.VISIBLE
         } else {
-            viewBinding.fragmentProfileBtnLogin.visibility = View.VISIBLE
-            viewBinding.fragmentProfileBtnSignUp.visibility = View.VISIBLE
+            viewBinding.fragmentProfileChildBtnLogin.visibility = View.VISIBLE
+            viewBinding.fragmentProfileChildBtnSignUp.visibility = View.VISIBLE
         }
         return viewBinding.root
 
@@ -49,19 +46,19 @@ class ProfileFragment : Fragment() {
 
     fun buttonClickAction() {
         //Transition from profile fragment to other detail fragments
-        viewBinding.fragmentProfileBtnUserInfo.setOnClickListener {
+        viewBinding.fragmentProfileChildBtnUserInfo.setOnClickListener {
             Navigation.findNavController(it)
-                .navigate(R.id.action_profileFragment_to_userInfoFragment)
+                .navigate(R.id.action_profileChildFragment_to_userInfoFragment)
         }
-        viewBinding.fragmentProfileBtnAccountSettings.setOnClickListener {
+        viewBinding.fragmentProfileChildBtnAccountSettings.setOnClickListener {
             Navigation.findNavController(it)
-                .navigate(R.id.action_profileFragment_to_accountSettingsFragment)
+                .navigate(R.id.action_profileChildFragment_to_accountSettingsFragment)
         }
 
 
         //The user logs out, both for those who enter with google and for those who register and enter
         if (fireBaseAuth.currentUser != null) {
-            viewBinding.fragmentProfileBtnLogOut.setOnClickListener {
+            viewBinding.fragmentProfileChildBtnLogOut.setOnClickListener {
                 val googleSignInClient =
                     GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
                 fireBaseAuth.signOut()
@@ -73,11 +70,11 @@ class ProfileFragment : Fragment() {
         }
 
         //transition to sign up and login activity
-        viewBinding.fragmentProfileBtnLogin.setOnClickListener {
+        viewBinding.fragmentProfileChildBtnLogin.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
         }
-        viewBinding.fragmentProfileBtnSignUp.setOnClickListener {
+        viewBinding.fragmentProfileChildBtnSignUp.setOnClickListener {
             val intent = Intent(context, SignUpActivity::class.java)
             startActivity(intent)
         }
@@ -97,9 +94,9 @@ class ProfileFragment : Fragment() {
                             firestoreUserData()
                         } else {
                             firebaseFirestoreAddData()
-                            viewBinding.fragmentProfileTxvName.text =
+                            viewBinding.fragmentProfileChildTxvName.text =
                                 currentUser.displayName
-                            viewBinding.fragmentProfileTxvNameChar.text =
+                            viewBinding.fragmentProfileChildTxvNameChar.text =
                                 currentUser.displayName?.get(0)
                                     .toString()
                         }
@@ -125,18 +122,18 @@ class ProfileFragment : Fragment() {
                             val name = snapshot.data?.get("name").toString()
                             val lastName = snapshot.data?.get("lastName").toString()
                             if (name != "" && lastName != "") {
-                                viewBinding.fragmentProfileTxvName.text = "$name $lastName"
-                                viewBinding.fragmentProfileTxvNameChar.text =
+                                viewBinding.fragmentProfileChildTxvName.text = "$name $lastName"
+                                viewBinding.fragmentProfileChildTxvNameChar.text =
                                     name.get(0).toString() + lastName.get(0).toString()
                             } else {
                                 if (currentUser.displayName != null && currentUser.displayName != "") {
-                                    viewBinding.fragmentProfileTxvName.text =
+                                    viewBinding.fragmentProfileChildTxvName.text =
                                         currentUser.displayName
-                                    viewBinding.fragmentProfileTxvNameChar.text =
+                                    viewBinding.fragmentProfileChildTxvNameChar.text =
                                         currentUser.displayName?.first().toString()
                                 } else {
-                                    viewBinding.fragmentProfileTxvName.text = currentUser.email
-                                    viewBinding.fragmentProfileTxvNameChar.text =
+                                    viewBinding.fragmentProfileChildTxvName.text = currentUser.email
+                                    viewBinding.fragmentProfileChildTxvNameChar.text =
                                         currentUser.email?.get(0).toString().replaceFirstChar {
                                             it.uppercaseChar()
                                         }

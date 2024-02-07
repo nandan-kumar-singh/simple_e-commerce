@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alsess.databinding.FragmentProductParentRowBinding
 import com.example.alsess.recyclerviewmodel.ProductParentModel
-import com.example.alsess.view.ProductsFragmentDirections
+import com.example.alsess.view.ProductChildFragmentDirections
+
 
 class ProductParentAdapter(val context: Context, val parentList: List<ProductParentModel>) :
     RecyclerView.Adapter<ProductParentAdapter.ProductParentVH>() {
@@ -44,9 +45,12 @@ class ProductParentAdapter(val context: Context, val parentList: List<ProductPar
         //Sends Category and is listed in ProductCategoryAll by category
         holder.viewBinding.rowProductParentBtnAll.setOnClickListener {
             val category = parentList.get(position).category
-            val categoryTitle  = parentList.get(position).categoryTitle
+            val categoryTitle = parentList.get(position).categoryTitle
             val navDirections =
-                ProductsFragmentDirections.actionProductsFragmentToProductCategoryFragment(category,categoryTitle)
+                ProductChildFragmentDirections.actionProductChildFragmentToProductCategoryFragment(
+                    category,
+                    categoryTitle
+                )
             Navigation.findNavController(it).navigate(navDirections)
         }
     }

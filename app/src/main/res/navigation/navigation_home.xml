@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_home"
+    app:startDestination="@id/productChildFragment">
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.alsess.view.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/productCategoryFragment"
+        android:name="com.example.alsess.view.ProductCategoryFragment"
+        android:label="fragment_product_category"
+        tools:layout="@layout/fragment_product_category">
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <argument
+            android:name="categoryTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_productCategoryFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productChildFragment"
+        android:name="com.example.alsess.view.ProductChildFragment"
+        android:label="fragment_product_child"
+        tools:layout="@layout/fragment_product_child" >
+        <action
+            android:id="@+id/action_productChildFragment_to_productCategoryFragment"
+            app:destination="@id/productCategoryFragment" />
+        <action
+            android:id="@+id/toProductDetail"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+</navigation>
