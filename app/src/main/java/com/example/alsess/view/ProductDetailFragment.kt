@@ -23,10 +23,7 @@ import retrofit2.Response
 class ProductDetailFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductDetailBinding
     val bundle: ProductDetailFragmentArgs by navArgs()
-    val productIdList = ArrayList<Long>()
-    val productNameList = ArrayList<String>()
-    val productPriceList = ArrayList<Double>()
-    val productImageList = ArrayList<String>()
+    val productMutableList: MutableList<ApiProductsModel> = mutableListOf()
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
@@ -57,34 +54,25 @@ class ProductDetailFragment : Fragment() {
                     response: Response<List<ApiProductsModel>>,
                 ) {
                     if (response.isSuccessful) {
-                        var indeks = 0
-
                         viewBinding.fragmentProductDetailPgb.visibility = View.GONE
                         viewBinding.fragmentProductDetailCl.visibility = View.VISIBLE
                         viewBinding.fragmentProductDetailCardView.visibility = View.VISIBLE
+
+                        var indeks = 0
                         while (indeks < response.body()!!.size) {
                             if (response.body()!!.get(indeks).id == bundle.id.toLong()) {
-                                Glide.with(context!!).load(response.body()!!.get(indeks).image)
-                                    .into(viewBinding.fragmentProductDetailImvProduct)
-                                viewBinding.fragmentProductDetailTxvProductName.text =
-                                    response.body()!!.get(indeks).title
-                                viewBinding.fragmentProductDetailTxvTotalPrice.text =
-                                    response.body()!!.get(indeks).price.toString()
-                                viewBinding.fragmentProductDetailTxvDescription.text =
-                                    response.body()!!.get(indeks).description
-                                viewBinding.fragmentProductDetailRtb.rating =
-                                    response.body()!!.get(indeks).rating.rate.toFloat()
-                                viewBinding.fragmentProductDetailTxvRating.text =
-                                    response.body()!!.get(indeks).rating.rate.toString()
-                                viewBinding.fragmentProductDetailTxvCategory.text =
-                                    response.body()!!.get(indeks).category.replaceFirstChar {
-                                        it.uppercase()
-                                    }
-                                productIdList.add(response.body()!!.get(indeks).id)
-                                productNameList.add(response.body()!!.get(indeks).title)
-                                productPriceList.add(response.body()!!.get(indeks).price)
-                                productImageList.add(response.body()!!.get(indeks).image)
-
+                                productMutableList.add(
+                                    ApiProductsModel(
+                                        response.body()!!.get(indeks).id,
+                                        response.body()!!.get(indeks).title,
+                                        response.body()!!.get(indeks).price,
+                                        response.body()!!.get(indeks).description,
+                                        response.body()!!.get(indeks).category,
+                                        response.body()!!.get(indeks).image,
+                                        response.body()!!.get(indeks).rating
+                                    )
+                                )
+                                exportInformationToViews()
                             }
                             indeks++
                         }
@@ -95,6 +83,31 @@ class ProductDetailFragment : Fragment() {
                     t.printStackTrace()
                 }
             })
+    }
+
+    fun exportInformationToViews() {
+        viewBinding.fragmentProductDetailTxvProductName.text =
+            productMutableList.get(0).title
+
+        Glide.with(context!!).load(productMutableList.get(0).image)
+            .into(viewBinding.fragmentProductDetailImvProduct)
+
+        viewBinding.fragmentProductDetailTxvTotalPrice.text =
+            productMutableList.get(0).price.toString()
+
+        viewBinding.fragmentProductDetailTxvDescription.text =
+            productMutableList.get(0).description
+
+        viewBinding.fragmentProductDetailRtb.rating =
+            productMutableList.get(0).rating.rate.toFloat()
+
+        viewBinding.fragmentProductDetailTxvRating.text =
+            productMutableList.get(0).rating.rate.toString()
+
+        viewBinding.fragmentProductDetailTxvCategory.text =
+            productMutableList.get(0).category.replaceFirstChar {
+                it.uppercase()
+            }
     }
 
     fun addDataFavoritesAndControl() {
@@ -109,8 +122,11 @@ class ProductDetailFragment : Fragment() {
                     ) == 0
                 ) {
                     favoritesDAO.addFavorites(
-                        favoritesDataHelper, productIdList.get(0), productNameList.get(0),
-                        productPriceList.get(0), productImageList.get(0)
+                        favoritesDataHelper,
+                        productMutableList.get(0).id,
+                        productMutableList.get(0).title,
+                        productMutableList.get(0).price,
+                        productMutableList.get(0).image
                     )
                 }
             } else {
@@ -137,8 +153,10 @@ class ProductDetailFragment : Fragment() {
                     ) == 0
                 ) {
                     basketDAO.addBasket(
-                        basketDataHelper, productIdList.get(0), productNameList.get(0),
-                        productPriceList.get(0), productImageList.get(0)
+                        basketDataHelper, productMutableList.get(0).id,
+                        productMutableList.get(0).title,
+                        productMutableList.get(0).price,
+                        productMutableList.get(0).image
                     )
                 }
             } else {

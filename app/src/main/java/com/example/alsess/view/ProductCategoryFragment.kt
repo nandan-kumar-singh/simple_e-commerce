@@ -18,11 +18,7 @@ import retrofit2.Response
 
 class ProductCategoryFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductCategoryBinding
-    val productIdList = ArrayList<Long>()
-    val productNameList = ArrayList<String>()
-    val productPriceList = ArrayList<Double>()
-    val productImageList = ArrayList<String>()
-    val productRatingList = ArrayList<Double>()
+    val productMutableList: MutableList<ApiProductsModel> = mutableListOf()
     val bundle: ProductCategoryFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +30,13 @@ class ProductCategoryFragment : Fragment() {
         viewBinding.fragmentProductCategoryAllRecyclerView.adapter =
             ProductCategoryAdapter(
                 requireContext(),
-                productIdList,
-                productNameList,
-                productPriceList,
-                productImageList,
-                productRatingList
+                productMutableList
             )
         viewBinding.fragmentProductCategoryAllRecyclerView.layoutManager =
             GridLayoutManager(context, 2)
         viewBinding.fragmentProductCategoryAllToolbar.title = bundle.categoryTitle
 
-        if (productIdList.size != 0) {
+        if (productMutableList.size != 0) {
             viewBinding.fragmentProductCategoryAllPgb.visibility = View.GONE
         }
         viewBinding.fragmentProductCategoryAllToolbar.setNavigationOnClickListener {
@@ -63,15 +55,11 @@ class ProductCategoryFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     viewBinding.fragmentProductCategoryAllPgb.visibility = View.GONE
-                    if (productIdList.size == 0) {
+                    if (productMutableList.size == 0) {
                         viewBinding.fragmentProductCategoryAllRecyclerView.adapter =
                             ProductCategoryAdapter(
                                 context!!,
-                                productIdList,
-                                productNameList,
-                                productPriceList,
-                                productImageList,
-                                productRatingList
+                                productMutableList
                             )
                         viewBinding.fragmentProductCategoryAllRecyclerView.layoutManager =
                             GridLayoutManager(context, 2)
@@ -80,16 +68,17 @@ class ProductCategoryFragment : Fragment() {
                     var indeks = 0
                     while (indeks < response.body()!!.size) {
                         if (bundle.category == response.body()!!.get(indeks).category) {
-                            productIdList.add(response.body()!!.get(indeks).id)
-                            productNameList.add(
-                                response.body()!!.get(indeks).title.replace(
-                                    "'",
-                                    " "
+                            productMutableList.add(
+                                ApiProductsModel(
+                                    response.body()!!.get(indeks).id,
+                                    response.body()!!.get(indeks).title,
+                                    response.body()!!.get(indeks).price,
+                                    response.body()!!.get(indeks).description,
+                                    response.body()!!.get(indeks).category,
+                                    response.body()!!.get(indeks).image,
+                                    response.body()!!.get(indeks).rating
                                 )
                             )
-                            productPriceList.add(response.body()!!.get(indeks).price)
-                            productImageList.add(response.body()!!.get(indeks).image)
-                            productRatingList.add(response.body()!!.get(indeks).rating.rate)
                         }
                         indeks++
                     }

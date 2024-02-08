@@ -19,11 +19,6 @@ import retrofit2.Response
 
 class ProductChildFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductChildBinding
-    val productIdList = ArrayList<Long>()
-    val productNameList = ArrayList<String>()
-    val productPriceList = ArrayList<Double>()
-    val productImageList = ArrayList<String>()
-    val productRatingList = ArrayList<Double>()
     val productParentList = ArrayList<ProductParentModel>()
     val productChildList = ArrayList<ProductChildModel>()
     val productChildList2 = ArrayList<ProductChildModel>()
@@ -39,11 +34,12 @@ class ProductChildFragment : Fragment() {
             ProductParentAdapter(requireContext(), productParentList)
         viewBinding.fragmentProductChildRecyclerView.layoutManager =
             LinearLayoutManager(context)
-        if (productIdList.size != 0) {
+        if (productParentList.size != 0) {
             viewBinding.fragmentProductChildPgb.visibility = View.GONE
         }
         return viewBinding.root
     }
+
     fun productLoadData() {
         val retrofit = ProductsRetrofit()
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
@@ -54,7 +50,7 @@ class ProductChildFragment : Fragment() {
                 if (response.isSuccessful) {
                     viewBinding.fragmentProductChildPgb.visibility = View.GONE
 
-                    addDatatNestedRecyclerView(response)
+                    addDataNestedRecyclerView(response)
                     if (productParentList.size == 0) {
                         viewBinding.fragmentProductChildRecyclerView.adapter =
                             ProductParentAdapter(requireContext(), productParentList)
@@ -62,27 +58,7 @@ class ProductChildFragment : Fragment() {
                             LinearLayoutManager(context)
                         addDataParentList()
                     }
-
-                    if (productIdList.size < response.body()!!.size) {
-                        var indeks = 0
-                        while (indeks < response.body()!!.size) {
-                            productIdList.add(response.body()!!.get(indeks).id)
-                            productNameList.add(
-                                response.body()!!.get(indeks).title.replace(
-                                    "'",
-                                    " "
-                                )
-                            )
-                            productPriceList.add(response.body()!!.get(indeks).price)
-                            productImageList.add(response.body()!!.get(indeks).image)
-                            productRatingList.add(response.body()!!.get(indeks).rating.rate)
-                            indeks++
-                        }
-
-                    }
                 }
-
-
             }
 
             override fun onFailure(call: Call<List<ApiProductsModel>>, t: Throwable) {
@@ -147,7 +123,7 @@ class ProductChildFragment : Fragment() {
     }
 
     //Add to childLists and select category
-    fun addDatatNestedRecyclerView(response: Response<List<ApiProductsModel>>) {
+    fun addDataNestedRecyclerView(response: Response<List<ApiProductsModel>>) {
         if (productChildList.size == 0) {
             whileLoopNestedRV(
                 productChildList,

@@ -7,6 +7,7 @@ import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
@@ -16,11 +17,7 @@ import com.example.alsess.view.ProductCategoryFragmentDirections
 
 class ProductCategoryAdapter(
     val context: Context,
-    val idList: ArrayList<Long>,
-    val titleList: ArrayList<String>,
-    val priceList: ArrayList<Double>,
-    val imageList: ArrayList<String>,
-    val ratingList: ArrayList<Double>
+    val productMutableList: MutableList<ApiProductsModel>
 ) : RecyclerView.Adapter<ProductCategoryAdapter.ProductCategoryAllVH>() {
     class ProductCategoryAllVH(val viewBinding: FragmentProductCategoryRowBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
@@ -37,23 +34,26 @@ class ProductCategoryAdapter(
     }
 
     override fun getItemCount(): Int {
-        return idList.size
+        return productMutableList.size
 
     }
 
     override fun onBindViewHolder(holder: ProductCategoryAllVH, position: Int) {
-        holder.viewBinding.rowProductCategoryAllTxvName.text = titleList.get(position)
-        Glide.with(context).load(imageList.get(position))
+        val mutablePosition = productMutableList.get(position)
+        holder.viewBinding.rowProductCategoryAllTxvName.text = mutablePosition.title
+        Glide.with(context).load(mutablePosition.image)
             .into(holder.viewBinding.rowProductCategoryAllImvProduct)
-        holder.viewBinding.rowProductCategoryAllTxvPrice.text = priceList.get(position).toString()
-        holder.viewBinding.rowProductCategoryAllRtbStar.rating = ratingList.get(position).toFloat()
-        holder.viewBinding.rowProductCategoryAllTxvRating.text = ratingList.get(position).toString()
+        holder.viewBinding.rowProductCategoryAllTxvPrice.text = mutablePosition.price.toString()
+        holder.viewBinding.rowProductCategoryAllRtbStar.rating =
+            mutablePosition.rating.rate.toFloat()
+        holder.viewBinding.rowProductCategoryAllTxvRating.text =
+            mutablePosition.rating.rate.toString()
         addDataFavorites(holder.viewBinding.rowProductCategoryAllTgbFavorites, position)
         addDataBasket(holder.viewBinding.rowProductCategoryAllTgbAddBasket, position)
         holder.viewBinding.rowProductCategoryAllCardView.setOnClickListener {
             val dataDrections =
                 ProductCategoryFragmentDirections.actionProductCategoryFragmentToProductDetailFragment(
-                    idList.get(position).toInt()
+                    mutablePosition.id.toInt()
                 )
             Navigation.findNavController(it).navigate(dataDrections)
         }
@@ -62,28 +62,29 @@ class ProductCategoryAdapter(
     fun addDataFavorites(toggleButton: ToggleButton, position: Int) {
         val favoritesDataHelper = FavoritesSqliteDataHelper(context)
         val favoritesDAO = FavoritesSqliteDao()
+        val mutablePositionFav = productMutableList.get(position)
 
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 if (favoritesDAO.controlFavorites(
                         favoritesDataHelper,
-                        idList.get(position)
+                        mutablePositionFav.id
                     ) == 0
                 ) {
                     favoritesDAO.addFavorites(
                         favoritesDataHelper,
-                        idList.get(position),
-                        titleList.get(position).replace("'", " "),
-                        priceList.get(position),
-                        imageList.get(position)
+                        mutablePositionFav.id,
+                        mutablePositionFav.title,
+                        mutablePositionFav.price,
+                        mutablePositionFav.image
                     )
                 }
             } else {
-                favoritesDAO.deleteFavorites(favoritesDataHelper, idList.get(position))
+                favoritesDAO.deleteFavorites(favoritesDataHelper, mutablePositionFav.id)
             }
         }
         //Toggle button is checked as true if added to favorites, false if not
-        if (favoritesDAO.controlFavorites(favoritesDataHelper, idList.get(position)) == 0) {
+        if (favoritesDAO.controlFavorites(favoritesDataHelper, mutablePositionFav.id) == 0) {
             toggleButton.isChecked = false
         } else {
             toggleButton.isChecked = true
@@ -93,29 +94,29 @@ class ProductCategoryAdapter(
     fun addDataBasket(toggleButton: ToggleButton, position: Int) {
         val basketDataHelper = BasketSqliteDataHelper(context)
         val basketDAO = BasketSqliteDao()
-
+        val mutablePositionBasket = productMutableList.get(position)
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 if (basketDAO.controlBasket(
                         basketDataHelper,
-                        idList.get(position)
+                        mutablePositionBasket.id
                     ) == 0
                 ) {
                     basketDAO.addBasket(
                         basketDataHelper,
-                        idList.get(position),
-                        titleList.get(position).replace("'", " "),
-                        priceList.get(position),
-                        imageList.get(position),
+                        mutablePositionBasket.id,
+                        mutablePositionBasket.title,
+                        mutablePositionBasket.price,
+                        mutablePositionBasket.image,
                         1
                     )
                 }
             } else {
-                basketDAO.deleteProduts(basketDataHelper, idList.get(position))
+                basketDAO.deleteProduts(basketDataHelper, mutablePositionBasket.id)
             }
         }
         //Toggle button is checked as true if added to basket, false if not
-        if (basketDAO.controlBasket(basketDataHelper, idList.get(position)) == 0) {
+        if (basketDAO.controlBasket(basketDataHelper, mutablePositionBasket.id) == 0) {
             toggleButton.isChecked = false
         } else {
             toggleButton.isChecked = true
