@@ -43,7 +43,7 @@ class ProductCategoryAdapter(
         holder.viewBinding.rowProductCategoryAllTxvName.text = mutablePosition.title
         Glide.with(context).load(mutablePosition.image)
             .into(holder.viewBinding.rowProductCategoryAllImvProduct)
-        holder.viewBinding.rowProductCategoryAllTxvPrice.text = mutablePosition.price.toString()
+        holder.viewBinding.rowProductCategoryAllTxvPrice.text = "${mutablePosition.price.toString()}$"
         holder.viewBinding.rowProductCategoryAllRtbStar.rating =
             mutablePosition.rating.rate.toFloat()
         holder.viewBinding.rowProductCategoryAllTxvRating.text =

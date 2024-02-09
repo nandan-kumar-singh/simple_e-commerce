@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragmentCategoryBottomSheetCv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_sheet_cv">
+
+            <TextView
+                android:id="@+id/fragmentCategoryBottomSheetTxvSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/sort"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/fragmentCategoryBottomSheetRg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCategoryBottomSheetCv">
+
+        <RadioButton
+            android:id="@+id/fragmentCategoryBottomSheetRbDefaultSorting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/radio_button_selector"
+            android:checked="true"
+            android:paddingStart="10dp"
+            android:text="@string/default_sorting"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/fragmentCategoryBottomSheetRbLowestPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:button="@drawable/radio_button_selector"
+            android:paddingStart="10dp"
+            android:text="@string/lowest_price"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/fragmentCategoryBottomSheetRbHighestPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:button="@drawable/radio_button_selector"
+            android:paddingStart="10dp"
+            android:text="@string/highest_price"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/fragmentCategoryBottomSheetRbLowestRated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:button="@drawable/radio_button_selector"
+            android:paddingStart="10dp"
+            android:text="@string/lowest_rated"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/fragmentCategoryBottomSheetRbHighestRated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:button="@drawable/radio_button_selector"
+            android:paddingStart="10dp"
+            android:text="@string/highest_rated"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,15 @@
     <string name="reset_password" translatable="false">Password reset link sent to email</string>
     <string name="enter_email" translatable="false">Please enter your e-mail </string>
 
+    <!-- Category Activity -->
+    <string name="sort">Sort</string>
+    <string name="default_sorting">Default Sorting</string>
+    <string name="lowest_price">Lowest Price</string>
+    <string name="highest_price">Highest Price</string>
+    <string name="highest_rated">Highest Rated</string>
+    <string name="lowest_rated">Lowest Rated</string>
+    <string name="apply">Apply</string>
+
     <!--Profile Fragment-->
     <string name="user_information" translatable="false">User Information</string>
     <string name="account_settings" translatable="false">Account Settings</string>

@@ -26,6 +26,15 @@
     <string name="pasword">Şifre</string>
     <string name="accept">Satın Al</string>
 
+    <!-- Category Activity -->
+    <string name="sort">Sırala</string>
+    <string name="default_sorting">Varsayılan Sıralama</string>
+    <string name="lowest_price">En Düşük Fiyat</string>
+    <string name="highest_price">En Yüksek Fiyat</string>
+    <string name="lowest_rated">En Düşük Puan</string>
+    <string name="highest_rated">En Yüksek Puan</string>
+    <string name="apply">Apply</string>
+
     <!-- Sign Up Activity -->
     <string name="password_repeat">Şifre Tekrarı</string>
     <string name="password_not_same">Şifre ve şifre tekrarı aynı değil</string>

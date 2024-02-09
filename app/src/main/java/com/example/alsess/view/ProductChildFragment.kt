@@ -1,5 +1,6 @@
 package com.example.alsess.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,20 @@ class ProductChildFragment : Fragment() {
     val productChildList2 = ArrayList<ProductChildModel>()
     val productChildList3 = ArrayList<ProductChildModel>()
     val productChildList4 = ArrayList<ProductChildModel>()
+
+    /*Clicking the radiobutton in the product search and categories section is saved,
+     when you come to the home page,
+      this record is deleted and returns to the default values
+     */
+    override fun onStart() {
+        super.onStart()
+        val sharedPreferences =
+            context!!.getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
+        val sharedPreferencesEditor = sharedPreferences.edit()
+        sharedPreferencesEditor.clear()
+        sharedPreferencesEditor.apply()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
