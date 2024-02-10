@@ -16,7 +16,7 @@
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/toProductsDetail"
+            android:id="@+id/action_favoritesFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
@@ -25,7 +25,7 @@
         android:label="fragment_basket"
         tools:layout="@layout/fragment_basket" >
         <action
-            android:id="@+id/toProductsDetail"
+            android:id="@+id/action_basketFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
@@ -40,6 +40,6 @@
         tools:layout="@layout/fragment_product_detail" >
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
 </navigation>

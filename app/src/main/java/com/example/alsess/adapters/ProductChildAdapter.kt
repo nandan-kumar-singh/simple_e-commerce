@@ -56,7 +56,7 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
         //Gets the id of the clicked product and shows the product in the product detail
         holder.viewBinding.rowProductChildCardView.setOnClickListener {
             val navARg = ProductChildFragmentDirections.toProductDetail(
-                childList.get(position).productId.toInt()
+                childList.get(position).productId
             )
             Navigation.findNavController(it).navigate(navARg)
         }

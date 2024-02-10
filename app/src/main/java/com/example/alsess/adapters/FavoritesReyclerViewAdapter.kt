@@ -39,7 +39,7 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
 
         //Products in favorites are displayed on the detail page
         holder.viewBinding.recyclerRowFavoritesCardViewProduct.setOnClickListener {
-            val navArgs = FavoritesFragmentDirections.toProductsDetail(favoritesList.get(position).id.toInt())
+            val navArgs = FavoritesFragmentDirections.actionFavoritesFragmentToProductDetailFragment(favoritesList.get(position).id)
             Navigation.findNavController(it).navigate(navArgs)
         }
 

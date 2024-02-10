@@ -50,7 +50,7 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
 
         //An id is sent to the detail page and the product clicked in the detail is displayed thanks to this id
         holder.viewBinding.recyclerRowBasketCardView.setOnClickListener {
-            val navArgs = BasketFragmentDirections.toProductsDetail(basket.id.toInt())
+            val navArgs = BasketFragmentDirections.actionBasketFragmentToProductDetailFragment(basket.id)
             Navigation.findNavController(it).navigate(navArgs)
         }
 

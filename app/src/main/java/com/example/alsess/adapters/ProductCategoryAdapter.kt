@@ -7,7 +7,6 @@ import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
