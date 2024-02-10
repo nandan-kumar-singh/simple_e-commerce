@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/toolbar"
+        android:elevation="5dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:elevation="5dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/black"
         app:navigationIcon="@drawable/asset_back_button"
+        app:titleTextColor="@color/black"
         tools:layout_editor_absoluteX="1dp" />
 
     <Button

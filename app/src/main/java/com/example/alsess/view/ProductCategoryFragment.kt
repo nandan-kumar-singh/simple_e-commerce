@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.navigation.Navigation
@@ -105,6 +106,8 @@ class ProductCategoryFragment : Fragment() {
             context!!.getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
         val sharedPreferencesEditor = sharedPreferences.edit()
 
+        val imbCancel = bottomSheetView.findViewById(R.id.fragmentCategoryBottomSheetImbCancel) as ImageButton
+
         val radioGroup =
             bottomSheetView.findViewById(R.id.fragmentCategoryBottomSheetRg) as RadioGroup
         bottomSheetDialog.setContentView(bottomSheetView)
@@ -136,7 +139,7 @@ class ProductCategoryFragment : Fragment() {
                     sharedPreferencesEditor.putInt("rbClickId", 1)
                     sharedPreferencesEditor.apply()
                     if (productMutableList.size != 0) {
-                        viewBinding.fragmentProductCategoryAllRecyclerView.adapter?.notifyDataSetChanged()
+                        recyclerViewActions()
                         productMutableList.sortBy {
                             it.id
                         }
@@ -147,7 +150,7 @@ class ProductCategoryFragment : Fragment() {
                     sharedPreferencesEditor.putInt("rbClickId", 2)
                     sharedPreferencesEditor.apply()
                     if (productMutableList.size != 0) {
-                        viewBinding.fragmentProductCategoryAllRecyclerView.adapter?.notifyDataSetChanged()
+                        recyclerViewActions()
                         productMutableList.sortBy {
                             it.price
                         }
@@ -158,7 +161,7 @@ class ProductCategoryFragment : Fragment() {
                     sharedPreferencesEditor.putInt("rbClickId", 3)
                     sharedPreferencesEditor.apply()
                     if (productMutableList.size != 0) {
-                        viewBinding.fragmentProductCategoryAllRecyclerView.adapter?.notifyDataSetChanged()
+                        recyclerViewActions()
                         productMutableList.sortBy {
                             it.price
                         }
@@ -170,7 +173,7 @@ class ProductCategoryFragment : Fragment() {
                     sharedPreferencesEditor.putInt("rbClickId", 4)
                     sharedPreferencesEditor.apply()
                     if (productMutableList.size != 0) {
-                        viewBinding.fragmentProductCategoryAllRecyclerView.adapter?.notifyDataSetChanged()
+                        recyclerViewActions()
                         productMutableList.sortBy {
                             it.rating.rate
                         }
@@ -179,9 +182,9 @@ class ProductCategoryFragment : Fragment() {
                 }
                 R.id.fragmentCategoryBottomSheetRbHighestRated -> {
                     sharedPreferencesEditor.putInt("rbClickId", 5)
-                    sharedPreferencesEditor.commit()
+                    sharedPreferencesEditor.apply()
                     if (productMutableList.size != 0) {
-                        viewBinding.fragmentProductCategoryAllRecyclerView.adapter?.notifyDataSetChanged()
+                        recyclerViewActions()
                         productMutableList.sortBy {
                             it.rating.rate
                         }
@@ -191,6 +194,10 @@ class ProductCategoryFragment : Fragment() {
 
                 }
             }
+        }
+
+        imbCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
         }
 
         bottomSheetDialog.show()

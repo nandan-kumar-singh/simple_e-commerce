@@ -5,37 +5,37 @@
     <string name="favorites">Favorites</string>
     <string name="basket">Basket</string>
     <string name="profile">Profile</string>
-    <string name="email" translatable="false">E-Mail</string>
-    <string name="password" translatable="false">Password</string>
-    <string name="sing_up" translatable="false">Sing Up</string>
-    <string name="first_name" translatable="false">First Name</string>
-    <string name="last_name" translatable="false">Last Name</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="sing_up">Sing Up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="phone">Phone</string>
-    <string name="cancel" translatable="false">Calcel</string>
-    <string name="yes" translatable="false">Yes</string>
+    <string name="cancel">Calcel</string>
+    <string name="yes">Yes</string>
     <string name="all">All</string>
     <string name="mansCloting" tools:ignore="DuplicateDefinition">Men  s Clothing</string>
     <string name="womensClothing" tools:ignore="DuplicateDefinition">Women  s Clothing</string>
-    <string name="electronics" translatable="false">Electronics</string>
+    <string name="electronics">Electronics</string>
     <string name="jewelery" tools:ignore="DuplicateDefinition">Jewelery</string>
-    <string name="add_basket" translatable="false">Add Basket</string>
-    <string name="added_basket" translatable="false">Added Basket</string>
-    <string name="product_detail" translatable="false">Product Detail</string>
+    <string name="add_basket">Add Basket</string>
+    <string name="added_basket">Added Basket</string>
+    <string name="product_detail">Product Detail</string>
     <string name="login">Log In</string>
     <string name="pasword">Pasword</string>
     <string name="accept">Buy</string>
 
     <!-- Sign Up Activity -->
     <string name="password_repeat">Retype Password</string>
-    <string name="password_not_same" translatable="false">Password and password Again not same</string>
-    <string name="empty_field" translatable="false">Please fill in all fields</string>
+    <string name="password_not_same">Password and password Again not same</string>
+    <string name="empty_field">Please fill in all fields</string>
 
     <!-- Login Activity -->
-    <string name="with" translatable="false">With</string>
-    <string name="forgot_passwrod" translatable="false">Forgot Password</string>
-    <string name="email_password_empty" translatable="false">Email and password are required</string>
-    <string name="reset_password" translatable="false">Password reset link sent to email</string>
-    <string name="enter_email" translatable="false">Please enter your e-mail </string>
+    <string name="with">With</string>
+    <string name="forgot_passwrod">Forgot Password</string>
+    <string name="email_password_empty">Email and password are required</string>
+    <string name="reset_password">Password reset link sent to email</string>
+    <string name="enter_email">Please enter your e-mail </string>
 
     <!-- Category Activity -->
     <string name="sort">Sort</string>
@@ -47,44 +47,42 @@
     <string name="apply">Apply</string>
 
     <!--Profile Fragment-->
-    <string name="user_information" translatable="false">User Information</string>
-    <string name="account_settings" translatable="false">Account Settings</string>
-    <string name="log_out" translatable="false">Log Out</string>
+    <string name="user_information">User Information</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="log_out">Log Out</string>
 
     <!-- User Info Fragment -->
-    <string name="update_info" translatable="false">Update Info</string>
+    <string name="update_info">Update Info</string>
 
     <!-- Account Settings Fragment -->
-    <string name="change_email" translatable="false">Change Email Address</string>
-    <string name="change_password" translatable="false">Change Password</string>
-    <string name="email_verification" translatable="false">Email Verification</string>
-    <string name="account_delete" translatable="false">Delete Account</string>
+    <string name="change_email">Change Email Address</string>
+    <string name="change_password">Change Password</string>
+    <string name="email_verification">Email Verification</string>
+    <string name="account_delete">Delete Account</string>
 
     <!-- Change Email Fragment -->
-    <string name="new_email" translatable="false">New Email</string>
-    <string name="new_email_again" translatable="false">New Email Again</string>
-    <string name="email_not_same" translatable="false">email and new email again not same</string>
+    <string name="new_email">New Email</string>
+    <string name="new_email_again">New Email Again</string>
+    <string name="email_not_same">email and new email again not same</string>
 
     <!-- Change Password Fragment -->
-    <string name="first_verify_your_email" translatable="false">First verify your email</string>
-    <string name="go" translatable="false"><u>Go -></u></string>
-    <string name="current_password" translatable="false">Current Password</string>
-    <string name="new_password" translatable="false">New Password</string>
-    <string name="new_password_again" translatable="false">New Password Again</string>
-    <string name="logged_in_with_google" translatable="false">logged in with google</string>
-    <string name="current_password_incorrect" translatable="false">Current password incorrect</string>
+    <string name="first_verify_your_email">First verify your email</string>
+    <string name="go"><u>Go -></u></string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_again">New Password Again</string>
+    <string name="logged_in_with_google">logged in with google</string>
+    <string name="current_password_incorrect">Current password incorrect</string>
 
     <!-- Email Verification Fragment -->
-    <string name="email_already_verified" translatable="false">Email already verified</string>
-    <string name="verification_link_sent" translatable="false">Verification Link Sent</string>
+    <string name="email_already_verified">Email already verified</string>
+    <string name="verification_link_sent">Verification Link Sent</string>
 
     <!-- Delete Account Fragment -->
-    <string name="delete_account" translatable="false">Delete Account</string>
-    <string name="delete_account_message" translatable="false">* All storage data in your account will be deleted
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_account_message">* All storage data in your account will be deleted
         \n* Purchased products cannot be returned
         \n* Deleted account cannot be restored</string>
-    <string name="delete_account_alert_message" translatable="false">Are you sure you want to delete your account?</string>
-    <string name="enter_info_correctly" translatable="false">Enter the information correctly</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete_account_alert_message">Are you sure you want to delete your account?</string>
+    <string name="enter_info_correctly">Enter the information correctly</string>
 </resources>

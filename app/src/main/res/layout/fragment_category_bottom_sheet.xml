@@ -16,8 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bottom_sheet_cv">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/fragmentCategoryBottomSheetTxvSort"
@@ -25,13 +24,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/sort"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/fragmentCategoryBottomSheetImbCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/asset_cancel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -57,51 +69,51 @@
             android:text="@string/default_sorting"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/fragmentCategoryBottomSheetRbLowestPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:button="@drawable/radio_button_selector"
             android:paddingStart="10dp"
             android:text="@string/lowest_price"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/fragmentCategoryBottomSheetRbHighestPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:button="@drawable/radio_button_selector"
             android:paddingStart="10dp"
             android:text="@string/highest_price"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/fragmentCategoryBottomSheetRbLowestRated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:button="@drawable/radio_button_selector"
             android:paddingStart="10dp"
             android:text="@string/lowest_rated"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/fragmentCategoryBottomSheetRbHighestRated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:button="@drawable/radio_button_selector"
             android:paddingStart="10dp"
             android:text="@string/highest_rated"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
