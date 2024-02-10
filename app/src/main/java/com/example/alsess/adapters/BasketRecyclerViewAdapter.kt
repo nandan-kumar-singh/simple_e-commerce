@@ -45,7 +45,7 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
         holder.viewBinding.recyclerRowBasketTxvPrice.text =
             "${basket.price.toFloat() * basket.count} $"
         holder.viewBinding.recyclerRowBasketTxvCount.text = basket.count.toString()
-        Glide.with(context!!).load(basket.imageUrl)
+        Glide.with(context).load(basket.imageUrl)
             .into(holder.viewBinding.recyclerRowBasketImvProduct)
 
         //An id is sent to the detail page and the product clicked in the detail is displayed thanks to this id

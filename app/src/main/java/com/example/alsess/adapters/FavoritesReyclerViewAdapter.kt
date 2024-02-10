@@ -35,7 +35,7 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
         Collections.reverse(favoritesList)
         holder.viewBinding.recyclerRowFavoritesTxvProductName.text = favoritesList.get(position).title.replace("'"," ")
         holder.viewBinding.recyclerRowFavoritesTxvPrice.text = favoritesList.get(position).price.toString()
-        Glide.with(context!!).load(favoritesList.get(position).image_url).into(holder.viewBinding.recyclerRowFavoritesImvProduct)
+        Glide.with(context).load(favoritesList.get(position).image_url).into(holder.viewBinding.recyclerRowFavoritesImvProduct)
 
         //Products in favorites are displayed on the detail page
         holder.viewBinding.recyclerRowFavoritesCardViewProduct.setOnClickListener {

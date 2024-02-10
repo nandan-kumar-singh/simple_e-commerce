@@ -7,6 +7,7 @@ import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
@@ -52,7 +53,7 @@ class ProductCategoryAdapter(
         holder.viewBinding.rowProductCategoryAllCardView.setOnClickListener {
             val dataDrections =
                 ProductCategoryFragmentDirections.actionProductCategoryFragmentToProductDetailFragment(
-                    mutablePosition.id.toInt()
+                    mutablePosition.id
                 )
             Navigation.findNavController(it).navigate(dataDrections)
         }

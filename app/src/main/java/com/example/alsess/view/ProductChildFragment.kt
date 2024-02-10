@@ -46,7 +46,7 @@ class ProductChildFragment : Fragment() {
         viewBinding = FragmentProductChildBinding.inflate(inflater, container, false)
         productLoadData()
         viewBinding.fragmentProductChildRecyclerView.adapter =
-            ProductParentAdapter(requireContext(), productParentList)
+            context?.let { ProductParentAdapter(it, productParentList) }
         viewBinding.fragmentProductChildRecyclerView.layoutManager =
             LinearLayoutManager(context)
         if (productParentList.size != 0) {
@@ -68,7 +68,7 @@ class ProductChildFragment : Fragment() {
                     addDataNestedRecyclerView(response)
                     if (productParentList.size == 0) {
                         viewBinding.fragmentProductChildRecyclerView.adapter =
-                            ProductParentAdapter(requireContext(), productParentList)
+                            context?.let { ProductParentAdapter(it, productParentList) }
                         viewBinding.fragmentProductChildRecyclerView.layoutManager =
                             LinearLayoutManager(context)
                         addDataParentList()

@@ -57,9 +57,9 @@ class ProfileChildFragment : Fragment() {
         if (fireBaseAuth.currentUser != null) {
             viewBinding.fragmentProfileChildBtnLogOut.setOnClickListener {
                 val googleSignInClient =
-                    GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    context?.let { it1 -> GoogleSignIn.getClient(it1, GoogleSignInOptions.DEFAULT_SIGN_IN) }
                 fireBaseAuth.signOut()
-                googleSignInClient.revokeAccess()
+                googleSignInClient?.revokeAccess()
                 val intent = Intent(context, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

@@ -206,10 +206,12 @@ class ProductCategoryFragment : Fragment() {
 
     fun recyclerViewActions() {
         viewBinding.fragmentProductCategoryAllRecyclerView.adapter =
-            ProductCategoryAdapter(
-                requireContext(),
-                productMutableList
-            )
+            context?.let {
+                ProductCategoryAdapter(
+                    it,
+                    productMutableList
+                )
+            }
         viewBinding.fragmentProductCategoryAllRecyclerView.layoutManager =
             GridLayoutManager(context, 2)
         viewBinding.fragmentProductCategoryAllToolbar.title = bundle.categoryTitle
