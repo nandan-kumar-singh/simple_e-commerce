@@ -61,6 +61,8 @@ class ProfileChildFragment : Fragment() {
                 fireBaseAuth.signOut()
                 googleSignInClient.revokeAccess()
                 val intent = Intent(context, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 activity?.let(FragmentActivity::finish)
             }

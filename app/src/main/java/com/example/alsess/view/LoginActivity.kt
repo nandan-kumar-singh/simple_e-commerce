@@ -40,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                     finish()
                 }
@@ -127,6 +129,8 @@ class LoginActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 viewBinding.activityLoginPgb.visibility = View.VISIBLE
                 val intent = Intent(this@LoginActivity, MainActivity :: class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 finish()
             } else {
