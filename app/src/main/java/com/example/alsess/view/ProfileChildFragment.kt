@@ -93,6 +93,7 @@ class ProfileChildFragment : Fragment() {
                             firestoreUserData()
                         } else {
                             firebaseFirestoreAddData()
+                            firestoreUserData()
                             viewBinding.fragmentProfileChildTxvName.text =
                                 currentUser.displayName
                             viewBinding.fragmentProfileChildTxvNameChar.text =

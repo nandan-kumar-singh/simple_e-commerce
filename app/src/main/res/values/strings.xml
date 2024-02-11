@@ -14,10 +14,10 @@
     <string name="cancel">Calcel</string>
     <string name="yes">Yes</string>
     <string name="all">All</string>
-    <string name="mansCloting" tools:ignore="DuplicateDefinition">Men  s Clothing</string>
-    <string name="womensClothing" tools:ignore="DuplicateDefinition">Women  s Clothing</string>
+    <string name="mansCloting">Men  s Clothing</string>
+    <string name="womensClothing">Women  s Clothing</string>
     <string name="electronics">Electronics</string>
-    <string name="jewelery" tools:ignore="DuplicateDefinition">Jewelery</string>
+    <string name="jewelery">Jewelery</string>
     <string name="add_basket">Add Basket</string>
     <string name="added_basket">Added Basket</string>
     <string name="product_detail">Product Detail</string>
