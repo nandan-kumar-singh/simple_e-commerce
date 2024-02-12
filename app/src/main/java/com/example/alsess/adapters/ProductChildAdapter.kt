@@ -2,20 +2,26 @@ package com.example.aaaaaa
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductChildRowBinding
 import com.example.alsess.recyclerviewmodel.ProductChildModel
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.view.LoginActivity
 import com.example.alsess.view.ProductChildFragmentDirections
+import com.google.firebase.auth.FirebaseAuth
 
 class ProductChildAdapter(val context: Context, val childList: List<ProductChildModel>) :
     RecyclerView.Adapter<ProductChildAdapter.ProductChildVH>() {
+    private lateinit var firebaseAuth: FirebaseAuth
+
     class ProductChildVH(val viewBinding: FragmentProductChildRowBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
 
@@ -36,6 +42,9 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductChildVH, position: Int) {
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+
         holder.viewBinding.rowProductChildTxvName.text = childList.get(position).productName
 
         Glide.with(context).load(childList.get(position).productImage)
@@ -51,7 +60,18 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
         holder.viewBinding.rowProductChildTxvRating.text =
             childList.get(position).productRating.toString()
 
-        addDataFavorites(holder.viewBinding.rowProductChildTgbAddFavorites, position)
+        //Data cannot be added to the favorites list if no user is logged in
+        if (currentUser != null) {
+            addDataFavorites(holder.viewBinding.rowProductChildTgbAddFavorites, position)
+        } else {
+            holder.viewBinding.rowProductChildTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
+            holder.viewBinding.rowProductChildTgbAddFavorites.setOnClickListener {
+                val intent = Intent(context, LoginActivity::class.java)
+                context.startActivity(intent)
+            }
+
+        }
+
 
         //Gets the id of the clicked product and shows the product in the product detail
         holder.viewBinding.rowProductChildCardView.setOnClickListener {

@@ -1,6 +1,7 @@
 package com.example.alsess.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,14 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.alsess.ProductsRetrofit
+import com.example.alsess.R
 import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductDetailBinding
 import com.example.alsess.sqlitedaos.BasketSqliteDao
 import com.example.alsess.sqlitedaos.FavoritesSqliteDao
 import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
 import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +27,7 @@ class ProductDetailFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductDetailBinding
     val bundle: ProductDetailFragmentArgs by navArgs()
     val productMutableList: MutableList<ApiProductsModel> = mutableListOf()
+    private lateinit var firebaseAuth: FirebaseAuth
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
@@ -32,9 +36,21 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         viewBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
-
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
         loadDetailDaata()
-        addDataFavoritesAndControl()
+
+        //Data cannot be added to the favorites list if no user is logged in
+        if (currentUser != null) {
+            addDataFavoritesAndControl()
+        } else {
+            viewBinding.fragmentProductDetailTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
+            viewBinding.fragmentProductDetailTgbAddFavorites.setOnClickListener {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         addDataBasketAndControl()
 
         viewBinding.fragmentProductDetailToolbar.setNavigationOnClickListener {

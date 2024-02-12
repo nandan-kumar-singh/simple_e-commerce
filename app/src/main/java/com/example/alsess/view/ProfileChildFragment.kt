@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProfileChildBinding
+import com.example.alsess.sqlitedaos.FavoritesSqliteDao
+import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +44,7 @@ class ProfileChildFragment : Fragment() {
     }
 
     fun buttonClickAction() {
+        val favoritesDataHelper = FavoritesSqliteDataHelper(context!!)
         //Transition from profile fragment to other detail fragments
         viewBinding.fragmentProfileChildBtnUserInfo.setOnClickListener {
             Navigation.findNavController(it)
@@ -65,6 +68,7 @@ class ProfileChildFragment : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 activity?.let(FragmentActivity::finish)
+                favoritesDataHelper.writableDatabase.delete("favorites",null,null)
             }
         }
 
