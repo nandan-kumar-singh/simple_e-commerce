@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aaaaaa.ProductParentAdapter
 import com.example.alsess.ProductsRetrofit
@@ -52,6 +53,15 @@ class ProductChildFragment : Fragment() {
         if (productParentList.size != 0) {
             viewBinding.fragmentProductChildPgb.visibility = View.GONE
         }
+
+        //Click on the search button and it switches to the search fragment
+        viewBinding.fragmentProductChildSearchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                Navigation.findNavController(v)
+                    .navigate(R.id.action_productChildFragment_to_searchFragment)
+            }
+        }
+
         return viewBinding.root
     }
 

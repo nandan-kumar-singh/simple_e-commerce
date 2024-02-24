@@ -66,7 +66,7 @@ class SignUpActivity : AppCompatActivity() {
     //User data is saved in firestore
     /*The password will be used in the password changing section,
     the product ID will be used for favorites and product IDs added to the cart. */
-    fun firebaseFirestore() {
+    private fun firebaseFirestore() {
         val name = viewBinding.activitySignUpEdtName.text.toString().trim().replaceFirstChar {
             it.uppercase()
         }
@@ -77,17 +77,11 @@ class SignUpActivity : AppCompatActivity() {
         val phone = viewBinding.activitySignUpEdtPhone.text.toString().trim()
         val password = viewBinding.activitySignUpEdtPassword.text.toString().trim()
         val usersHashMap = HashMap<String, Any>()
-        val productIdHashMap = HashMap<String, Any>()
         val passwordHashMap = HashMap<String, Any>()
-        val favoritesList = ArrayList<Long>()
-        val basketList = ArrayList<Long>()
         usersHashMap.put("name", name)
         usersHashMap.put("lastName", lastName)
         usersHashMap.put("phone", phone)
         firebaseFirestoreCollection("Users", usersHashMap)
-        productIdHashMap.put("favorites product id", favoritesList)
-        productIdHashMap.put("basket product id", basketList)
-        firebaseFirestoreCollection("Product Id", productIdHashMap)
         passwordHashMap.put("password", password)
         firebaseFirestoreCollection("Password", passwordHashMap)
 

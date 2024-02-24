@@ -40,5 +40,29 @@
         <action
             android:id="@+id/toProductDetail"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_productChildFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productSearchFragment"
+        android:name="com.example.alsess.view.ProductSearchFragment"
+        android:label="fragment_product_search"
+        tools:layout="@layout/fragment_product_search" >
+        <action
+            android:id="@+id/action_productSearchFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.alsess.view.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_productSearchFragment"
+            app:destination="@id/productSearchFragment" />
     </fragment>
 </navigation>
