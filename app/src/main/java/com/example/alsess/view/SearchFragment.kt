@@ -2,11 +2,11 @@ package com.example.alsess.view
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,6 +55,18 @@ class SearchFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                //The entered data is confirmed and sent to the product search page
+                if (query != null) {
+                    if (query.length >= 2) {
+                        val dataDirections =
+                            SearchFragmentDirections.actionSearchFragmentToProductSearchFragment(
+                                query
+                            )
+                        view?.let {
+                            Navigation.findNavController(it).navigate(dataDirections)
+                        }
+                    }
+                }
                 return false
             }
 

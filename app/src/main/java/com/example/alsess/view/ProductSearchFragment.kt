@@ -42,24 +42,25 @@ class ProductSearchFragment : Fragment() {
         if (productArrayList.size != 0) {
             viewBinding.fragmentProductSearchPgb.visibility = View.GONE
             viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
+        }else{
+            viewBinding.fragmentProductSearchBtnSort.visibility = View.GONE
         }
 
         viewBinding.fragmentProductSearchToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
 
-
-        viewBinding.fragmentProductSearchSchv.setOnQueryTextFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                Navigation.findNavController(v).popBackStack()
-            }
+        viewBinding.fragmentProductSearchTxv.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
         }
+
+        viewBinding.fragmentProductSearchTxv.text = bundle.category
 
         viewBinding.fragmentProductSearchBtnSort.setOnClickListener {
             bottomSheetDialogAction()
         }
 
-        viewBinding.fragmentProductSearchSchv.setQuery(bundle.category,true)
+
         return viewBinding.root
     }
 
@@ -71,9 +72,8 @@ class ProductSearchFragment : Fragment() {
                 response: Response<List<ApiProductsModel>>
             ) {
                 if (response.isSuccessful) {
-                    viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
                     viewBinding.fragmentProductSearchPgb.visibility = View.GONE
-
+                    viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
                     if (productArrayList.size == 0) {
                         recyclerViewActions()
                     }
@@ -81,7 +81,7 @@ class ProductSearchFragment : Fragment() {
                     var index = 0
                     if (productArrayList.size == 0) {
                         while (index < response.body()!!.size) {
-                            if (response.body()!![index].category == bundle.category) {
+                            if (response.body()!![index].category.contains(bundle.category)) {
                                 productArrayList.add(
                                     ApiProductsModel(
                                         response.body()!![index].id,
