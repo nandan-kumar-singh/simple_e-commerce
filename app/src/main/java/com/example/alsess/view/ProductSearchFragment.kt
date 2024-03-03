@@ -13,11 +13,11 @@ import android.widget.RadioGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.alsess.ProductsRetrofit
+import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.R
 import com.example.alsess.adapters.ProductSearchAdapter
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductSearchBinding
+import com.example.alsess.model.ApiProductsModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,7 +65,7 @@ class ProductSearchFragment : Fragment() {
     }
 
     private fun productLoadData() {
-        val retrofit = ProductsRetrofit()
+        val retrofit = ProductsRetrofitService()
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
             override fun onResponse(
                 call: Call<List<ApiProductsModel>>,

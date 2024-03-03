@@ -9,23 +9,23 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aaaaaa.ProductParentAdapter
-import com.example.alsess.ProductsRetrofit
+import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.R
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductChildBinding
-import com.example.alsess.recyclerviewmodel.ProductChildModel
-import com.example.alsess.recyclerviewmodel.ProductParentModel
+import com.example.alsess.model.ApiProductsModel
+import com.example.alsess.model.ProductRVChildModel
+import com.example.alsess.model.ProductRVParentModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ProductChildFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductChildBinding
-    val productParentList = ArrayList<ProductParentModel>()
-    val productChildList = ArrayList<ProductChildModel>()
-    val productChildList2 = ArrayList<ProductChildModel>()
-    val productChildList3 = ArrayList<ProductChildModel>()
-    val productChildList4 = ArrayList<ProductChildModel>()
+    val productParentList = ArrayList<ProductRVParentModel>()
+    val productChildList = ArrayList<ProductRVChildModel>()
+    val productChildList2 = ArrayList<ProductRVChildModel>()
+    val productChildList3 = ArrayList<ProductRVChildModel>()
+    val productChildList4 = ArrayList<ProductRVChildModel>()
 
     /*Clicking the radiobutton in the product search and categories section is saved,
      when you come to the home page,
@@ -66,7 +66,7 @@ class ProductChildFragment : Fragment() {
     }
 
     fun productLoadData() {
-        val retrofit = ProductsRetrofit()
+        val retrofit = ProductsRetrofitService()
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
             override fun onResponse(
                 call: Call<List<ApiProductsModel>>,
@@ -96,22 +96,22 @@ class ProductChildFragment : Fragment() {
     //Adds to parentLi
     fun addDataParentList() {
         productParentList.add(
-            ProductParentModel(
+            ProductRVParentModel(
                 getString(R.string.mansCloting), "men's clothing", productChildList
             )
         )
         productParentList.add(
-            ProductParentModel(
+            ProductRVParentModel(
                 getString(R.string.womensClothing), "women's clothing", productChildList2
             )
         )
         productParentList.add(
-            ProductParentModel(
+            ProductRVParentModel(
                 getString(R.string.jewelery), "jewelery", productChildList3
             )
         )
         productParentList.add(
-            ProductParentModel(
+            ProductRVParentModel(
                 getString(R.string.electronics), "electronics", productChildList4
             )
         )
@@ -119,7 +119,7 @@ class ProductChildFragment : Fragment() {
     }
 
     fun whileLoopNestedRV(
-        childList: ArrayList<ProductChildModel>,
+        childList: ArrayList<ProductRVChildModel>,
         category: String,
         response: Response<List<ApiProductsModel>>
     ) {
@@ -130,7 +130,7 @@ class ProductChildFragment : Fragment() {
             if (response.body()!!.get(indeks).category == category) {
                 if (element < 4) {
                     childList.add(
-                        ProductChildModel(
+                        ProductRVChildModel(
                             response.body()!!.get(indeks).id,
                             response.body()!!.get(indeks).title,
                             response.body()!!.get(indeks).image,

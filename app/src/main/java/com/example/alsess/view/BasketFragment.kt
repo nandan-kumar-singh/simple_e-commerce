@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.alsess.OnChangeAmount
-import com.example.alsess.adapters.BasketRecyclerViewAdapter
+import com.example.alsess.adapters.OnChangeAmount
+import com.example.alsess.adapters.BasketAdapter
 import com.example.alsess.databinding.FragmentBasketBinding
 
 class BasketFragment : Fragment() {
@@ -51,7 +51,7 @@ class BasketFragment : Fragment() {
             sharedPreferences.getFloat("total", 0F).toString()
 
         viewBinding.fragmentBasketRecyclerView.adapter =
-            context?.let { BasketRecyclerViewAdapter(it, onChangeAmount) }
+            context?.let { BasketAdapter(it, onChangeAmount) }
         viewBinding.fragmentBasketRecyclerView.layoutManager = LinearLayoutManager(context)
         return viewBinding.root
 

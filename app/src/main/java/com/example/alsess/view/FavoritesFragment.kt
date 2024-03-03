@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.alsess.adapters.FavoritesReyclerViewAdapter
+import com.example.alsess.adapters.FavoritesAdapter
 import com.example.alsess.databinding.FragmentFavoritesBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -29,7 +29,7 @@ class FavoritesFragment : Fragment() {
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
             viewBinding.fragmentFavoritesRecyclerView.adapter =
-                context?.let { FavoritesReyclerViewAdapter(it) }
+                context?.let { FavoritesAdapter(it) }
             viewBinding.fragmentFavoritesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext())
         } else {

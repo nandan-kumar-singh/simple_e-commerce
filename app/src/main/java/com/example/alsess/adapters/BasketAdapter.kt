@@ -7,17 +7,16 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.alsess.OnChangeAmount
 import com.example.alsess.databinding.FragmentBasketRowBinding
-import com.example.alsess.sqlitedaos.BasketSqliteDao
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
-import com.example.alsess.sqlitemodels.SqliteBasketModel
+import com.example.alsess.model.BasketSQLiteModel
+import com.example.alsess.service.BasketSQLiteDao
+import com.example.alsess.service.BasketSQLiteDataHelper
 import com.example.alsess.view.BasketFragmentDirections
-import java.util.*
 
 
-class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
-    RecyclerView.Adapter<BasketRecyclerViewAdapter.BasketVH>() {
+
+class BasketAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
+    RecyclerView.Adapter<BasketAdapter.BasketVH>() {
     class BasketVH(val viewBinding: FragmentBasketRowBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
     }
@@ -29,17 +28,17 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
     }
 
     override fun getItemCount(): Int {
-        val basketDataHelper = BasketSqliteDataHelper(context)
-        val titlelist = BasketSqliteDao().getAllBaskets(basketDataHelper)
+        val basketDataHelper = BasketSQLiteDataHelper(context)
+        val titlelist = BasketSQLiteDao().getAllBaskets(basketDataHelper)
         return titlelist.size
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: BasketVH, position: Int) {
-        val basketDataHelper = BasketSqliteDataHelper(context)
-        val basketList = BasketSqliteDao().getAllBaskets(basketDataHelper)
-        Collections.reverse(basketList)
-        val basket: SqliteBasketModel = basketList.get(position)
+        val basketDataHelper = BasketSQLiteDataHelper(context)
+        val basketList = BasketSQLiteDao().getAllBaskets(basketDataHelper)
+        basketList.reverse()
+        val basket: BasketSQLiteModel = basketList.get(position)
 
         holder.viewBinding.recyclerRowBasketTxvProductName.text = basket.title.replace("'", " ")
         holder.viewBinding.recyclerRowBasketTxvPrice.text =
@@ -60,7 +59,7 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
         holder.viewBinding.recyclerRowBasketBtnIncrease.setOnClickListener {
             if (count < 20) {
                 count++
-                BasketSqliteDao().updateBasket(
+                BasketSQLiteDao().updateBasket(
                     basketDataHelper,
                     basket.id,
                     basket.title,
@@ -80,7 +79,7 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
         holder.viewBinding.recyclerRowBasketBtnDecrease.setOnClickListener {
             if (count > 1) {
                 count--
-                BasketSqliteDao().updateBasket(
+                BasketSQLiteDao().updateBasket(
                     basketDataHelper,
                     basket.id,
                     basket.title,
@@ -102,15 +101,15 @@ class BasketRecyclerViewAdapter(val context: Context, val onChangeAmount: OnChan
             if(basketList.size != 0 ){
                 onChangeAmount.onChange("0.0")
             }
-            BasketSqliteDao().deleteProduts(basketDataHelper,basket.id)
+            BasketSQLiteDao().deleteProduts(basketDataHelper,basket.id)
             total()
             notifyDataSetChanged()
         }
     }
 
     fun total() {
-        val basketDataHelper = BasketSqliteDataHelper(context)
-        val basketList = BasketSqliteDao().getAllBaskets(basketDataHelper)
+        val basketDataHelper = BasketSQLiteDataHelper(context)
+        val basketList = BasketSQLiteDao().getAllBaskets(basketDataHelper)
         var total = 0.0F
         for (i in 0..(basketList.size - 1)) {
             total += basketList.get(i).price.toFloat() * basketList.get(i).count

@@ -9,8 +9,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.alsess.R
 import com.example.alsess.databinding.ActivityMainBinding
-import com.example.alsess.sqlitedaos.BasketSqliteDao
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
+import com.example.alsess.service.BasketSQLiteDao
+import com.example.alsess.service.BasketSQLiteDataHelper
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
 
     //The number of products added to the cart is displayed as a bottom notification.
     fun basketBedge() {
-        val basketSQLiteDataHelper = BasketSqliteDataHelper(this)
-        val basketSqliteList = BasketSqliteDao().getAllBaskets(basketSQLiteDataHelper)
+        val basketSQLiteDataHelper = BasketSQLiteDataHelper(this)
+        val basketSqliteList = BasketSQLiteDao().getAllBaskets(basketSQLiteDataHelper)
         val basketBadge =
             viewBinding.activityMainBottomNavigationView.getOrCreateBadge(R.id.basketFragment)
         basketBadge.number = basketSqliteList.size

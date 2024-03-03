@@ -10,12 +10,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.alsess.R
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
-import com.example.alsess.sqlitedaos.BasketSqliteDao
-import com.example.alsess.sqlitedaos.FavoritesSqliteDao
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
-import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.model.ApiProductsModel
+import com.example.alsess.service.BasketSQLiteDao
+import com.example.alsess.service.FavoritesSQLiteDao
+import com.example.alsess.service.BasketSQLiteDataHelper
+import com.example.alsess.service.FavoritesSQLiteDataHelper
 import com.example.alsess.view.LoginActivity
 import com.example.alsess.view.ProductCategoryFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
@@ -90,8 +90,8 @@ class ProductCategoryAdapter(
     }
 
     fun addDataFavorites(toggleButton: ToggleButton, position: Int) {
-        val favoritesDataHelper = FavoritesSqliteDataHelper(context)
-        val favoritesDAO = FavoritesSqliteDao()
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(context)
+        val favoritesDAO = FavoritesSQLiteDao()
         val mutablePositionFav = productMutableList.get(position)
 
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -122,8 +122,8 @@ class ProductCategoryAdapter(
     }
 
     fun addDataBasket(toggleButton: ToggleButton, position: Int) {
-        val basketDataHelper = BasketSqliteDataHelper(context)
-        val basketDAO = BasketSqliteDao()
+        val basketDataHelper = BasketSQLiteDataHelper(context)
+        val basketDAO = BasketSQLiteDao()
         val mutablePositionBasket = productMutableList.get(position)
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

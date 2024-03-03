@@ -85,4 +85,7 @@
         \n* Deleted account cannot be restored</string>
     <string name="delete_account_alert_message">Are you sure you want to delete your account?</string>
     <string name="enter_info_correctly">Enter the information correctly</string>
+
+    <!-- Google Json Client Id -->
+    <string name="google_json_client_id" translatable="false">clientId</string>
 </resources>

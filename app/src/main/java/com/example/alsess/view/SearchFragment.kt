@@ -3,17 +3,15 @@ package com.example.alsess.view
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alsess.ProductsRetrofit
+import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.adapters.SearchAdapter
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentSearchBinding
+import com.example.alsess.model.ApiProductsModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -103,7 +101,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun searchItemLoadData() {
-        val retrofit = ProductsRetrofit()
+        val retrofit = ProductsRetrofitService()
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
             override fun onResponse(
                 call: Call<List<ApiProductsModel>>,

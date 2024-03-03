@@ -1,6 +1,6 @@
-package com.example.alsess.sqlitemodels
+package com.example.alsess.model
 
-data class SqliteBasketModel(
+data class BasketSQLiteModel(
     var id: Long,
     var title: String,
     var price: Double,

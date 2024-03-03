@@ -1,12 +1,12 @@
-package com.example.alsess
+package com.example.alsess.service
 
-import com.example.alsess.apis.ProductsAPI
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ProductsRetrofit {
+class ProductsRetrofitService {
+    private val PRODUCTS_BASE_URL = "https://fakestoreapi.com/"
     val retrofit = Retrofit.Builder()
-        .baseUrl(ApiLinks.PRODUCTS_BASE_URL)
+        .baseUrl(PRODUCTS_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val service = retrofit.create(ProductsAPI:: class.java)

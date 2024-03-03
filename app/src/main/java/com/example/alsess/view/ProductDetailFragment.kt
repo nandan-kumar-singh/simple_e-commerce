@@ -10,14 +10,14 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.alsess.ProductsRetrofit
+import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.R
-import com.example.alsess.apimodels.ApiProductsModel
 import com.example.alsess.databinding.FragmentProductDetailBinding
-import com.example.alsess.sqlitedaos.BasketSqliteDao
-import com.example.alsess.sqlitedaos.FavoritesSqliteDao
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
-import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.model.ApiProductsModel
+import com.example.alsess.service.BasketSQLiteDao
+import com.example.alsess.service.FavoritesSQLiteDao
+import com.example.alsess.service.BasketSQLiteDataHelper
+import com.example.alsess.service.FavoritesSQLiteDataHelper
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,7 +61,7 @@ class ProductDetailFragment : Fragment() {
     }
 
     fun loadDetailDaata() {
-        val retrofit = ProductsRetrofit()
+        val retrofit = ProductsRetrofitService()
         retrofit.service.loadData()
             .enqueue(object : Callback<List<ApiProductsModel>> {
                 @SuppressLint("CheckResult")
@@ -127,8 +127,8 @@ class ProductDetailFragment : Fragment() {
     }
 
     fun addDataFavoritesAndControl() {
-        val favoritesDataHelper = FavoritesSqliteDataHelper(requireContext())
-        val favoritesDAO = FavoritesSqliteDao()
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(requireContext())
+        val favoritesDAO = FavoritesSQLiteDao()
 
         viewBinding.fragmentProductDetailTgbAddFavorites.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -158,8 +158,8 @@ class ProductDetailFragment : Fragment() {
     }
 
     fun addDataBasketAndControl() {
-        val basketDataHelper = BasketSqliteDataHelper(requireContext())
-        val basketDAO = BasketSqliteDao()
+        val basketDataHelper = BasketSQLiteDataHelper(requireContext())
+        val basketDAO = BasketSQLiteDao()
 
         viewBinding.fragmentProductDetailTgbAddBasket.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

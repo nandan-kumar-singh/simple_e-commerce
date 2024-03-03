@@ -1,6 +1,4 @@
-package com.example.alsess.apimodels
-
-
+package com.example.alsess.model
 
 data class ApiProductsModel(
     val id: Long,
@@ -11,7 +9,9 @@ data class ApiProductsModel(
     val image: String,
     val rating: Rating,
 )
+
 data class Rating(
     val rate: Double,
     val count: Int,
 )
+

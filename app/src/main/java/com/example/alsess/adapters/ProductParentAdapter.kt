@@ -7,11 +7,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alsess.databinding.FragmentProductParentRowBinding
-import com.example.alsess.recyclerviewmodel.ProductParentModel
+import com.example.alsess.model.ProductRVParentModel
 import com.example.alsess.view.ProductChildFragmentDirections
 
 
-class ProductParentAdapter(val context: Context, val parentList: List<ProductParentModel>) :
+class ProductParentAdapter(val context: Context, val parentList: List<ProductRVParentModel>) :
     RecyclerView.Adapter<ProductParentAdapter.ProductParentVH>() {
     class ProductParentVH(val viewBinding: FragmentProductParentRowBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {

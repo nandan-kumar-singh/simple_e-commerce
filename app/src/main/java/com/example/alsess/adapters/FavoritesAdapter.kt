@@ -7,13 +7,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.alsess.databinding.FragmentFavoritesRowBinding
-import com.example.alsess.sqlitedaos.FavoritesSqliteDao
-import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.service.FavoritesSQLiteDao
+import com.example.alsess.service.FavoritesSQLiteDataHelper
 import com.example.alsess.view.FavoritesFragmentDirections
 import java.util.*
 
 
-class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<FavoritesReyclerViewAdapter.FavoritesVH>() {
+class FavoritesAdapter(val context: Context) : RecyclerView.Adapter<FavoritesAdapter.FavoritesVH>() {
     class FavoritesVH(val viewBinding : FragmentFavoritesRowBinding) : RecyclerView.ViewHolder(viewBinding.root){
 
     }
@@ -24,14 +24,14 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
     }
 
     override fun getItemCount(): Int {
-        val favoritesDataHelper = FavoritesSqliteDataHelper(context)
-        val titlelist = FavoritesSqliteDao().readFavorites(favoritesDataHelper)
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(context)
+        val titlelist = FavoritesSQLiteDao().readFavorites(favoritesDataHelper)
         return titlelist.size
     }
 
     override fun onBindViewHolder(holder: FavoritesVH, position: Int) {
-        val favoritesDataHelper = FavoritesSqliteDataHelper(context)
-        val favoritesList = FavoritesSqliteDao().readFavorites(favoritesDataHelper)
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(context)
+        val favoritesList = FavoritesSQLiteDao().readFavorites(favoritesDataHelper)
         Collections.reverse(favoritesList)
         holder.viewBinding.recyclerRowFavoritesTxvProductName.text = favoritesList.get(position).title.replace("'"," ")
         holder.viewBinding.recyclerRowFavoritesTxvPrice.text = favoritesList.get(position).price.toString()
@@ -44,7 +44,7 @@ class FavoritesReyclerViewAdapter(val context: Context) : RecyclerView.Adapter<F
         }
 
         holder.viewBinding.recyclerRowFavoritesBtnFavorites.setOnClickListener {
-            FavoritesSqliteDao().deleteFavorites(favoritesDataHelper,favoritesList.get(position).id)
+            FavoritesSQLiteDao().deleteFavorites(favoritesDataHelper,favoritesList.get(position).id)
             notifyDataSetChanged()
         }
     }

@@ -1,13 +1,11 @@
-package com.example.alsess.sqlitedaos
+package com.example.alsess.service
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
-import com.example.alsess.sqlitemodels.SqliteBasketModel
+import com.example.alsess.model.BasketSQLiteModel
 
-
-class BasketSqliteDao {
-    fun addBasket(basketDataHelper: BasketSqliteDataHelper,id : Long, title: String, price: Double,image_url : String,count : Int = 1) {
+class BasketSQLiteDao {
+    fun addBasket(basketDataHelper: BasketSQLiteDataHelper, id : Long, title: String, price: Double, image_url : String, count : Int = 1) {
         val db = basketDataHelper.writableDatabase
         val values = ContentValues()
         values.put("id",id)
@@ -21,33 +19,33 @@ class BasketSqliteDao {
     }
 
     fun updateBasket(
-        basketDataHelper: BasketSqliteDataHelper,
+        basketDataHelper: BasketSQLiteDataHelper,
         id: Long,
         title: String,
         price: Double,
         imageUrl: String,
         count : Int
     ) {
-            val db = basketDataHelper.writableDatabase
-            val values = ContentValues()
-            values.put("id",id)
-            values.put("title",title)
-            values.put("price",price)
-            values.put("image_url",imageUrl)
-            values.put("count",count)
+        val db = basketDataHelper.writableDatabase
+        val values = ContentValues()
+        values.put("id",id)
+        values.put("title",title)
+        values.put("price",price)
+        values.put("image_url",imageUrl)
+        values.put("count",count)
 
-            db.update("basket",values,"id=?", arrayOf(id.toString()))
-            db.close()
+        db.update("basket",values,"id=?", arrayOf(id.toString()))
+        db.close()
 
 
     }
 
     @SuppressLint("Range")
-    fun getBasket(basketDataHelper: BasketSqliteDataHelper, id: Long): SqliteBasketModel? {
+    fun getBasket(basketDataHelper: BasketSQLiteDataHelper, id: Long): BasketSQLiteModel? {
         val db = basketDataHelper.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM basket WHERE id='$id'", null)
         while (cursor.moveToNext()) {
-            return SqliteBasketModel(
+            return BasketSQLiteModel(
                 cursor.getLong(cursor.getColumnIndex("id")),
                 cursor.getString(cursor.getColumnIndex("title")),
                 cursor.getDouble(cursor.getColumnIndex("price")),
@@ -59,12 +57,12 @@ class BasketSqliteDao {
     }
 
     @SuppressLint("Range")
-    fun getAllBaskets(basketDataHelper: BasketSqliteDataHelper): ArrayList<SqliteBasketModel> {
-        val basketArrayList = ArrayList<SqliteBasketModel>()
+    fun getAllBaskets(basketDataHelper: BasketSQLiteDataHelper): ArrayList<BasketSQLiteModel> {
+        val basketArrayList = ArrayList<BasketSQLiteModel>()
         val db = basketDataHelper.writableDatabase
         val cursor = db.rawQuery("SELECT * FROM basket", null)
         while (cursor.moveToNext()) {
-            val basket = SqliteBasketModel(
+            val basket = BasketSQLiteModel(
                 cursor.getLong(cursor.getColumnIndex("id")),
                 cursor.getString(cursor.getColumnIndex("title")),
                 cursor.getDouble(cursor.getColumnIndex("price")),
@@ -76,13 +74,13 @@ class BasketSqliteDao {
 
         return basketArrayList
     }
-    fun deleteProduts(basketDataHelper: BasketSqliteDataHelper, id: Long){
+    fun deleteProduts(basketDataHelper: BasketSQLiteDataHelper, id: Long){
         val db = basketDataHelper.writableDatabase
         db.delete("basket","id=?", arrayOf(id.toString()))
         db.close()
     }
     @SuppressLint("Range", "Recycle")
-    fun controlBasket(basketDataHelper : BasketSqliteDataHelper, id : Long) : Int {
+    fun controlBasket(basketDataHelper : BasketSQLiteDataHelper, id : Long) : Int {
         var conclusion = 0
         val db = basketDataHelper.writableDatabase
         val cursor = db.rawQuery("SELECT count(*) AS conclusion FROM basket WHERE id='$id'",null)

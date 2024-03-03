@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductChildRowBinding
-import com.example.alsess.recyclerviewmodel.ProductChildModel
-import com.example.alsess.sqlitedaos.FavoritesSqliteDao
-import com.example.alsess.sqlitedatahelpers.FavoritesSqliteDataHelper
+import com.example.alsess.model.ProductRVChildModel
+import com.example.alsess.service.FavoritesSQLiteDao
+import com.example.alsess.service.FavoritesSQLiteDataHelper
 import com.example.alsess.view.LoginActivity
 import com.example.alsess.view.ProductChildFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 
-class ProductChildAdapter(val context: Context, val childList: List<ProductChildModel>) :
+class ProductChildAdapter(val context: Context, val childList: List<ProductRVChildModel>) :
     RecyclerView.Adapter<ProductChildAdapter.ProductChildVH>() {
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -86,8 +86,8 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductChild
 
     //To add to favorites from child in nested recyclerview
     fun addDataFavorites(toggleButton: ToggleButton, position: Int) {
-        val favoritesDataHelper = FavoritesSqliteDataHelper(context)
-        val favoritesDAO = FavoritesSqliteDao()
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(context)
+        val favoritesDAO = FavoritesSQLiteDao()
 
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

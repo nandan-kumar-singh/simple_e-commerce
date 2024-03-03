@@ -9,8 +9,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductParentBinding
-import com.example.alsess.sqlitedaos.BasketSqliteDao
-import com.example.alsess.sqlitedatahelpers.BasketSqliteDataHelper
+import com.example.alsess.service.BasketSQLiteDao
+import com.example.alsess.service.BasketSQLiteDataHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProductParentFragment : Fragment() {
@@ -47,8 +47,8 @@ class ProductParentFragment : Fragment() {
     fun basketBedge() {
         val activityMainBottomNavigation =
             activity!!.findViewById(R.id.activityMainBottomNavigationView) as BottomNavigationView
-        val basketSQLiteDataHelper = BasketSqliteDataHelper(context!!)
-        val basketSqliteList = BasketSqliteDao().getAllBaskets(basketSQLiteDataHelper)
+        val basketSQLiteDataHelper = BasketSQLiteDataHelper(context!!)
+        val basketSqliteList = BasketSQLiteDao().getAllBaskets(basketSQLiteDataHelper)
         val basketBadge =
             activityMainBottomNavigation.getOrCreateBadge(R.id.basketFragment)
         basketBadge.number = basketSqliteList.size
