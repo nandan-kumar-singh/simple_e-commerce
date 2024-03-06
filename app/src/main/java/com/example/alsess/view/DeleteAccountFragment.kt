@@ -30,18 +30,8 @@ class DeleteAccountFragment : Fragment() {
             Navigation.findNavController(it).popBackStack()
         }
 
-        if (GoogleSignIn.getLastSignedInAccount(requireContext()) != null) {
-            viewBinding.fragmentDeleteAccountEdtPassword.visibility = View.GONE
-        }else{
-            viewBinding.fragmentDeleteAccountEdtPassword.visibility = View.VISIBLE
-        }
         viewBinding.fragmentDeleteAccountBtnDelete.setOnClickListener {
-            if (GoogleSignIn.getLastSignedInAccount(requireContext()) != null) {
-                controlloginWithGoogleEmail()
-            }else{
-                controlPasswordInfo()
-            }
-
+            deleteAccoundAlerdDialog()
         }
         return viewBinding.root
     }
@@ -49,7 +39,10 @@ class DeleteAccountFragment : Fragment() {
     //Click on the button and it exits and is deleted from firestore and authtan
     fun deleteAccoundAlerdDialog() {
         val currendUser = firebaseAuth.currentUser!!
+        val userEmail = viewBinding.fragmentDeleteAccountEdtEmail.text.toString()
+
         val alertDialog = android.app.AlertDialog.Builder(context)
+
         alertDialog.setTitle(getString(R.string.delete_account))
         alertDialog.setMessage(getString(R.string.delete_account_alert_message))
         alertDialog.setNegativeButton(getString(R.string.cancel)) { dialogInterface, i ->
@@ -61,56 +54,23 @@ class DeleteAccountFragment : Fragment() {
                     /*After deleting someone who enters Google,
                      so that the selection screen appears again on the login screen
                      */
-                    val googleSignInClient = GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    val googleSignInClient = GoogleSignIn.getClient(
+                        requireContext(),
+                        GoogleSignInOptions.DEFAULT_SIGN_IN
+                    )
                     googleSignInClient.revokeAccess()
 
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     firebaseFirestoreDB.collection("Users").document(currendUser.uid).delete()
-                    firebaseFirestoreDB.collection("Password").document(currendUser.uid).delete()
-                    firebaseFirestoreDB.collection("Product Id").document(currendUser.uid).delete()
                 }
 
             }.addOnFailureListener { exception ->
                 Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
-        alertDialog.show()
-
-    }
-
-    //check the correctness of the data entered in the edittext
-    fun controlPasswordInfo() {
-        val currentUser = firebaseAuth.currentUser!!
-        val userEmail = viewBinding.fragmentDeleteAccountEdtEmail.text.toString()
-        val userPassword = viewBinding.fragmentDeleteAccountEdtPassword.text.toString()
-        firebaseFirestoreDB.collection("Password").document(currentUser.uid)
-            .addSnapshotListener { snapshot, exception ->
-                if (exception != null) {
-                    Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT).show()
-                } else {
-                    if (snapshot != null && snapshot.exists()) {
-                        val password = snapshot.data?.get("password").toString()
-                        if (currentUser.email == userEmail && password == userPassword) {
-                            deleteAccoundAlerdDialog()
-                        } else {
-                            Toast.makeText(
-                                context,
-                                getString(R.string.enter_info_correctly),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                    }
-                }
-            }
-    }
-    //Separate control for entering with google
-    fun controlloginWithGoogleEmail(){
-        val currentUser = firebaseAuth.currentUser!!
-        val userEmail = viewBinding.fragmentDeleteAccountEdtEmail.text.toString()
-        if (currentUser.email == userEmail) {
-            deleteAccoundAlerdDialog()
+        if (currendUser.email == userEmail) {
+            alertDialog.show()
         } else {
             Toast.makeText(
                 context,

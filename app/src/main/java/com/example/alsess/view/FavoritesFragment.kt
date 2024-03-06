@@ -14,10 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 class FavoritesFragment : Fragment() {
     private lateinit var viewBinding: FragmentFavoritesBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    override fun onStart() {
-        super.onStart()
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

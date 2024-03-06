@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentChangePasswordBinding
+import com.example.alsess.service.UpdateFirebaseData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,7 +26,7 @@ class ChangePasswordFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         viewBinding.fragmentChangePasswordBtnChange.setOnClickListener {
-            currentPassword()
+            changePassword()
         }
 
         /*İf the e-mail has been verified, the password change screen opens,
@@ -36,13 +37,12 @@ class ChangePasswordFragment : Fragment() {
         } else {
             if (GoogleSignIn.getLastSignedInAccount(requireContext()) != null) {
                 viewBinding.fragmentChangePasswordTxvWithGoogle.visibility = View.VISIBLE
-            }else{
+            } else {
                 viewBinding.fragmentChangePasswordTxvVerifyYourEmail.visibility = View.VISIBLE
                 viewBinding.fragmentChangePasswordTxvGo.visibility = View.VISIBLE
             }
 
         }
-
         viewBinding.fragmentChangePasswordTxvGo.setOnClickListener {
             Navigation.findNavController(it)
                 .navigate(R.id.action_changePasswordFragment_to_emailVerificationFragment)
@@ -55,46 +55,14 @@ class ChangePasswordFragment : Fragment() {
         return viewBinding.root
     }
 
-    //Existing password verification
-    fun currentPassword() {
-        val currentUser = auth.currentUser!!
-        val currentPassword = viewBinding.fragmentChangePasswordEdtCurrentPassword.text.toString()
-        firebaseFirestoreDB.collection("Password").document(currentUser.uid)
-            .addSnapshotListener { snapshot, exception ->
-                if (exception != null) {
-                    Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    if (snapshot != null && snapshot.exists()) {
-                        val userPassword = snapshot.data?.get("password").toString()
-                        if (currentPassword == userPassword) {
-                            changePassword()
-                        } else {
-                            Toast.makeText(
-                                context,
-                                getString(R.string.current_password_incorrect),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                    }
-                }
-            }
-    }
-
     fun changePassword() {
-        val currentUser = auth.currentUser!!
+        val updatePassword = UpdateFirebaseData(requireContext())
         val newPassword = viewBinding.fragmentChangePasswordEdtNewPassword.text.toString()
         val newPasswordAgain = viewBinding.fragmentChangePasswordEdtNewPasswordAgain.text.toString()
         if (newPassword != "" && newPasswordAgain != "") {
             if (newPassword == newPasswordAgain) {
-                currentUser.updatePassword(newPassword).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        updateFirestoreData()
-                    }
-                }.addOnFailureListener { exception ->
-                    Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT).show()
-                }
+              updatePassword.changefirebasePassword(newPassword)
+
             } else {
                 Toast.makeText(context, getString(R.string.password_not_same), Toast.LENGTH_SHORT)
                     .show()
@@ -105,14 +73,4 @@ class ChangePasswordFragment : Fragment() {
         }
     }
 
-    //Update the updated password in firestore as well
-    fun updateFirestoreData() {
-        val currentUser = auth.currentUser!!
-        val newPassword = viewBinding.fragmentChangePasswordEdtNewPasswordAgain.text.toString()
-        firebaseFirestoreDB.collection("Password").document(currentUser.uid)
-            .update("password", newPassword).addOnSuccessListener {
-            }.addOnFailureListener { exception ->
-                exception.localizedMessage
-            }
-    }
 }

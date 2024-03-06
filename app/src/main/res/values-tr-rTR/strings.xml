@@ -73,7 +73,7 @@
     <string name="new_password">Yeni Şifre</string>
     <string name="new_password_again">Yeni Şifre Tekrarı</string>
     <string name="logged_in_with_google">Google ile giriş yapıldı</string>
-    <string name="current_password_incorrect">Mevcut şifre yanlış</string>
+    <string name="password_updated">Şifre Güncellendi</string>
 
     <!-- Email Verification Fragment -->
     <string name="email_already_verified" >E-Postanızı zaten güncellediniz</string>

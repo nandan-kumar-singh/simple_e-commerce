@@ -75,15 +75,12 @@ class SignUpActivity : AppCompatActivity() {
                 it.uppercase()
             }
         val phone = viewBinding.activitySignUpEdtPhone.text.toString().trim()
-        val password = viewBinding.activitySignUpEdtPassword.text.toString().trim()
         val usersHashMap = HashMap<String, Any>()
-        val passwordHashMap = HashMap<String, Any>()
         usersHashMap.put("name", name)
         usersHashMap.put("lastName", lastName)
         usersHashMap.put("phone", phone)
         firebaseFirestoreCollection("Users", usersHashMap)
-        passwordHashMap.put("password", password)
-        firebaseFirestoreCollection("Password", passwordHashMap)
+
 
     }
 

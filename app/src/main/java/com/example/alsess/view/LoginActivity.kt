@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-    val clientID = getString(R.string.google_json_client_id)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -91,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun request() {
+        val clientID = getString(R.string.google_json_client_id)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(clientID)
             .requestEmail()

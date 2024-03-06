@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.alsess.R
-import com.example.alsess.service.UpdateFirestoreData
+import com.example.alsess.service.UpdateFirebaseData
 import com.example.alsess.databinding.FragmentUserInfoBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,7 +92,7 @@ class UserInfoFragment : Fragment() {
         val userLastName = viewBinding.fragmentUserInfoEdtLastName.text.toString()
         val userPhone = viewBinding.fragmentUserInfoEdtPhone.text.toString()
         val currentUserUid = auth.currentUser!!.uid
-        val updateFirestore = UpdateFirestoreData(requireContext())
+        val updateFirestore = UpdateFirebaseData(requireContext())
 
         updateFirestore.updateFirestoreUserInfo(currentUserUid, "name", userName.replaceFirstChar {
             it.uppercase()
