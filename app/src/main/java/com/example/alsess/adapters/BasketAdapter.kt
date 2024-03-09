@@ -101,7 +101,7 @@ class BasketAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
             if(basketList.size != 0 ){
                 onChangeAmount.onChange("0.0")
             }
-            BasketSQLiteDao().deleteProduts(basketDataHelper,basket.id)
+            BasketSQLiteDao().deleteBasket(basketDataHelper,basket.id)
             total()
             notifyDataSetChanged()
         }

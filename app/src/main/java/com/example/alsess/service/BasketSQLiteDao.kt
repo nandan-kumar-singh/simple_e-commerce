@@ -74,7 +74,7 @@ class BasketSQLiteDao {
 
         return basketArrayList
     }
-    fun deleteProduts(basketDataHelper: BasketSQLiteDataHelper, id: Long){
+    fun deleteBasket(basketDataHelper: BasketSQLiteDataHelper, id: Long){
         val db = basketDataHelper.writableDatabase
         db.delete("basket","id=?", arrayOf(id.toString()))
         db.close()

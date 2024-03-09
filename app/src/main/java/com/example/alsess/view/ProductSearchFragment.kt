@@ -10,18 +10,16 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.R
 import com.example.alsess.adapters.ProductSearchAdapter
 import com.example.alsess.databinding.FragmentProductSearchBinding
 import com.example.alsess.model.ApiProductsModel
+import com.example.alsess.viewmodel.ProductSearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,22 +28,18 @@ class ProductSearchFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductSearchBinding
     val productArrayList = ArrayList<ApiProductsModel>()
     val bundle: ProductSearchFragmentArgs by navArgs()
+    private lateinit var productSearchViewModel: ProductSearchViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         viewBinding = FragmentProductSearchBinding.inflate(inflater, container, false)
+        productSearchViewModel = ViewModelProvider(this).get(ProductSearchViewModel::class.java)
+        productSearchViewModel.productLoadData(bundle.category)
 
-        productLoadData()
+        viewModelObserve()
+
         recyclerViewActions()
-
-        if (productArrayList.size != 0) {
-            viewBinding.fragmentProductSearchPgb.visibility = View.GONE
-            viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
-        }else{
-            viewBinding.fragmentProductSearchBtnSort.visibility = View.GONE
-        }
-
         viewBinding.fragmentProductSearchToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
@@ -64,48 +58,34 @@ class ProductSearchFragment : Fragment() {
         return viewBinding.root
     }
 
-    private fun productLoadData() {
-        val retrofit = ProductsRetrofitService()
-        retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
-            override fun onResponse(
-                call: Call<List<ApiProductsModel>>,
-                response: Response<List<ApiProductsModel>>
-            ) {
-                if (response.isSuccessful) {
-                    viewBinding.fragmentProductSearchPgb.visibility = View.GONE
-                    viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
-                    if (productArrayList.size == 0) {
-                        recyclerViewActions()
-                    }
+    fun viewModelObserve() {
+        if (productArrayList.size == 0) {
+            productSearchViewModel.productMLD.observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer { product ->
+                    product?.let {
+                        productArrayList.addAll(it)
 
-                    var index = 0
-                    if (productArrayList.size == 0) {
-                        while (index < response.body()!!.size) {
-                            if (response.body()!![index].category.contains(bundle.category)) {
-                                productArrayList.add(
-                                    ApiProductsModel(
-                                        response.body()!![index].id,
-                                        response.body()!![index].title,
-                                        response.body()!![index].price,
-                                        response.body()!![index].description,
-                                        response.body()!![index].category,
-                                        response.body()!![index].image,
-                                        response.body()!![index].rating
-                                    )
-                                )
-                            }
-                            index++
-                        }
+                    }
+                })
+        }
+
+
+        productSearchViewModel.productLoadMLD.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { productLoad ->
+                productLoad?.let {
+                    if (it) {
+                        viewBinding.fragmentProductSearchBtnSort.visibility = View.VISIBLE
+                        viewBinding.fragmentProductSearchPgb.visibility = View.GONE
+
+                    } else {
+                        viewBinding.fragmentProductSearchPgb.visibility = View.VISIBLE
                     }
                 }
-            }
-
-            override fun onFailure(call: Call<List<ApiProductsModel>>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
+            })
     }
+
 
     @SuppressLint("InflateParams")
     fun bottomSheetDialogAction() {
@@ -150,9 +130,6 @@ class ProductSearchFragment : Fragment() {
                     sharedPreferencesEditor?.apply()
                     if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productArrayList.sortBy {
-                            it.id
-                        }
                         bottomSheetDialog?.dismiss()
                     }
                 }

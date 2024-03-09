@@ -138,7 +138,7 @@ class ProductSearchAdapter(
                     )
                 }
             } else {
-                basketDAO.deleteProduts(basketDataHelper, arrayPositionBasket.id)
+                basketDAO.deleteBasket(basketDataHelper, arrayPositionBasket.id)
             }
         }
         //Toggle button is checked as true if added to basket, false if not

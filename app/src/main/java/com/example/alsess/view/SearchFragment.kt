@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.adapters.SearchAdapter
 import com.example.alsess.databinding.FragmentSearchBinding
-import com.example.alsess.model.ApiProductsModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.alsess.viewmodel.SearchViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,16 +20,9 @@ class SearchFragment : Fragment() {
     private lateinit var searchView: SearchView
     private lateinit var adapter: SearchAdapter
     private lateinit var viewBinding: FragmentSearchBinding
+    private lateinit var searchViewModel: SearchViewModel
     val searchItemList = HashSet<String>()
 
-    override fun onStart() {
-        super.onStart()
-        val sharedPreferences =
-            context?.getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
-        val sharedPreferencesEditor = sharedPreferences?.edit()
-        sharedPreferencesEditor?.clear()
-        sharedPreferencesEditor?.apply()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +32,29 @@ class SearchFragment : Fragment() {
         viewBinding.fragmentSearchToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
+
+        val sharedPreferences =
+            context?.getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
+        val sharedPreferencesEditor = sharedPreferences?.edit()
+        sharedPreferencesEditor?.clear()
+        sharedPreferencesEditor?.apply()
+
+        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        searchViewModel.searchItemLoadData()
+        viewModelObserve()
+        searchProduct()
+
         recyclerView = viewBinding.fragmentSearchRecyclerView
         searchView = viewBinding.fragmentSearchSchv
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        searchItemLoadData()
         adapter = SearchAdapter(searchItemList.toList())
         recyclerView.adapter = adapter
 
+        return viewBinding.root
+    }
 
+    fun searchProduct() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 //The entered data is confirmed and sent to the product search page
@@ -74,9 +78,6 @@ class SearchFragment : Fragment() {
             }
 
         })
-
-
-        return viewBinding.root
     }
 
     private fun filterList(query: String?) {
@@ -100,27 +101,12 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun searchItemLoadData() {
-        val retrofit = ProductsRetrofitService()
-        retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
-            override fun onResponse(
-                call: Call<List<ApiProductsModel>>,
-                response: Response<List<ApiProductsModel>>
-            ) {
-                if (response.isSuccessful) {
-                    var index = 0
-                    while (index < response.body()!!.size) {
-                        searchItemList.add(response.body()!![index].category)
-                        index++
-                    }
-
+    private fun viewModelObserve() {
+        searchViewModel.searchItemMLD.observe(
+            viewLifecycleOwner, androidx.lifecycle.Observer { product ->
+                product?.let {
+                    searchItemList.addAll(it)
                 }
-            }
-
-            override fun onFailure(call: Call<List<ApiProductsModel>>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
+            })
     }
 }

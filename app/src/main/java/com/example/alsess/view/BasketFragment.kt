@@ -18,7 +18,7 @@ class BasketFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         viewBinding = FragmentBasketBinding.inflate(inflater, container, false)
 
         val sharedPreferences = context?.getSharedPreferences("totalPrice", Context.MODE_PRIVATE)

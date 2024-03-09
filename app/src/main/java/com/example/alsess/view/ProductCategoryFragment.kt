@@ -10,37 +10,38 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.alsess.service.ProductsRetrofitService
 import com.example.alsess.R
 import com.example.alsess.adapters.ProductCategoryAdapter
 import com.example.alsess.databinding.FragmentProductCategoryBinding
 import com.example.alsess.model.ApiProductsModel
+import com.example.alsess.viewmodel.ProductCategoryViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.Collections
 
 class ProductCategoryFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductCategoryBinding
-    val productMutableList: MutableList<ApiProductsModel> = mutableListOf()
+    private lateinit var productCategoryViewModel: ProductCategoryViewModel
+    val productArrayList = ArrayList<ApiProductsModel>()
     val bundle: ProductCategoryFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         viewBinding = FragmentProductCategoryBinding.inflate(inflater, container, false)
 
-        productLoadData()
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel :: class.java)
+        productCategoryViewModel .productLoadData(bundle.category)
+
+        viewModelObserve()
+
         recyclerViewActions()
 
-        if (productMutableList.size != 0) {
-            viewBinding.fragmentProductCategoryAllPgb.visibility = View.GONE
-            viewBinding.fragmentProductCategoryAllBtnSort.visibility = View.VISIBLE
-        }
+
         viewBinding.fragmentProductCategoryAllToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
@@ -50,60 +51,42 @@ class ProductCategoryFragment : Fragment() {
         }
         return viewBinding.root
     }
+    fun viewModelObserve() {
+        if (productArrayList.size == 0) {
+            productCategoryViewModel.productMLD.observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer { product ->
+                    product?.let {
+                        productArrayList.addAll(it)
 
-    fun productLoadData() {
-        val retrofit = ProductsRetrofitService()
-        retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
-            override fun onResponse(
-                call: Call<List<ApiProductsModel>>,
-                response: Response<List<ApiProductsModel>>
-            ) {
-
-                if (response.isSuccessful) {
-                    viewBinding.fragmentProductCategoryAllPgb.visibility = View.GONE
-                    viewBinding.fragmentProductCategoryAllBtnSort.visibility = View.VISIBLE
-                    if (productMutableList.size == 0) {
-                        recyclerViewActions()
                     }
-                    //The listing changes depending on which category is clicked
-                    var indeks = 0
-                    if(productMutableList.size == 0){
-                        while (indeks < response.body()!!.size) {
-                            if (bundle.category == response.body()!!.get(indeks).category) {
-                                productMutableList.add(
-                                    ApiProductsModel(
-                                        response.body()!!.get(indeks).id,
-                                        response.body()!!.get(indeks).title,
-                                        response.body()!!.get(indeks).price,
-                                        response.body()!!.get(indeks).description,
-                                        response.body()!!.get(indeks).category,
-                                        response.body()!!.get(indeks).image,
-                                        response.body()!!.get(indeks).rating
-                                    )
-                                )
+                })
+        }
 
 
-                            }
-                            indeks++
-                        }
+        productCategoryViewModel.productLoadMLD.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { productLoad ->
+                productLoad?.let {
+                    if (it) {
+                        viewBinding.fragmentProductCategoryAllBtnSort.visibility = View.VISIBLE
+                        viewBinding.fragmentProductCategoryAllPgb.visibility = View.GONE
+
+                    } else {
+                        viewBinding.fragmentProductCategoryAllPgb.visibility = View.VISIBLE
                     }
-
                 }
-            }
-
-            override fun onFailure(call: Call<List<ApiProductsModel>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+            })
     }
+
 
 
     @SuppressLint("CommitPrefEdits", "NotifyDataSetChanged")
     fun bottomSheetDialogAction() {
-        val bottomSheetDialog = BottomSheetDialog(context!!)
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
         val bottomSheetView = layoutInflater.inflate(R.layout.fragment_category_bottom_sheet, null)
         val sharedPreferences =
-            context!!.getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences("radioButtonClick", Context.MODE_PRIVATE)
         val sharedPreferencesEditor = sharedPreferences.edit()
 
         val imbCancel = bottomSheetView.findViewById(R.id.fragmentCategoryBottomSheetImbCancel) as ImageButton
@@ -138,20 +121,19 @@ class ProductCategoryFragment : Fragment() {
                 R.id.fragmentCategoryBottomSheetRbDefaultSorting -> {
                     sharedPreferencesEditor.putInt("rbClickId", 1)
                     sharedPreferencesEditor.apply()
-                    if (productMutableList.size != 0) {
+                    if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productMutableList.sortBy {
-                            it.id
-                        }
+                        productArrayList.clear()
+                        viewModelObserve()
                         bottomSheetDialog.dismiss()
                     }
                 }
                 R.id.fragmentCategoryBottomSheetRbLowestPrice -> {
                     sharedPreferencesEditor.putInt("rbClickId", 2)
                     sharedPreferencesEditor.apply()
-                    if (productMutableList.size != 0) {
+                    if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productMutableList.sortBy {
+                        productArrayList.sortBy {
                             it.price
                         }
                         bottomSheetDialog.dismiss()
@@ -160,21 +142,21 @@ class ProductCategoryFragment : Fragment() {
                 R.id.fragmentCategoryBottomSheetRbHighestPrice -> {
                     sharedPreferencesEditor.putInt("rbClickId", 3)
                     sharedPreferencesEditor.apply()
-                    if (productMutableList.size != 0) {
+                    if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productMutableList.sortBy {
+                        productArrayList.sortBy {
                             it.price
                         }
-                        Collections.reverse(productMutableList)
+                        Collections.reverse(productArrayList)
                         bottomSheetDialog.dismiss()
                     }
                 }
                 R.id.fragmentCategoryBottomSheetRbLowestRated -> {
                     sharedPreferencesEditor.putInt("rbClickId", 4)
                     sharedPreferencesEditor.apply()
-                    if (productMutableList.size != 0) {
+                    if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productMutableList.sortBy {
+                        productArrayList.sortBy {
                             it.rating.rate
                         }
                         bottomSheetDialog.dismiss()
@@ -183,12 +165,12 @@ class ProductCategoryFragment : Fragment() {
                 R.id.fragmentCategoryBottomSheetRbHighestRated -> {
                     sharedPreferencesEditor.putInt("rbClickId", 5)
                     sharedPreferencesEditor.apply()
-                    if (productMutableList.size != 0) {
+                    if (productArrayList.size != 0) {
                         recyclerViewActions()
-                        productMutableList.sortBy {
+                        productArrayList.sortBy {
                             it.rating.rate
                         }
-                        Collections.reverse(productMutableList)
+                        Collections.reverse(productArrayList)
                         bottomSheetDialog.dismiss()
                     }
 
@@ -209,7 +191,7 @@ class ProductCategoryFragment : Fragment() {
             context?.let {
                 ProductCategoryAdapter(
                     it,
-                    productMutableList
+                    productArrayList
                 )
             }
         viewBinding.fragmentProductCategoryAllRecyclerView.layoutManager =
