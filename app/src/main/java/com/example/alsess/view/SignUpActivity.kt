@@ -1,39 +1,53 @@
 package com.example.alsess.view
 
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.alsess.R
 import com.example.alsess.databinding.ActivitySignUpBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.alsess.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivitySignUpBinding
-    private lateinit var auth: FirebaseAuth
-    val firebaseFirestoreDB = FirebaseFirestore.getInstance()
+    private lateinit var signUpViewModel: SignUpViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         viewBinding = ActivitySignUpBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
-        auth = FirebaseAuth.getInstance()
-
+        signUpViewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
+        viewModelObserve()
     }
 
     //activitySignUpButtonSingUp onClick
     //when all the information is entered, the user is registered in the system
-    fun signUp(view : View) {
-        val name = viewBinding.activitySignUpEdtName.text.toString()
-        val lastName = viewBinding.activitySignUpEdtLastName.text.toString()
+    fun signUp(view: View) {
         val email = viewBinding.activitySignUpEdtEMail.text.toString()
-        val phone = viewBinding.activitySignUpEdtPhone.text.toString()
         val password = viewBinding.activitySignUpEdtPassword.text.toString()
         val passwordAgain = viewBinding.activitySignUpEdtPasswordAgain.text.toString()
+        val name = viewBinding.activitySignUpEdtName.text.toString().trim().replaceFirstChar {
+            it.uppercase()
+        }
+        val lastName =
+            viewBinding.activitySignUpEdtLastName.text.toString().trim().replaceFirstChar {
+                it.uppercase()
+            }
+        val phone = viewBinding.activitySignUpEdtPhone.text.toString().trim()
+
         if (name != "" && lastName != "" && email != "" && phone != "" && password != "" && passwordAgain != "") {
             if (password == passwordAgain) {
-                firebaseAuthentication()
+                signUpViewModel.firebaseAuthentication(
+                    this@SignUpActivity,
+                    email,
+                    password,
+                    name,
+                    lastName,
+                    phone
+                )
             } else {
                 Toast.makeText(
                     applicationContext,
@@ -47,59 +61,21 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    //firebase Authentication
-    fun firebaseAuthentication() {
-        val email = viewBinding.activitySignUpEdtEMail.text.toString()
-        val password = viewBinding.activitySignUpEdtPassword.text.toString()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+    fun viewModelObserve() {
+        signUpViewModel.loadAuthMLD.observe(this, Observer { load ->
+            load?.let {
+                if (it) {
                     viewBinding.activitySignUpProgressBar.visibility = View.VISIBLE
-                    firebaseFirestore()
                 }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_SHORT)
+            }
+        })
+
+        signUpViewModel.errorMessageMLD.observe(this, Observer { error ->
+            error?.let {
+                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT)
                     .show()
             }
-    }
-
-    //User data is saved in firestore
-    /*The password will be used in the password changing section,
-    the product ID will be used for favorites and product IDs added to the cart. */
-    private fun firebaseFirestore() {
-        val name = viewBinding.activitySignUpEdtName.text.toString().trim().replaceFirstChar {
-            it.uppercase()
-        }
-        val lastName =
-            viewBinding.activitySignUpEdtLastName.text.toString().trim().replaceFirstChar {
-                it.uppercase()
-            }
-        val phone = viewBinding.activitySignUpEdtPhone.text.toString().trim()
-        val usersHashMap = HashMap<String, Any>()
-        usersHashMap.put("name", name)
-        usersHashMap.put("lastName", lastName)
-        usersHashMap.put("phone", phone)
-        firebaseFirestoreCollection("Users", usersHashMap)
-
+        })
 
     }
-
-    //Called when adding multiple collections
-    fun firebaseFirestoreCollection(collectionName: String, setHashMap: HashMap<String, Any>) {
-        val currentUserUid = auth.currentUser!!.uid
-        firebaseFirestoreDB.collection(collectionName).document(currentUserUid).set(setHashMap)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(this@SignUpActivity, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
 }

@@ -5,101 +5,83 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.alsess.R
-import com.example.alsess.service.UpdateFirebaseData
 import com.example.alsess.databinding.FragmentUserInfoBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.alsess.viewmodel.UserInfoViewModel
 
 class UserInfoFragment : Fragment() {
     private lateinit var viewBinding: FragmentUserInfoBinding
-    private lateinit var auth: FirebaseAuth
-    val firebaseFirestoreDB = FirebaseFirestore.getInstance()
+    private lateinit var userInfoViewModel: UserInfoViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         viewBinding = FragmentUserInfoBinding.inflate(inflater, container, false)
-        auth = FirebaseAuth.getInstance()
-        readFirestoreUserData()
-
+        userInfoViewModel = ViewModelProvider(this).get(UserInfoViewModel::class.java)
+        userInfoViewModel.readFireStoreUserData()
+        viewModelObserve()
+        viewBinding.fragmentUserInfoBtnUpdateInfo.setOnClickListener {
+            val userName = viewBinding.fragmentUserInfoEdtName.text.toString()
+            val userLastName = viewBinding.fragmentUserInfoEdtLastName.text.toString()
+            val userPhone = viewBinding.fragmentUserInfoEdtPhone.text.toString()
+            userInfoViewModel.updateFireStoreUserData(
+                requireContext(),
+                userName,
+                userLastName,
+                userPhone
+            )
+        }
         viewBinding.fragmentUserInfoToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
-        }
-
-        viewBinding.fragmentUserInfoBtnUpdateInfo.setOnClickListener {
-            ubdateFirestoreUserData()
         }
 
         return viewBinding.root
     }
 
-    //User information is retrieved from firestore
-    fun readFirestoreUserData() {
-        val currentUser = auth.currentUser!!
-        viewBinding.fragmentUserInfoTxvEmail.text = currentUser.email
-        firebaseFirestoreDB.collection("Users").document(currentUser.uid)
-            .addSnapshotListener { snapshot, exception ->
-                if (exception != null) {
-                    Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT).show()
+    private fun viewModelObserve() {
+        val emptyEditTextShape = R.drawable.edittext_empty_shape
+        val editTextShape = R.drawable.edittext_shape
+        userInfoViewModel.userInfoMLD.observe(viewLifecycleOwner, Observer { user ->
+            user?.let {
+                val name = it.get("name")
+                val lastName = it.get("lastName")
+                val phone = it.get("phone")
+                val email = it.get("email")
+                viewBinding.fragmentUserInfoTxvEmail.text = email
+                if (name != "") {
+                    viewBinding.fragmentUserInfoEdtName.setText(name)
+                    viewBinding.fragmentUserInfoEdtName.setBackgroundResource(
+                        editTextShape
+                    )
                 } else {
-                    if (snapshot != null && snapshot.exists()) {
-                        val name = snapshot.data?.get("name").toString()
-                        val lastName = snapshot.data?.get("lastName").toString()
-                        val phone = snapshot.data?.get("phone").toString()
-                        val emptyEditTextShape = R.drawable.edittext_empty_shape
-                        val editTextShape = R.drawable.edittext_shape
-                        if (name != "") {
-                            viewBinding.fragmentUserInfoEdtName.setText(name)
-                            viewBinding.fragmentUserInfoEdtName.setBackgroundResource(
-                                editTextShape
-                            )
-                        } else {
-                            viewBinding.fragmentUserInfoEdtName.setBackgroundResource(
-                                emptyEditTextShape
-                            )
-                        }
-                        if (lastName != "") {
-                            viewBinding.fragmentUserInfoEdtLastName.setText(lastName)
-                            viewBinding.fragmentUserInfoEdtLastName.setBackgroundResource(
-                                editTextShape
-                            )
-                        } else {
-                            viewBinding.fragmentUserInfoEdtLastName.setBackgroundResource(
-                                emptyEditTextShape
-                            )
-                        }
-                        if (phone != "") {
-                            viewBinding.fragmentUserInfoEdtPhone.setText(phone)
-                            viewBinding.fragmentUserInfoEdtPhone.setBackgroundResource(
-                                editTextShape
-                            )
-                        } else {
-                            viewBinding.fragmentUserInfoEdtPhone.setBackgroundResource(
-                                emptyEditTextShape
-                            )
-                        }
-                    }
+                    viewBinding.fragmentUserInfoEdtName.setBackgroundResource(
+                        emptyEditTextShape
+                    )
+                }
+                if (lastName != "") {
+                    viewBinding.fragmentUserInfoEdtLastName.setText(lastName)
+                    viewBinding.fragmentUserInfoEdtLastName.setBackgroundResource(
+                        editTextShape
+                    )
+                } else {
+                    viewBinding.fragmentUserInfoEdtLastName.setBackgroundResource(
+                        emptyEditTextShape
+                    )
+                }
+                if (phone != "") {
+                    viewBinding.fragmentUserInfoEdtPhone.setText(phone)
+                    viewBinding.fragmentUserInfoEdtPhone.setBackgroundResource(
+                        editTextShape
+                    )
+                } else {
+                    viewBinding.fragmentUserInfoEdtPhone.setBackgroundResource(
+                        emptyEditTextShape
+                    )
                 }
             }
-    }
-
-    //Updates according to the entered field
-    fun ubdateFirestoreUserData() {
-        val userName = viewBinding.fragmentUserInfoEdtName.text.toString()
-        val userLastName = viewBinding.fragmentUserInfoEdtLastName.text.toString()
-        val userPhone = viewBinding.fragmentUserInfoEdtPhone.text.toString()
-        val currentUserUid = auth.currentUser!!.uid
-        val updateFirestore = UpdateFirebaseData(requireContext())
-
-        updateFirestore.updateFirestoreUserInfo(currentUserUid, "name", userName.replaceFirstChar {
-            it.uppercase()
         })
-        updateFirestore.updateFirestoreUserInfo(currentUserUid, "lastName", userLastName.replaceFirstChar {
-            it.uppercase()
-        })
-        updateFirestore.updateFirestoreUserInfo(currentUserUid, "phone", userPhone)
     }
 }
