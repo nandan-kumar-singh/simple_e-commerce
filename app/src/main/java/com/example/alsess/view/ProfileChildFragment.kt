@@ -1,6 +1,5 @@
 package com.example.alsess.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,31 +8,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProfileChildBinding
 import com.example.alsess.service.FavoritesSQLiteDataHelper
+import com.example.alsess.viewmodel.ProfileChildViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileChildFragment : Fragment() {
     private lateinit var viewBinding: FragmentProfileChildBinding
     private lateinit var fireBaseAuth: FirebaseAuth
-    val firebaseFirestoreDB = FirebaseFirestore.getInstance()
+    private lateinit var profileChildViewModel: ProfileChildViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewBinding = FragmentProfileChildBinding.inflate(inflater, container, false)
         fireBaseAuth = FirebaseAuth.getInstance()
+        profileChildViewModel = ViewModelProvider(this).get(ProfileChildViewModel::class.java)
         buttonClickAction()
-
+        viewModelObserve()
 
         //If the user is logged in, the profile is listed, if not, the register or login buttons appear
         if (fireBaseAuth.currentUser != null) {
-            checkFirestoredocument()
+            profileChildViewModel.checkFireStoreDocument()
         } else {
             viewBinding.fragmentProfileChildBtnLogin.visibility = View.VISIBLE
             viewBinding.fragmentProfileChildBtnSignUp.visibility = View.VISIBLE
@@ -42,8 +44,33 @@ class ProfileChildFragment : Fragment() {
 
     }
 
+    fun viewModelObserve() {
+        profileChildViewModel.errorMessageMLD.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+        })
+        profileChildViewModel.loadMLD.observe(viewLifecycleOwner, Observer { load ->
+            load?.let {
+                if (it) {
+                    viewBinding.fragmentProfileChildCardViewParent.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        profileChildViewModel.userMLD.observe(viewLifecycleOwner, Observer { user ->
+            user?.let {
+                viewBinding.fragmentProfileChildTxvName.text = it.get("name")
+                viewBinding.fragmentProfileChildTxvNameChar.text = it.get("nameChar")
+            }
+        })
+
+    }
+
     fun buttonClickAction() {
-        val favoritesDataHelper = FavoritesSQLiteDataHelper(context!!)
+        val favoritesDataHelper = FavoritesSQLiteDataHelper(requireContext())
         //Transition from profile fragment to other detail fragments
         viewBinding.fragmentProfileChildBtnUserInfo.setOnClickListener {
             Navigation.findNavController(it)
@@ -59,7 +86,12 @@ class ProfileChildFragment : Fragment() {
         if (fireBaseAuth.currentUser != null) {
             viewBinding.fragmentProfileChildBtnLogOut.setOnClickListener {
                 val googleSignInClient =
-                    context?.let { it1 -> GoogleSignIn.getClient(it1, GoogleSignInOptions.DEFAULT_SIGN_IN) }
+                    context?.let { it ->
+                        GoogleSignIn.getClient(
+                            it,
+                            GoogleSignInOptions.DEFAULT_SIGN_IN
+                        )
+                    }
                 fireBaseAuth.signOut()
                 googleSignInClient?.revokeAccess()
                 val intent = Intent(context, MainActivity::class.java)
@@ -67,7 +99,7 @@ class ProfileChildFragment : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 activity?.let(FragmentActivity::finish)
-                favoritesDataHelper.writableDatabase.delete("favorites",null,null)
+                favoritesDataHelper.writableDatabase.delete("favorites", null, null)
             }
         }
 
@@ -81,89 +113,5 @@ class ProfileChildFragment : Fragment() {
             startActivity(intent)
         }
 
-    }
-
-    //The user who enters Google for the first time does not have a user information document,
-    // this is checked
-    fun checkFirestoredocument() {
-        val currentUser = fireBaseAuth.currentUser!!
-        firebaseFirestoreDB.collection("Users").document(currentUser.uid)
-            .get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val document = task.result
-                    if (document != null) {
-                        if (document.exists() || document == null) {
-                            firestoreUserData()
-                        } else {
-                            firebaseFirestoreAddData()
-                            firestoreUserData()
-                            viewBinding.fragmentProfileChildTxvName.text =
-                                currentUser.displayName
-                            viewBinding.fragmentProfileChildTxvNameChar.text =
-                                currentUser.displayName?.get(0)
-                                    .toString()
-                        }
-                    }
-                }
-            }.addOnFailureListener { exception ->
-                exception.localizedMessage
-            }
-    }
-
-    //Information received when registering is withdrawn from the profile
-    @SuppressLint("SetTextI18n")
-    fun firestoreUserData() {
-        val currentUser = fireBaseAuth.currentUser
-        if (currentUser != null) {
-            firebaseFirestoreDB.collection("Users").document(currentUser.uid)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception != null) {
-                        Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        if (snapshot != null && snapshot.exists()) {
-                            val name = snapshot.data?.get("name").toString()
-                            val lastName = snapshot.data?.get("lastName").toString()
-                            if (name != "" && lastName != "") {
-                                viewBinding.fragmentProfileChildTxvName.text = "$name $lastName"
-                                viewBinding.fragmentProfileChildTxvNameChar.text =
-                                    name.get(0).toString() + lastName.get(0).toString()
-                            } else {
-                                if (currentUser.displayName != null && currentUser.displayName != "") {
-                                    viewBinding.fragmentProfileChildTxvName.text =
-                                        currentUser.displayName
-                                    viewBinding.fragmentProfileChildTxvNameChar.text =
-                                        currentUser.displayName?.first().toString()
-                                } else {
-                                    viewBinding.fragmentProfileChildTxvName.text = currentUser.email
-                                    viewBinding.fragmentProfileChildTxvNameChar.text =
-                                        currentUser.email?.get(0).toString().replaceFirstChar {
-                                            it.uppercaseChar()
-                                        }
-                                }
-                            }
-                            //To prevent the view from arriving before the data arrives
-                            viewBinding.fragmentProfileChildCardViewParent.visibility = View.VISIBLE
-                        }
-                    }
-                }
-        }
-    }
-
-    //Create user information document if it does not exist
-    fun firebaseFirestoreAddData() {
-        val currentUserUid = fireBaseAuth.currentUser!!.uid
-        val usersHashMap = HashMap<String, Any>()
-        usersHashMap.put("name", "")
-        usersHashMap.put("lastName", "")
-        usersHashMap.put("phone", "")
-        firebaseFirestoreDB.collection("Users").document(currentUserUid).set(usersHashMap)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-
-                }
-            }.addOnFailureListener { exception ->
-                exception.localizedMessage
-            }
     }
 }
