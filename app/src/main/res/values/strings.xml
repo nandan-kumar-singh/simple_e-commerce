@@ -87,5 +87,5 @@
     <string name="enter_info_correctly">Enter the information correctly</string>
 
     <!-- Google Json Client Id -->
-    <string name="google_json_client_id" translatable="false">clientId</string>
+    <string name="google_json_client_id" translatable="false">718308439529-fedrasv0vhnener9ls2j4iik81q7vlov.apps.googleusercontent.com</string>
 </resources>

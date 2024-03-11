@@ -7,136 +7,136 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.alsess.R
 import com.example.alsess.databinding.ActivityLoginBinding
+import com.example.alsess.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        auth = FirebaseAuth.getInstance()
-        request()
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        loginViewModel.request(this@LoginActivity)
+        viewModelObserve()
     }
+
     //activityLoginButtonLogin onClick
     //Login with e-mail and password using Firebase
     fun loginWithEmail(view: View) {
         val email = viewBinding.activityLoginTxvEmail.text.toString().trim()
         val password = viewBinding.activityLoginTxvPassword.text.toString().trim()
-
-        if (email != "" && password != "") {
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        } else {
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.email_password_empty),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        loginViewModel.loginWithEmail(email, password)
     }
 
-    //activityLoginbuttonResetPassword onClick
+    //activityLoginButtonResetPassword onClick
     //Firebase password reset link is sent to your e-mail
     fun resetPassword(view: View) {
         val email = viewBinding.activityLoginTxvEmail.text.toString().trim()
-        if (email != "") {
-            viewBinding.activityLoginTxvPassword.setText("")
-            auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.reset_password),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        } else {
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.enter_email),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        loginViewModel.resetPassword(email)
     }
 
     //activityLoginImageButtonGoogle onClick
     //Login with Google using Firebase
     fun loginWithGoogle(view: View) {
-        signInGoogle()
-    }
-
-    fun request() {
-        val clientID = getString(R.string.google_json_client_id)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(clientID)
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
-    //login with Google
-    private fun signInGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        launcher.launch(signInIntent)
+        loginViewModel.signInGoogle(launcher)
     }
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                handleResults(task)
+                loginViewModel.handleResults(task)
             }
         }
 
-    private fun handleResults(task: Task<GoogleSignInAccount>) {
-        if (task.isSuccessful) {
-            val account: GoogleSignInAccount? = task.result
-            if (account != null) {
-                updateUI(account)
+    private fun viewModelObserve() {
+        loginViewModel.loginMLD.observe(this, Observer { login ->
+            login?.let {
+                if (it) {
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                }
             }
-        } else {
-            Toast.makeText(this, task.exception.toString(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun updateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        auth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                viewBinding.activityLoginPgb.visibility = View.VISIBLE
-                val intent = Intent(this@LoginActivity, MainActivity :: class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+        })
+        loginViewModel.errorMessageMLD.observe(this, Observer { error ->
+            error?.let {
+                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT)
+                    .show()
 
             }
-        }
+        })
+        loginViewModel.loginEmptyMLD.observe(this, Observer { loginEmpty ->
+            loginEmpty?.let {
+                if (it) {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.email_password_empty),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
+        loginViewModel.resetLinkMLD.observe(this, Observer { reset ->
+            reset?.let {
+                if (it) {
+                    viewBinding.activityLoginTxvPassword.setText("")
+                }
+            }
+        })
+
+        loginViewModel.resetErrorMessageMLD.observe(this, Observer { resetError ->
+            resetError?.let {
+                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
+
+        loginViewModel.resetEmptyMLD.observe(this, Observer { resetEmpty ->
+            resetEmpty?.let {
+                if (it) {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.enter_email),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
+        loginViewModel.handleErrorMLD.observe(this, Observer { handleError ->
+            handleError?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        loginViewModel.loginWitGoogleMLD.observe(this, Observer { handleError ->
+            handleError?.let {
+                if (it) {
+                    viewBinding.activityLoginPgb.visibility = View.VISIBLE
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        })
+        loginViewModel.updateUIErrorMessageMLD.observe(this, Observer { updateUIError ->
+            updateUIError?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 }

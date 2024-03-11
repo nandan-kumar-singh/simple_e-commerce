@@ -45,7 +45,6 @@ class SearchFragment : Fragment() {
         searchProduct()
 
         recyclerView = viewBinding.fragmentSearchRecyclerView
-        searchView = viewBinding.fragmentSearchSchv
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = SearchAdapter(searchItemList.toList())
@@ -55,6 +54,7 @@ class SearchFragment : Fragment() {
     }
 
     fun searchProduct() {
+        searchView = viewBinding.fragmentSearchSchv
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 //The entered data is confirmed and sent to the product search page
