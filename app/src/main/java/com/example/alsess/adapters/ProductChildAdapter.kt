@@ -6,9 +6,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ToggleButton
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductChildRowBinding
 import com.example.alsess.model.ProductRVChildModel
@@ -22,14 +22,14 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductRVChi
     RecyclerView.Adapter<ProductChildAdapter.ProductChildVH>() {
     private lateinit var firebaseAuth: FirebaseAuth
 
-    class ProductChildVH(val viewBinding: FragmentProductChildRowBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-
+    class ProductChildVH(val dataBinding: FragmentProductChildRowBinding) :
+        RecyclerView.ViewHolder(dataBinding.root) {
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductChildVH {
-        val view = FragmentProductChildRowBinding.inflate(
-            LayoutInflater.from(parent.context),
+        val inflater = LayoutInflater.from(parent.context)
+        val view = DataBindingUtil.inflate<FragmentProductChildRowBinding>(
+            inflater,
+            R.layout.fragment_product_child_row,
             parent,
             false
         )
@@ -44,28 +44,15 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductRVChi
     override fun onBindViewHolder(holder: ProductChildVH, position: Int) {
         firebaseAuth = FirebaseAuth.getInstance()
         val currentUser = firebaseAuth.currentUser
+        holder.dataBinding.product = childList[position]
 
-        holder.viewBinding.rowProductChildTxvName.text = childList.get(position).productName
-
-        Glide.with(context).load(childList.get(position).productImage)
-            .into(holder.viewBinding.rowProductChildImvProduct)
-
-        holder.viewBinding.rowProductChildTxvPrice.text =
-            "${childList.get(position).productPrice.toString()}$"
-
-
-        holder.viewBinding.rowProductChildRtbStar.rating =
-            childList.get(position).productRating.toFloat()
-
-        holder.viewBinding.rowProductChildTxvRating.text =
-            childList.get(position).productRating.toString()
 
         //Data cannot be added to the favorites list if no user is logged in
         if (currentUser != null) {
-            addDataFavorites(holder.viewBinding.rowProductChildTgbAddFavorites, position)
+            addDataFavorites(holder.dataBinding.rowProductChildTgbAddFavorites, position)
         } else {
-            holder.viewBinding.rowProductChildTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
-            holder.viewBinding.rowProductChildTgbAddFavorites.setOnClickListener {
+            holder.dataBinding.rowProductChildTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
+            holder.dataBinding.rowProductChildTgbAddFavorites.setOnClickListener {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
             }
@@ -74,7 +61,7 @@ class ProductChildAdapter(val context: Context, val childList: List<ProductRVChi
 
 
         //Gets the id of the clicked product and shows the product in the product detail
-        holder.viewBinding.rowProductChildCardView.setOnClickListener {
+        holder.dataBinding.rowProductChildCardView.setOnClickListener {
             val navARg = ProductChildFragmentDirections.toProductDetail(
                 childList.get(position).productId
             )

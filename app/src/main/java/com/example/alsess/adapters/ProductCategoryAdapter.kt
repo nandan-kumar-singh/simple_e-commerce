@@ -6,9 +6,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ToggleButton
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductCategoryRowBinding
 import com.example.alsess.model.ApiProductsModel
@@ -26,14 +26,15 @@ class ProductCategoryAdapter(
 ) : RecyclerView.Adapter<ProductCategoryAdapter.ProductCategoryAllVH>() {
     private lateinit var firebaseAuth: FirebaseAuth
 
-    class ProductCategoryAllVH(val viewBinding: FragmentProductCategoryRowBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-
+    class ProductCategoryAllVH(val dataBinding: FragmentProductCategoryRowBinding) :
+        RecyclerView.ViewHolder(dataBinding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCategoryAllVH {
-        val view = FragmentProductCategoryRowBinding.inflate(
-            LayoutInflater.from(parent.context),
+        val inflater = LayoutInflater.from(parent.context)
+        val view = DataBindingUtil.inflate<FragmentProductCategoryRowBinding>(
+            inflater,
+            R.layout.fragment_product_category_row,
             parent,
             false
         )
@@ -42,7 +43,6 @@ class ProductCategoryAdapter(
 
     override fun getItemCount(): Int {
         return productMutableList.size
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,36 +51,23 @@ class ProductCategoryAdapter(
         val currentUser = firebaseAuth.currentUser
         val mutablePosition = productMutableList.get(position)
 
-        holder.viewBinding.rowProductCategoryAllTxvName.text = mutablePosition.title
-
-        Glide.with(context).load(mutablePosition.image)
-            .into(holder.viewBinding.rowProductCategoryAllImvProduct)
-
-        holder.viewBinding.rowProductCategoryAllTxvPrice.text =
-            "${mutablePosition.price.toString()}$"
-
-        holder.viewBinding.rowProductCategoryAllRtbStar.rating =
-            mutablePosition.rating.rate.toFloat()
-
-        holder.viewBinding.rowProductCategoryAllTxvRating.text =
-            mutablePosition.rating.rate.toString()
+        holder.dataBinding.product = productMutableList[position]
 
         //Data cannot be added to the favorites list if no user is logged in
         if (currentUser != null) {
-            addDataFavorites(holder.viewBinding.rowProductCategoryAllTgbFavorites, position)
+            addDataFavorites(holder.dataBinding.rowProductCategoryAllTgbFavorites, position)
         } else {
-            holder.viewBinding.rowProductCategoryAllTgbFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
-            holder.viewBinding.rowProductCategoryAllTgbFavorites.setOnClickListener {
+            holder.dataBinding.rowProductCategoryAllTgbFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
+            holder.dataBinding.rowProductCategoryAllTgbFavorites.setOnClickListener {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
             }
 
         }
 
+        addDataBasket(holder.dataBinding.rowProductCategoryAllTgbAddBasket, position)
 
-        addDataBasket(holder.viewBinding.rowProductCategoryAllTgbAddBasket, position)
-
-        holder.viewBinding.rowProductCategoryAllCardView.setOnClickListener {
+        holder.dataBinding.rowProductCategoryAllCardView.setOnClickListener {
             val dataDrections =
                 ProductCategoryFragmentDirections.actionProductCategoryFragmentToProductDetailFragment(
                     mutablePosition.id

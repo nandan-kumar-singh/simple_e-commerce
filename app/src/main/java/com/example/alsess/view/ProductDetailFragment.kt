@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.alsess.R
 import com.example.alsess.databinding.FragmentProductDetailBinding
 import com.example.alsess.model.ApiProductsModel
@@ -19,7 +19,7 @@ import com.example.alsess.viewmodel.ProductDetailViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class ProductDetailFragment : Fragment() {
-    private lateinit var viewBinding: FragmentProductDetailBinding
+    private lateinit var dataBinding: FragmentProductDetailBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private val bundle: ProductDetailFragmentArgs by navArgs()
     private val productArrayList = ArrayList<ApiProductsModel>()
@@ -31,17 +31,21 @@ class ProductDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
+        dataBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail, container, false)
         firebaseAuth = FirebaseAuth.getInstance()
         productDetailViewModel = ViewModelProvider(this)[ProductDetailViewModel::class.java]
         productDetailViewModel.loadProductData(bundle.id)
         viewModelObserve()
+        if (productArrayList.size != 0) {
+            dataBinding.product = productArrayList.get(0)
+        }
 
-        viewBinding.fragmentProductDetailToolbar.setNavigationOnClickListener {
+        dataBinding.fragmentProductDetailToolbar.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
 
-        return viewBinding.root
+        return dataBinding.root
     }
 
     private fun viewModelObserve() {
@@ -49,7 +53,7 @@ class ProductDetailFragment : Fragment() {
         productDetailViewModel.productMLD.observe(viewLifecycleOwner, Observer { product ->
             product?.let {
                 productArrayList.addAll(it)
-                exportInformationToViews()
+                dataBinding.product = it.get(0)
                 productDetailViewModel.controlBasketData(requireContext(), bundle.id)
                 productDetailViewModel.controlFavoritesData(requireContext(), bundle.id)
                 addDataFavorites()
@@ -60,19 +64,19 @@ class ProductDetailFragment : Fragment() {
         productDetailViewModel.loadMLD.observe(viewLifecycleOwner, Observer { product ->
             product?.let {
                 if (it) {
-                    viewBinding.fragmentProductDetailPgb.visibility = View.GONE
-                    viewBinding.fragmentProductDetailCardView.visibility = View.VISIBLE
-                    viewBinding.fragmentProductDetailCl.visibility = View.VISIBLE
+                    dataBinding.fragmentProductDetailPgb.visibility = View.GONE
+                    dataBinding.fragmentProductDetailCardView.visibility = View.VISIBLE
+                    dataBinding.fragmentProductDetailCl.visibility = View.VISIBLE
                 }
             }
         })
 
         productDetailViewModel.controlFavorites.observe(viewLifecycleOwner, Observer { control ->
             if (currentUser != null) {
-                viewBinding.fragmentProductDetailTgbAddFavorites.isChecked = !control
+                dataBinding.fragmentProductDetailTgbAddFavorites.isChecked = !control
             } else {
-                viewBinding.fragmentProductDetailTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
-                viewBinding.fragmentProductDetailTgbAddFavorites.setOnClickListener {
+                dataBinding.fragmentProductDetailTgbAddFavorites.setBackgroundResource(R.drawable.asset_favorites_white)
+                dataBinding.fragmentProductDetailTgbAddFavorites.setOnClickListener {
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
                 }
@@ -81,37 +85,11 @@ class ProductDetailFragment : Fragment() {
         })
 
         productDetailViewModel.controlBasket.observe(viewLifecycleOwner, Observer { control ->
-            viewBinding.fragmentProductDetailTgbAddBasket.isChecked = !control
+            dataBinding.fragmentProductDetailTgbAddBasket.isChecked = !control
         })
     }
-
-    private fun exportInformationToViews() {
-        viewBinding.fragmentProductDetailTxvProductName.text =
-            productArrayList[0].title
-
-        Glide.with(requireContext()).load(productArrayList[0].image)
-            .into(viewBinding.fragmentProductDetailImvProduct)
-
-        viewBinding.fragmentProductDetailTxvTotalPrice.text =
-            productArrayList[0].price.toString()
-
-        viewBinding.fragmentProductDetailTxvDescription.text =
-            productArrayList[0].description
-
-        viewBinding.fragmentProductDetailRtb.rating =
-            productArrayList[0].rating.rate.toFloat()
-
-        viewBinding.fragmentProductDetailTxvRating.text =
-            productArrayList[0].rating.rate.toString()
-
-        viewBinding.fragmentProductDetailTxvCategory.text =
-            productArrayList[0].category.replaceFirstChar {
-                it.uppercase()
-            }
-    }
-
     private fun addDataFavorites() {
-        viewBinding.fragmentProductDetailTgbAddFavorites.setOnCheckedChangeListener { _, isChecked ->
+        dataBinding.fragmentProductDetailTgbAddFavorites.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 productDetailViewModel.addFavoritesData(requireContext())
             } else {
@@ -122,7 +100,7 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun addDataBasket() {
-        viewBinding.fragmentProductDetailTgbAddBasket.setOnCheckedChangeListener { _, isChecked ->
+        dataBinding.fragmentProductDetailTgbAddBasket.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 productDetailViewModel.addBasketData(requireContext())
             } else {

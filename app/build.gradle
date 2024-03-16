@@ -4,6 +4,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id 'kotlin-kapt'
 }
 
 android {
@@ -12,8 +13,11 @@ android {
 
     buildFeatures{
         viewBinding true
-        dataBinding true
     }
+    dataBinding{
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.alsess"
         minSdk 24

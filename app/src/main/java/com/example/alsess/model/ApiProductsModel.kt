@@ -11,7 +11,7 @@ data class ApiProductsModel(
 )
 
 data class Rating(
-    val rate: Double,
+    val rate: Float,
     val count: Int,
 )
 

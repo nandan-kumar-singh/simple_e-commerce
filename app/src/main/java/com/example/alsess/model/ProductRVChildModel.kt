@@ -5,5 +5,4 @@ data class ProductRVChildModel(
     val productName: String,
     val productImage: String,
     val productPrice: Double,
-    val productRating: Double
-)
+    val productRating: Float)
