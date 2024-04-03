@@ -11,9 +11,13 @@ Aliwo is a basic level e-commerce application written in Kotlin, you can registe
 
 **-Firebase Crashlytics**
 
-**-RecyclerView**
+**-MVVM**
+
+**-Data Binding**
 
 **-Retrofit2**
+
+**-RecyclerView**
 
 **-Glide**
 
