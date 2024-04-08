@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Alsess" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.Alsess" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/primaryColor</item>
@@ -13,7 +13,7 @@
         <item name="windowNoTitle">true</item>
     </style>
     <!--Theme that will be activated when splashScreen opens-->
-    <style name = "splashScreenTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name = "splashScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimaryVariant">@color/general_application_color</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
