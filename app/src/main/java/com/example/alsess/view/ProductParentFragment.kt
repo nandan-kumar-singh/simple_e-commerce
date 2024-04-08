@@ -23,7 +23,7 @@ class ProductParentFragment : Fragment() {
         viewBinding = FragmentProductParentBinding.inflate(inflater, container, false)
 
         val activityMainBottomNavigation =
-            activity!!.findViewById(R.id.activityMainBottomNavigationView) as BottomNavigationView
+            activity?.findViewById(R.id.activityMainBottomNavigationView) as BottomNavigationView
 
         val navHostFragment =
             childFragmentManager.findFragmentById(R.id.FragmentProductParentNavHostFragment) as NavHostFragment
@@ -46,8 +46,8 @@ class ProductParentFragment : Fragment() {
     //The number of products added to the cart is displayed as a bottom notification.
     fun basketBedge() {
         val activityMainBottomNavigation =
-            activity!!.findViewById(R.id.activityMainBottomNavigationView) as BottomNavigationView
-        val basketSQLiteDataHelper = BasketSQLiteDataHelper(context!!)
+            activity?.findViewById(R.id.activityMainBottomNavigationView) as BottomNavigationView
+        val basketSQLiteDataHelper = BasketSQLiteDataHelper(requireContext())
         val basketSqliteList = BasketSQLiteDao().getAllBaskets(basketSQLiteDataHelper)
         val basketBadge =
             activityMainBottomNavigation.getOrCreateBadge(R.id.basketFragment)

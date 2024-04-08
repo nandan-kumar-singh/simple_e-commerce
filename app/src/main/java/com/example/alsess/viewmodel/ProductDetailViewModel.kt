@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alsess.model.ApiProductsModel
 import com.example.alsess.service.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class ProductDetailViewModel : ViewModel() {
     private val detailArrayList = ArrayList<ApiProductsModel>()
@@ -24,7 +26,7 @@ class ProductDetailViewModel : ViewModel() {
     }
 
     fun loadProductData(id: Long) {
-        val retrofit = ProductsRetrofitService()
+        val retrofit = ProductsRetrofitService
         retrofit.service.loadData()
             .enqueue(object : Callback<List<ApiProductsModel>> {
                 @SuppressLint("CheckResult")
@@ -33,23 +35,18 @@ class ProductDetailViewModel : ViewModel() {
                     response: Response<List<ApiProductsModel>>,
                 ) {
                     if (response.isSuccessful) {
-                        var index = 0
-                        while (index < response.body()!!.size) {
-                            if (response.body()!!.get(index).id == id) {
-                                detailArrayList.add(
-                                    ApiProductsModel(
-                                        response.body()!![index].id,
-                                        response.body()!![index].title,
-                                        response.body()!![index].price,
-                                        response.body()!![index].description,
-                                        response.body()!![index].category,
-                                        response.body()!![index].image,
-                                        response.body()!![index].rating
-                                    )
+                        detailArrayList.addAll(response.body()!!.filter { it.id == id }
+                            .map {
+                                ApiProductsModel(
+                                    it.id,
+                                    it.title,
+                                    it.price,
+                                    it.description,
+                                    it.category,
+                                    it.image,
+                                    it.rating
                                 )
-                            }
-                            index++
-                        }
+                            })
                         productMLD.value = detailArrayList
                         loadMLD.value = true
                     }

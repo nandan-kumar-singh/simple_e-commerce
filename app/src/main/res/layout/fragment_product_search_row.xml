@@ -2,138 +2,129 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="product"
-            type="com.example.alsess.model.ApiProductsModel"/>
+            type="com.example.alsess.model.ApiProductsModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-
+        android:id="@+id/rowProductSearchCardView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/product_item_shape">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/rowProductSearchCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:elevation="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/rowProductSearchImvProduct"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:scaleType="fitCenter"
-                    android:downloadUrl="@{product.image}"
-                    app:layout_constraintBottom_toTopOf="@+id/rowProductSearchTxvName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/rowProductSearchImvProduct"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:downloadUrl="@{product.image}"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@+id/rowProductSearchTxvName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/rowProductSearchTxvName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{product.title}"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rowProductSearchImvProduct" />
+            <TextView
+                android:id="@+id/rowProductSearchTxvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{product.title}"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rowProductSearchImvProduct" />
 
-                <TextView
-                    android:id="@+id/rowProductSearchTxvPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="@{String.valueOf(product.price)}"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rowProductSearchTxvName" />
+            <TextView
+                android:id="@+id/rowProductSearchTxvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="@{String.valueOf(product.price)}"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rowProductSearchTxvName" />
 
-                <RatingBar
-                    android:id="@+id/rowProductSearchRtbStar"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:numStars="5"
-                    android:rating="@{product.rating.rate}"
-                    android:progressTint="@color/general_application_color"
-                    android:stepSize="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rowProductSearchTxvPrice" />
+            <RatingBar
+                android:id="@+id/rowProductSearchRtbStar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:numStars="5"
+                android:progressTint="@color/general_application_color"
+                android:rating="@{product.rating.rate}"
+                android:stepSize="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rowProductSearchTxvPrice" />
 
-                <TextView
-                    android:id="@+id/rowProductSearchTxvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(product.rating.rate)}"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
+            <TextView
+                android:id="@+id/rowProductSearchTxvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(product.rating.rate)}"
+                android:textColor="@color/black"
+                android:textSize="10sp"
 
-                    app:layout_constraintBottom_toBottomOf="@+id/rowProductSearchRtbStar"
-                    app:layout_constraintStart_toEndOf="@+id/rowProductSearchRtbStar"
-                    app:layout_constraintTop_toTopOf="@+id/rowProductSearchRtbStar" />
+                app:layout_constraintBottom_toBottomOf="@+id/rowProductSearchRtbStar"
+                app:layout_constraintStart_toEndOf="@+id/rowProductSearchRtbStar"
+                app:layout_constraintTop_toTopOf="@+id/rowProductSearchRtbStar" />
 
-                <ToggleButton
-                    android:id="@+id/rowProductSearchTgbFavorites"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@drawable/favorites_button_selector"
-                    android:checked="false"
-                    android:textOff=""
-                    android:textOn=""
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ToggleButton
+                android:id="@+id/rowProductSearchTgbFavorites"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/favorites_button_selector"
+                android:checked="false"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ToggleButton
-                    android:id="@+id/rowProductSearchTgbAddBasket"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/add_basket_button_selector"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:textOff="@string/add_basket"
-                    android:textOn="@string/added_basket"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rowProductSearchRtbStar"
-                    tools:ignore="MissingConstraints" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+            <ToggleButton
+                android:id="@+id/rowProductSearchTgbAddBasket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/add_basket_button_selector"
+                android:checked="false"
+                android:clickable="true"
+                android:textOff="@string/add_basket"
+                android:textOn="@string/added_basket"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rowProductSearchRtbStar"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

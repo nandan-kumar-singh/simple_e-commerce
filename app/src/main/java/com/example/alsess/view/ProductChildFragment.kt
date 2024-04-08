@@ -18,6 +18,8 @@ import com.example.alsess.adapters.ProductCategoryAdapter
 import com.example.alsess.databinding.FragmentProductChildBinding
 import com.example.alsess.model.ProductRVParentModel
 import com.example.alsess.viewmodel.ProductChildViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 class ProductChildFragment : Fragment() {
     private lateinit var viewBinding: FragmentProductChildBinding

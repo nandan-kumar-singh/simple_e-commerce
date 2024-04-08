@@ -1,13 +1,25 @@
 package com.example.alsess.service
 
+import com.example.alsess.BuildConfig
+import com.example.alsess.MyApp
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ProductsRetrofitService {
-    private val PRODUCTS_BASE_URL = "https://fakestoreapi.com/"
-    val retrofit = Retrofit.Builder()
-        .baseUrl(PRODUCTS_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    val service = retrofit.create(ProductsAPI:: class.java)
+object ProductsRetrofitService {
+    var retrofit: Retrofit
+
+    init {
+        val client =
+            OkHttpClient().newBuilder().addInterceptor(MockIntercepter(context = MyApp.context))
+                .build()
+
+        retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
+
+    val service = retrofit.create(ProductsAPI::class.java)
 }

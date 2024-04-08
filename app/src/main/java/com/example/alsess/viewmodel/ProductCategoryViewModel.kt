@@ -1,6 +1,5 @@
 package com.example.alsess.viewmodel
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alsess.model.ApiProductsModel
@@ -15,7 +14,7 @@ class ProductCategoryViewModel : ViewModel() {
     val productLoadMLD = MutableLiveData<Boolean>()
 
     fun productLoadData(category: String) {
-        val retrofit = ProductsRetrofitService()
+        val retrofit = ProductsRetrofitService
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
             override fun onResponse(
                 call: Call<List<ApiProductsModel>>,
@@ -23,24 +22,18 @@ class ProductCategoryViewModel : ViewModel() {
             ) {
 
                 if (response.isSuccessful) {
-
-                    var indeks = 0
-                    while (indeks < response.body()!!.size) {
-                        if (category == response.body()!!.get(indeks).category) {
-                            productArrayList.add(
-                                ApiProductsModel(
-                                    response.body()!!.get(indeks).id,
-                                    response.body()!!.get(indeks).title,
-                                    response.body()!!.get(indeks).price,
-                                    response.body()!!.get(indeks).description,
-                                    response.body()!!.get(indeks).category,
-                                    response.body()!!.get(indeks).image,
-                                    response.body()!!.get(indeks).rating
-                                )
+                    productArrayList.addAll(response.body()!!.filter { it.category == category }
+                        .map {
+                            ApiProductsModel(
+                                it.id,
+                                it.title,
+                                it.price,
+                                it.description,
+                                it.category,
+                                it.image,
+                                it.rating
                             )
-                        }
-                        indeks++
-                    }
+                        })
                     productMLD.value = productArrayList
                     productLoadMLD.value = true
                 }

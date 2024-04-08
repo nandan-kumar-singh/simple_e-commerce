@@ -98,7 +98,7 @@ class BasketAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
 
        holder.dataBinding.recyclerRowBasketBtnDelete.setOnClickListener {
            if (basketList.size != 0) {
-               onChangeAmount.onChange("0.0")
+               onChangeAmount.onChange("0.0", basketList)
            }
            BasketSQLiteDao().deleteBasket(basketDataHelper, basket.id)
            total()
@@ -110,9 +110,9 @@ class BasketAdapter(val context: Context, val onChangeAmount: OnChangeAmount) :
         val basketDataHelper = BasketSQLiteDataHelper(context)
         val basketList = BasketSQLiteDao().getAllBaskets(basketDataHelper)
         var total = 0.0F
-        for (i in 0..(basketList.size - 1)) {
-            total += basketList.get(i).price.toFloat() * basketList.get(i).count
-            onChangeAmount.onChange(total.toString())
+        for (i in 0 until basketList.size) {
+            total += basketList[i].price.toFloat() * basketList[i].count
+            onChangeAmount.onChange(total.toString(), basketList)
         }
     }
 }

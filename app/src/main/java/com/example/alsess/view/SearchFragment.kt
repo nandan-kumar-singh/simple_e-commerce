@@ -2,25 +2,29 @@ package com.example.alsess.view
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alsess.adapters.SearchAdapter
 import com.example.alsess.databinding.FragmentSearchBinding
 import com.example.alsess.viewmodel.SearchViewModel
-import java.util.*
-import kotlin.collections.ArrayList
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
+import java.util.Locale
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var adapter: SearchAdapter
     private lateinit var viewBinding: FragmentSearchBinding
-    private lateinit var searchViewModel: SearchViewModel
+    val searchViewModel: SearchViewModel by viewModels()
     val searchItemList = HashSet<String>()
 
 
@@ -39,7 +43,6 @@ class SearchFragment : Fragment() {
         sharedPreferencesEditor?.clear()
         sharedPreferencesEditor?.apply()
 
-        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         searchViewModel.searchItemLoadData()
         viewModelObserve()
         searchProduct()

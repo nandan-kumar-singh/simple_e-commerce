@@ -8,10 +8,13 @@ import com.example.alsess.R
 import com.example.alsess.model.ApiProductsModel
 import com.example.alsess.model.ProductRVChildModel
 import com.example.alsess.model.ProductRVParentModel
+import com.example.alsess.service.ProductsAPI
 import com.example.alsess.service.ProductsRetrofitService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class ProductChildViewModel : ViewModel() {
     val producParenttMLD = MutableLiveData<List<ProductRVParentModel>>()
@@ -24,7 +27,7 @@ class ProductChildViewModel : ViewModel() {
 
 
     fun productLoadData(context: Context) {
-        val retrofit = ProductsRetrofitService()
+        val retrofit = ProductsRetrofitService
         retrofit.service.loadData().enqueue(object : Callback<List<ApiProductsModel>> {
             override fun onResponse(
                 call: Call<List<ApiProductsModel>>,
@@ -75,27 +78,18 @@ class ProductChildViewModel : ViewModel() {
         category: String,
         response: Response<List<ApiProductsModel>>
     ) {
-        var indeks = 0
-        var element = 0
-
-        while (indeks < response.body()!!.size) {
-            if (response.body()!!.get(indeks).category == category) {
-                if (element < 4) {
-                    childList.add(
-                        ProductRVChildModel(
-                            response.body()!!.get(indeks).id,
-                            response.body()!!.get(indeks).title,
-                            response.body()!!.get(indeks).image,
-                            response.body()!!.get(indeks).price,
-                            response.body()!!.get(indeks).rating.rate
-                        )
-                    )
-
-                    element++
-                }
-
-            }
-            indeks++
+        val data = response.body()
+        val filteredData = data?.filter { it.category == category }?.map {
+            ProductRVChildModel(
+                it.id,
+                it.title,
+                it.image,
+                it.price,
+                it.rating.rate
+            )
+        }
+        filteredData?.let {
+            childList.addAll(filteredData)
         }
     }
 

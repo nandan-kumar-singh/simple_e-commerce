@@ -16,14 +16,12 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
-    private lateinit var firebaseAuth: FirebaseAuth
 
     @SuppressLint("DetachAndAttachSameFragment")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        firebaseAuth = FirebaseAuth.getInstance()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activityMainNavHostFragment) as NavHostFragment
         NavigationUI.setupWithNavController(

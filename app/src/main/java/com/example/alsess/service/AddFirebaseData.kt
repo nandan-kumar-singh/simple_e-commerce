@@ -35,9 +35,9 @@ class AddFirebaseData {
         firebaseAuth = FirebaseAuth.getInstance()
         val currentUserUid = firebaseAuth.currentUser!!.uid
         val usersHashMap = HashMap<String, Any>()
-        usersHashMap.put("name", "")
-        usersHashMap.put("lastName", "")
-        usersHashMap.put("phone", "")
+        usersHashMap["name"] = ""
+        usersHashMap["lastName"] = ""
+        usersHashMap["phone"] = ""
         firebaseFireStoreDB.collection("Users").document(currentUserUid).set(usersHashMap)
             .addOnCompleteListener { task ->
             }.addOnFailureListener { exception ->

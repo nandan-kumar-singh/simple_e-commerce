@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Aliwo</string>
+    <string name="app_name">eShopping App</string>
     <!-- General -->
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
@@ -13,9 +13,9 @@
     <string name="phone">Phone</string>
     <string name="cancel">Calcel</string>
     <string name="yes">Yes</string>
-    <string name="all">All</string>
-    <string name="mansCloting">Men  s Clothing</string>
-    <string name="womensClothing">Women  s Clothing</string>
+    <string name="all">See all</string>
+    <string name="mansCloting">Men\'s Clothing</string>
+    <string name="womensClothing">Women\'s Clothing</string>
     <string name="electronics">Electronics</string>
     <string name="jewelery">Jewelery</string>
     <string name="add_basket">Add Basket</string>
@@ -88,4 +88,5 @@
 
     <!-- Google Json Client Id -->
     <string name="google_json_client_id" translatable="false">cliendıd</string>
+    <string name="search_product">Search product</string>
 </resources>
